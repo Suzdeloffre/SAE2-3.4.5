@@ -108,7 +108,7 @@ INSERT INTO casque (id_casque, nom_casque, poids, couleur, prix_casque, taille_i
 (NULL, 'Casque militaire léger', 1200,'Marron', 149.90, 4, 5, 'Boutique Militaire', '', 'casque_militaire_marron_jpeg'),
 (NULL, 'Casque moto vintage avec visière', 1300,'Jaune', 109.00, 2, 6, 'Outlet Moto', 'Premier', 'casque_moto_avec_visiere_jaune.jpg'),
 (NULL, 'Casque Airoh Commander Boost', 1400,'Rouge', 469.99, 1, 6, 'Speedway', 'Airoh', 'casque_moto_avec_visiere_rouge.jpeg'),
-(NULL, 'ZHEN Flip-Up', 1560,'Rose', 142.95, 2, 6, 'Amazon', 'ZHEN', 'casque_moto_avec_visere_rose.jpeg'),
+(NULL, 'ZHEN Flip-Up', 1560,'Rose', 142.95, 2, 6, 'Amazon', 'ZHEN', 'casque_moto_avec_visere_rose.jpg'),
 (NULL, 'Westt Vintage Casque Moto sans visière blanc', 1050,'Blanc', 62.95, 5, 7, 'Amazon', 'Westt', 'casque_moto_sans_visere_blanc.jpg'),
 (NULL, 'Casque TEEN visor', 1300,'Gris', 59.99, 4, 7, 'Diezz', 'TEEN', 'casque_moto_sans_visiere_gris.jpeg'),
 (NULL, 'Casque Arctik sans visière', 960, 'Noir', 129.90, 2, 7, 'Diezz Sport', 'Diezz', 'casque_mot_sans_visiere_noir.png');
