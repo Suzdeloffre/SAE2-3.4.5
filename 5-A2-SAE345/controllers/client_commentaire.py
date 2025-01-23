@@ -52,7 +52,7 @@ def client_casque_details():
     return render_template('client/casque_info/casque_details.html'
                            , casque=casque
                            # , commentaires=commentaires
-                           , commandes_articles=commandes_casque
+                           , commandes_casque=commandes_casque
                            # , note=note
                            , nb_commentaires=nb_commentaires
                            )
