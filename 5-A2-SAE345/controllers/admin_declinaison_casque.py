@@ -18,7 +18,7 @@ def add_declinaison_casque():
     tailles=None
     d_taille_uniq=None
     d_couleur_uniq=None
-    return render_template('admin/article/add_declinaison_article.html'
+    return render_template('admin/casque/add_declinaison_article.html'
                            , casque=casque
                            , couleurs=couleurs
                            , tailles=tailles
@@ -31,13 +31,13 @@ def add_declinaison_casque():
 def valid_add_declinaison_casque():
     mycursor = get_db().cursor()
 
-    id_article = request.form.get('id_article')
+    id_casque = request.form.get('id_casque')
     stock = request.form.get('stock')
     taille = request.form.get('taille')
     couleur = request.form.get('couleur')
     # attention au doublon
     get_db().commit()
-    return redirect('/admin/article/edit?id_article=' + id_article)
+    return redirect('/admin/casque/edit?id_casque=' + id_casque)
 
 
 @admin_declinaison_casque.route('/admin/declinaison_casque/edit', methods=['GET'])
@@ -49,7 +49,7 @@ def edit_declinaison_casque():
     tailles=None
     d_taille_uniq=None
     d_couleur_uniq=None
-    return render_template('admin/article/edit_declinaison_casque.html'
+    return render_template('admin/casque/edit_declinaison_casque.html'
                            , tailles=tailles
                            , couleurs=couleurs
                            , declinaison_casque=declinaison_casque
@@ -67,7 +67,7 @@ def valid_edit_declinaison_casque():
     couleur_id = request.form.get('id_couleur','')
     mycursor = get_db().cursor()
 
-    message = u'declinaison_article modifié , id:' + str(id_declinaison_casque) + '- stock :' + str(stock) + ' - taille_id:' + str(taille_id) + ' - couleur_id:' + str(couleur_id)
+    message = u'declinaison_casque modifié , id:' + str(id_declinaison_casque) + '- stock :' + str(stock) + ' - taille_id:' + str(taille_id) + ' - couleur_id:' + str(couleur_id)
     flash(message, 'alert-success')
     return redirect('/admin/casque/edit?id_casque=' + str(id_casque))
 

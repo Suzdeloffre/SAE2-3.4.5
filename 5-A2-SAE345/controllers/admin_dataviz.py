@@ -9,7 +9,7 @@ admin_dataviz = Blueprint('admin_dataviz', __name__,
                         template_folder='templates')
 
 @admin_dataviz.route('/admin/dataviz/etat1')
-def show_type_article_stock():
+def show_type_casque_stock():
     mycursor = get_db().cursor()
     sql = '''
     

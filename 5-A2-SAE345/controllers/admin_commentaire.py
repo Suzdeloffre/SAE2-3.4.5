@@ -43,7 +43,7 @@ def admin_comment_add():
         id_utilisateur = request.args.get('id_utilisateur', None)
         id_casque = request.args.get('id_casque', None)
         date_publication = request.args.get('date_publication', None)
-        return render_template('admin/casque/add_commentaire.html',id_utilisateur=id_utilisateur,id_article=id_casque,date_publication=date_publication )
+        return render_template('admin/casque/add_commentaire.html',id_utilisateur=id_utilisateur,id_casque=id_casque,date_publication=date_publication )
 
     mycursor = get_db().cursor()
     id_utilisateur = session['id_user']   #1 admin
@@ -52,13 +52,13 @@ def admin_comment_add():
     commentaire = request.form.get('commentaire', None)
     sql = '''    requête admin_type_article_3   '''
     get_db().commit()
-    return redirect('/admin/article/commentaires?id_casque='+id_casque)
+    return redirect('/admin/casque/commentaires?id_casque='+id_casque)
 
 
-@admin_commentaire.route('/admin/article/commentaires/valider', methods=['POST','GET'])
+@admin_commentaire.route('/admin/casque/commentaires/valider', methods=['POST','GET'])
 def admin_comment_valider():
-    id_article = request.args.get('id_article', None)
+    id_casque = request.args.get('id_casque', None)
     mycursor = get_db().cursor()
     sql = '''   requête admin_type_article_4   '''
     get_db().commit()
-    return redirect('/admin/article/commentaires?id_article='+id_article)
+    return redirect('/admin/casque/commentaires?id_casque='+id_casque)

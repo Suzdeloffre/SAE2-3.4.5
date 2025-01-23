@@ -17,7 +17,7 @@ from controllers.client_coordonnee import *
 from controllers.admin_casque import *
 from controllers.admin_declinaison_casque import *
 from controllers.admin_commande import *
-from controllers.admin_type_article import *
+from controllers.admin_type_casque import *
 from controllers.admin_dataviz import *
 from controllers.admin_commentaire import *
 from controllers.client_liste_envies import *
