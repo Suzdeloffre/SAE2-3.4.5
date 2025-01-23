@@ -172,6 +172,22 @@ INSERT INTO commande (id_commande, date_achat, id_utilisateur, id_etat) VALUES
 (NULL, '24-11-2021', 2, 3),
 (NULL, '28-02-2004', 3, 4);
 
+INSERT INTO ligne_commande(id_commande, id_casque, prix, quantite) VALUES
+(1, 1, 90.00, 1),
+(1, 2, 89.99, 1),
+(2, 3, 49.90, 1),
+(2, 4, 199.95, 1),
+(3, 5, 350.00, 1),
+(3, 6, 129.00, 1),
+(4, 7, 6.99, 1),
+(4, 8, 4.95, 1),
+(4, 9, 3.30, 1),
+(4, 10, 74.50, 1),
+(4, 18, 142.95, 1),
+(4, 19, 62.95, 1),
+(4, 20, 59.99, 1),
+(4, 21, 129.90, 1);
+
 
 
 
