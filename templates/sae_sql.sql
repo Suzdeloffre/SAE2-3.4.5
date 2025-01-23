@@ -1,4 +1,9 @@
 DROP TABLE IF EXISTS utilisateur;
+DROP TABLE IF EXISTS casque;
+DROP TABLE IF EXISTS type_casque;
+DROP TABLE IF EXISTS taille;
+
+
 CREATE TABLE utilisateur(
     id_utilisateur INT AUTO_INCREMENT,
     login VARCHAR(255),
@@ -13,6 +18,40 @@ CREATE TABLE utilisateur(
 
     PRIMARY KEY (id_utilisateur)
     )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE taille(
+    id_taille INT AUTO_INCREMENT,
+    libelle_taille VARCHAR(200),
+    PRIMARY KEY (id_taille)
+);
+
+
+CREATE TABLE type_casque(
+    id_type_casque INT AUTO_INCREMENT,
+    libelle_type_casque VARCHAR(200),
+    PRIMARY KEY (id_type_casque)
+);
+
+
+
+CREATE TABLE casque(
+    id_casque INT AUTO_INCREMENT,
+    nom_casque VARCHAR(200),
+    poids NUMERIC(6,2),
+    couleur VARCHAR(200),
+    prix_casque NUMERIC(6,2),
+    taille_id INT,
+    type_casque_id INT,
+    fournisseur VARCHAR(200),
+    marque VARCHAR(200),
+    photo VARCHAR(200),
+    PRIMARY KEY (id_casque),
+    CONSTRAINT fk_casque_taille FOREIGN KEY (taille_id) REFERENCES taille(id_taille),
+    CONSTRAINT fk_casque_type_epoque FOREIGN KEY (type_casque_id) REFERENCES type_casque(id_type_casque)
+);
+
+
 
 INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) VALUES
 (1,'admin','admin@admin.fr',
