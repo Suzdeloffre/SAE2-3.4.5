@@ -31,7 +31,7 @@ def client_panier_add():
     #     sql = '''   '''
     #     mycursor.execute(sql, (id_article))
     #     article = mycursor.fetchone()
-    #     return render_template('client/boutique/declinaison_article.html'
+    #     return render_template('client/boutique/declinaison_casque.html'
     #                                , declinaisons=declinaisons
     #                                , quantite=quantite
     #                                , article=article)
@@ -39,7 +39,7 @@ def client_panier_add():
 # ajout dans le panier d'un article
 
 
-    return redirect('/client/article/show')
+    return redirect('/client/casque/show')
 
 @client_panier.route('/client/panier/delete', methods=['POST'])
 def client_panier_delete():
@@ -62,7 +62,7 @@ def client_panier_delete():
 
     # mise à jour du stock de l'article disponible
     get_db().commit()
-    return redirect('/client/article/show')
+    return redirect('/client/casque/show')
 
 
 

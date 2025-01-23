@@ -11,8 +11,8 @@ client_commentaire = Blueprint('client_commentaire', __name__,
                         template_folder='templates')
 
 
-@client_commentaire.route('/client/article/details', methods=['GET'])
-def client_article_details():
+@client_commentaire.route('/client/casque/details', methods=['GET'])
+def client_casque_details():
     mycursor = get_db().cursor()
     id_article =  request.args.get('id_article', None)
     id_client = session['id_user']
@@ -49,12 +49,12 @@ def client_article_details():
     # '''
     # mycursor.execute(sql, (id_client, id_article))
     # nb_commentaires = mycursor.fetchone()
-    return render_template('client/article_info/article_details.html'
+    return render_template('client/casque_info/casque_details.html'
                            , article=article
                            # , commentaires=commentaires
                            , commandes_articles=commandes_articles
                            # , note=note
-                            , nb_commentaires=nb_commentaires
+                           , nb_commentaires=nb_commentaires
                            )
 
 @client_commentaire.route('/client/commentaire/add', methods=['POST'])

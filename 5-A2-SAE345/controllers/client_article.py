@@ -8,13 +8,13 @@ from connexion_db import get_db
 client_article = Blueprint('client_article', __name__,
                         template_folder='templates')
 
-@client_article.route('/client/index')
-@client_article.route('/client/article/show')              # remplace /client
-def client_article_show():                                 # remplace client_index
+@client_casque_show.route('/client/index')
+@client_casque_show.route('/client/article/show')              # remplace /client
+def client_casque_show():                                 # remplace client_index
     mycursor = get_db().cursor()
     id_client = session['id_user']
 
-    sql = '''   selection des articles   '''
+    sql = '''   SELECT * FROM casque   '''
     list_param = []
     condition_and = ""
     # utilisation du filtre
@@ -33,7 +33,7 @@ def client_article_show():                                 # remplace client_ind
         prix_total = None
     else:
         prix_total = None
-    return render_template('client/boutique/panier_article.html'
+    return render_template('client/boutique/panier_casque.html'
                            , articles=articles
                            , articles_panier=articles_panier
                            #, prix_total=prix_total
