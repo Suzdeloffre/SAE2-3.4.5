@@ -35,7 +35,7 @@ def client_casque_show():                                 # remplace client_inde
     else:
         prix_total = None
     return render_template('client/boutique/panier_casque.html'
-                           , casque=casque
+                           , casque=casques
                            , casque_panier=casque_panier
                            #, prix_total=prix_total
                            , items_filtre=types_casque

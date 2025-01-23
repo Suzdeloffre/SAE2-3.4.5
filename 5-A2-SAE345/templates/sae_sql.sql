@@ -46,7 +46,7 @@ CREATE TABLE casque(
     type_casque_id INT,
     fournisseur VARCHAR(200),
     marque VARCHAR(200),
-    photo VARCHAR(200),
+    image VARCHAR(200),
     PRIMARY KEY (id_casque),
     CONSTRAINT fk_casque_taille FOREIGN KEY (taille_id) REFERENCES taille(id_taille),
     CONSTRAINT fk_casque_type_epoque FOREIGN KEY (type_casque_id) REFERENCES type_casque(id_type_casque)
