@@ -46,7 +46,7 @@ CREATE TABLE commande(
 CREATE TABLE ligne_commande(
    id_commande INT,
    id_casque INT,
-   prix CURRENCY,
+   prix NUMERIC(6,2),
    quantite INT,
    PRIMARY KEY(id_commande, id_casque),
    FOREIGN KEY(id_commande) REFERENCES commande(id_commande),
