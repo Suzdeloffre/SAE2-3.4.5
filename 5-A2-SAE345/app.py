@@ -68,17 +68,17 @@ def before_request():
 app.register_blueprint(auth_security)
 app.register_blueprint(fixtures_load)
 
-app.register_blueprint(client_article)
+app.register_blueprint(client_casque)
 app.register_blueprint(client_commande)
 app.register_blueprint(client_commentaire)
 app.register_blueprint(client_panier)
 app.register_blueprint(client_coordonnee)
 app.register_blueprint(client_liste_envies)
 
-app.register_blueprint(admin_article)
+app.register_blueprint(admin_casque)
 app.register_blueprint(admin_declinaison_article)
 app.register_blueprint(admin_commande)
-app.register_blueprint(admin_type_article)
+app.register_blueprint(admin_type_casque)
 app.register_blueprint(admin_dataviz)
 app.register_blueprint(admin_commentaire)
 
