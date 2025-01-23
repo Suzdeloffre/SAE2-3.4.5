@@ -21,17 +21,18 @@
 
         <div class="row">
                 {% for casque in casques  %}
+                    <p>test</p>
                         <div class="card col-4 mt-4 p-1">
                             <div class="card-body border-dark rounded p-1">
                                 <a href="/client/casque/details?id_casque={{ casque.id_casque }}" >
                                 <h3 class="card-title">
-                                    <span style="color: #0b2e13">{{ casque.nom }}</span><br>
-                                    {{ casque.prix }}
+                                    <span style="color: #0b2e13">{{ casque.nom_casque }}</span><br>
+                                    {{ casque.prix_casque }}
                                     €
                                 </h3>
                                      {%  if casque.image is not none %}
-                                        <img class="card-img-top rounded mx-auto d-block"  style="width:100px;height:100px"  src="{{ url_for('static', filename = 'images_casque/')}}{{ casque.image }}"  alt="image  de {{ casque.nom }}" >
-                                    {% else %} <img class="card-img-top rounded mx-auto d-block"   style="width:100px;height:100px"   src="{{ url_for('static', filename='images/no_photo.jpeg')}}"  alt="image  de {{ casque.nom }}" >
+                                        <img class="card-img-top rounded mx-auto d-block"  style="width:100px;height:100px"  src="{{ url_for('static', filename = 'images_casque/')}}{{ casque.image }}"  alt="image  de {{ casque.nom_casque }}" >
+                                    {% else %} <img class="card-img-top rounded mx-auto d-block"   style="width:100px;height:100px"   src="{{ url_for('static', filename='images/no_photo.jpeg')}}"  alt="image  de {{ casque.nom_casque }}" >
                                     {% endif %}
                                     <hr>
                                 </a>
