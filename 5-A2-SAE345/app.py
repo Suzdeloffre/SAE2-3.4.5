@@ -8,7 +8,7 @@ from flask import Blueprint
 from controllers.auth_security import *
 from controllers.fixtures_load import *
 
-from controllers.client_article import *
+from controllers.client_casque import *
 from controllers.client_panier import *
 from controllers.client_commande import *
 from controllers.client_commentaire import *

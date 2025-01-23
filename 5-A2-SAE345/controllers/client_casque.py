@@ -20,23 +20,23 @@ def client_casque_show():                                 # remplace client_inde
     condition_and = ""
     # utilisation du filtre
     sql3=''' prise en compte des commentaires et des notes dans le SQL    '''
-    casque =[]
+    casques =[]
 
 
     # pour le filtre
     types_casque = []
 
 
-    casque_panier = []
+    casques_panier = []
 
-    if len(casque_panier) >= 1:
+    if len(casques_panier) >= 1:
         sql = ''' calcul du prix total du panier '''
         prix_total = None
     else:
         prix_total = None
     return render_template('client/boutique/panier_casque.html'
                            , casque=casques
-                           , casque_panier=casque_panier
+                           , casque_panier=casques_panier
                            #, prix_total=prix_total
                            , items_filtre=types_casque
                            )
