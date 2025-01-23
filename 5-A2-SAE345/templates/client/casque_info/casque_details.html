@@ -13,8 +13,8 @@
          </h2>
         <div class="card-body">
         {%  if casque.image is not none %}
-            <img class="card-img-top rounded mx-auto d-block"  style="width:100px;height:100px"  src="{{ url_for('static', filename = 'images/')}}{{ article.image }}"  alt="image  de {{ casque.nom }}" >
-        {% else %} <img class="card-img-top rounded mx-auto d-block"   style="width:100px;height:100px"   src="{{ url_for('static', filename='images/no_photo.jpeg')}}"  alt="image  de {{ casque.nom }}" >
+            <img class="card-img-top rounded mx-auto d-block"  style="width:100px;height:100px"  src="{{ url_for('static', filename = 'images-casque/')}}{{ casque.image }}"  alt="image  de {{ casque.nom_casque }}" >
+        {% else %} <img class="card-img-top rounded mx-auto d-block"   style="width:100px;height:100px"   src="{{ url_for('static', filename='images/no_photo.jpeg')}}"  alt="image  de {{ casque.nom_casque }}" >
         {% endif %}
 
 
@@ -44,7 +44,7 @@
                     <form  action="/client/note/edit"   method="post" class="row">
                     <input type="hidden" name="id_casque" value="{{ casque.id_casque }}">
                     <div class="col-md-3">
-                        <label for="input_note" class="d-flex justify-content-end align-items-end pe-3">Modifier votre note sur cet article : </label>
+                        <label for="input_note" class="d-flex justify-content-end align-items-end pe-3">Modifier votre note sur ce casque : </label>
                     </div>
                     <div class="col-md-1">
                         <input type="number" name="note" id="input_note" step="0.1" min="0" max="5" class="form-control col-md-2" value="{{ note }}" >
