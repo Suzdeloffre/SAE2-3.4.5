@@ -5,11 +5,12 @@ from flask import Flask, request, render_template, redirect, abort, flash, sessi
 
 from connexion_db import get_db
 
-client_article = Blueprint('client_article', __name__,
+client_casque = Blueprint('client_casque', __name__,
                         template_folder='templates')
 
-@client_casque_show.route('/client/index')
-@client_casque_show.route('/client/article/show')              # remplace /client
+
+@client_casque.route('/client/index')
+@client_casque.route('/client/casque/show')              # remplace /client
 def client_casque_show():                                 # remplace client_index
     mycursor = get_db().cursor()
     id_client = session['id_user']
@@ -19,23 +20,23 @@ def client_casque_show():                                 # remplace client_inde
     condition_and = ""
     # utilisation du filtre
     sql3=''' prise en compte des commentaires et des notes dans le SQL    '''
-    articles =[]
+    casque =[]
 
 
     # pour le filtre
-    types_article = []
+    types_casque = []
 
 
-    articles_panier = []
+    casque_panier = []
 
-    if len(articles_panier) >= 1:
+    if len(casque_panier) >= 1:
         sql = ''' calcul du prix total du panier '''
         prix_total = None
     else:
         prix_total = None
     return render_template('client/boutique/panier_casque.html'
-                           , articles=articles
-                           , articles_panier=articles_panier
+                           , casque=casque
+                           , casque_panier=casque_panier
                            #, prix_total=prix_total
-                           , items_filtre=types_article
+                           , items_filtre=types_casque
                            )
