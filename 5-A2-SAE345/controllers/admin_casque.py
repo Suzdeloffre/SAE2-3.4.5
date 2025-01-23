@@ -97,48 +97,48 @@ def delete_casque():
     return redirect('/admin/casque/show')
 
 
-@admin_article.route('/admin/casque/edit', methods=['GET'])
+@admin_casque.route('/admin/casque/edit', methods=['GET'])
 def edit_casque():
-    id_article=request.args.get('id_article')
+    id_casque=request.args.get('id_casque')
     mycursor = get_db().cursor()
     sql = '''
     requête admin_article_6    
     '''
-    mycursor.execute(sql, id_article)
-    article = mycursor.fetchone()
-    print(article)
+    mycursor.execute(sql, id_casque)
+    casque = mycursor.fetchone()
+    print(casque)
     sql = '''
     requête admin_article_7
     '''
     mycursor.execute(sql)
-    types_article = mycursor.fetchall()
+    types_casque = mycursor.fetchall()
 
     # sql = '''
     # requête admin_article_6
     # '''
-    # mycursor.execute(sql, id_article)
-    # declinaisons_article = mycursor.fetchall()
+    # mycursor.execute(sql, id_casque)
+    # declinaisons_casque = mycursor.fetchall()
 
     return render_template('admin/casque/edit_article.html'
-                           ,article=article
-                           ,types_article=types_article
-                         #  ,declinaisons_article=declinaisons_article
+                           ,casque=casque
+                           ,types_casque=types_casque
+                         #  ,declinaisons_casque=declinaisons_casque
                            )
 
 
-@admin_article.route('/admin/article/edit', methods=['POST'])
-def valid_edit_article():
+@admin_casque.route('/admin/casque/edit', methods=['POST'])
+def valid_edit_casque():
     mycursor = get_db().cursor()
     nom = request.form.get('nom')
-    id_article = request.form.get('id_article')
+    id_casque = request.form.get('id_casque')
     image = request.files.get('image', '')
-    type_article_id = request.form.get('type_article_id', '')
+    type_casque_id = request.form.get('type_casque_id', '')
     prix = request.form.get('prix', '')
     description = request.form.get('description')
     sql = '''
        requête admin_article_8
        '''
-    mycursor.execute(sql, id_article)
+    mycursor.execute(sql, id_casque)
     image_nom = mycursor.fetchone()
     image_nom = image_nom['image']
     if image:
@@ -152,14 +152,14 @@ def valid_edit_article():
             image_nom = filename
 
     sql = '''  requête admin_article_9 '''
-    mycursor.execute(sql, (nom, image_nom, prix, type_article_id, description, id_article))
+    mycursor.execute(sql, (nom, image_nom, prix, type_casque_id, description, id_casque))
 
     get_db().commit()
     if image_nom is None:
         image_nom = ''
-    message = u'article modifié , nom:' + nom + '- type_article :' + type_article_id + ' - prix:' + prix  + ' - image:' + image_nom + ' - description: ' + description
+    message = u'casque modifié , nom:' + nom + '- type_casque :' + type_casque_id + ' - prix:' + prix  + ' - image:' + image_nom + ' - description: ' + description
     flash(message, 'alert-success')
-    return redirect('/admin/article/show')
+    return redirect('/admin/casque/show')
 
 
 
@@ -167,21 +167,21 @@ def valid_edit_article():
 
 
 
-@admin_article.route('/admin/article/avis/<int:id>', methods=['GET'])
+@admin_casque.route('/admin/casque/avis/<int:id>', methods=['GET'])
 def admin_avis(id):
     mycursor = get_db().cursor()
-    article=[]
+    casque=[]
     commentaires = {}
     return render_template('admin/casque/show_avis.html'
-                           , article=article
+                           , casque=casque
                            , commentaires=commentaires
                            )
 
 
-@admin_article.route('/admin/comment/delete', methods=['POST'])
+@admin_casque.route('/admin/comment/delete', methods=['POST'])
 def admin_avis_delete():
     mycursor = get_db().cursor()
-    article_id = request.form.get('idArticle', None)
+    casque_id = request.form.get('idCasque', None)
     userId = request.form.get('idUser', None)
 
-    return admin_avis(article_id)
+    return admin_avis(casque_id)
