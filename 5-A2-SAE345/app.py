@@ -76,7 +76,7 @@ app.register_blueprint(client_coordonnee)
 app.register_blueprint(client_liste_envies)
 
 app.register_blueprint(admin_casque)
-app.register_blueprint(admin_declinaison_article)
+app.register_blueprint(admin_declinaison_casque)
 app.register_blueprint(admin_commande)
 app.register_blueprint(admin_type_casque)
 app.register_blueprint(admin_dataviz)
