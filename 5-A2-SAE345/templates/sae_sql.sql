@@ -90,7 +90,7 @@ INSERT INTO type_casque (id_type_casque, libelle_type_casque) VALUES
 (NULL, 'Casque de moto sans visière');
 
 
-INSERT INTO casque (id_casque, nom_casque, poids, couleur, prix_casque, taille_id, type_casque_id, fournisseur, marque, photo) VALUES
+INSERT INTO casque (id_casque, nom_casque, poids, couleur, prix_casque, taille_id, type_casque_id, fournisseur, marque, image) VALUES
 (NULL, 'Casque Integral Kenny Downhill', 730, 'Vert', 90.00, 7, 1, 'Sarenne Sports Boutique', 'Kenny', 'casque_vtt_vert.jpeg'),
 (NULL, 'Casque AirBikeBlue', 1050, 'Bleu', 89.99, 1, 1, 'Holland Bikes', 'Lazer Sphere', 'casque_vtt_bleu.jpg'),
 (NULL, 'Casque VTT SCOTT Supra', 270,'Rouge', 49.90, 4, 1, 'Fun Sports Cycles', 'Scott', 'casque_vtt_rouge.jpg'),
