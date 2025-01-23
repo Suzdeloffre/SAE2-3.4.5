@@ -14,8 +14,8 @@ from controllers.client_commande import *
 from controllers.client_commentaire import *
 from controllers.client_coordonnee import *
 
-from controllers.admin_article import *
-from controllers.admin_declinaison_article import *
+from controllers.admin_casque import *
+from controllers.admin_declinaison_casque import *
 from controllers.admin_commande import *
 from controllers.admin_type_article import *
 from controllers.admin_dataviz import *

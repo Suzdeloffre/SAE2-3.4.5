@@ -10,37 +10,37 @@ from flask import request, render_template, redirect, flash
 
 from connexion_db import get_db
 
-admin_article = Blueprint('admin_article', __name__,
+admin_casque = Blueprint('admin_casque', __name__,
                           template_folder='templates')
 
 
-@admin_article.route('/admin/article/show')
-def show_article():
+@admin_casque.route('/admin//show')
+def show_casque():
     mycursor = get_db().cursor()
     sql = '''  requête admin_article_1
     '''
     mycursor.execute(sql)
-    articles = mycursor.fetchall()
-    return render_template('admin/article/show_article.html', articles=articles)
+    casque = mycursor.fetchall()
+    return render_template('admin/casque/show_casque.html', casque=casque)
 
 
-@admin_article.route('/admin/article/add', methods=['GET'])
-def add_article():
+@admin_casque.route('/admin/casque/add', methods=['GET'])
+def add_casque():
     mycursor = get_db().cursor()
 
-    return render_template('admin/article/add_article.html'
-                           #,types_article=type_article,
+    return render_template('admin/casque/add_casque.html'
+                           #,types_casque=type_casque,
                            #,couleurs=colors
                            #,tailles=tailles
                             )
 
 
-@admin_article.route('/admin/article/add', methods=['POST'])
-def valid_add_article():
+@admin_casque.route('/admin/casque/add', methods=['POST'])
+def valid_add_casque():
     mycursor = get_db().cursor()
 
     nom = request.form.get('nom', '')
-    type_article_id = request.form.get('type_article_id', '')
+    type_casque_id = request.form.get('type_casque_id', '')
     prix = request.form.get('prix', '')
     description = request.form.get('description', '')
     image = request.files.get('image', '')
@@ -54,51 +54,51 @@ def valid_add_article():
 
     sql = '''  requête admin_article_2 '''
 
-    tuple_add = (nom, filename, prix, type_article_id, description)
+    tuple_add = (nom, filename, prix, type_casque_id, description)
     print(tuple_add)
     mycursor.execute(sql, tuple_add)
     get_db().commit()
 
-    print(u'article ajouté , nom: ', nom, ' - type_article:', type_article_id, ' - prix:', prix,
+    print(u'casque ajouté , nom: ', nom, ' - type_casque:', type_casque_id, ' - prix:', prix,
           ' - description:', description, ' - image:', image)
-    message = u'article ajouté , nom:' + nom + '- type_article:' + type_article_id + ' - prix:' + prix + ' - description:' + description + ' - image:' + str(
+    message = u'casque ajouté , nom:' + nom + '- type_casque:' + type_casque_id + ' - prix:' + prix + ' - description:' + description + ' - image:' + str(
         image)
     flash(message, 'alert-success')
-    return redirect('/admin/article/show')
+    return redirect('/admin/casque/show')
 
 
-@admin_article.route('/admin/article/delete', methods=['GET'])
-def delete_article():
-    id_article=request.args.get('id_article')
+@admin_casque.route('/admin/casque/delete', methods=['GET'])
+def delete_casque():
+    id_casque=request.args.get('id_casque')
     mycursor = get_db().cursor()
     sql = ''' requête admin_article_3 '''
-    mycursor.execute(sql, id_article)
+    mycursor.execute(sql, id_casque)
     nb_declinaison = mycursor.fetchone()
     if nb_declinaison['nb_declinaison'] > 0:
-        message= u'il y a des declinaisons dans cet article : vous ne pouvez pas le supprimer'
+        message= u'il y a des declinaisons dans ce casque : vous ne pouvez pas le supprimer'
         flash(message, 'alert-warning')
     else:
         sql = ''' requête admin_article_4 '''
-        mycursor.execute(sql, id_article)
-        article = mycursor.fetchone()
-        print(article)
-        image = article['image']
+        mycursor.execute(sql, id_casque)
+        casque = mycursor.fetchone()
+        print(casque)
+        image = casque['image']
 
         sql = ''' requête admin_article_5  '''
-        mycursor.execute(sql, id_article)
+        mycursor.execute(sql, id_casque)
         get_db().commit()
         if image != None:
             os.remove('static/images/' + image)
 
-        print("un article supprimé, id :", id_article)
-        message = u'un article supprimé, id : ' + id_article
+        print("un casque supprimé, id :", id_casque)
+        message = u'un casque supprimé, id : ' + id_casque
         flash(message, 'alert-success')
 
-    return redirect('/admin/article/show')
+    return redirect('/admin/casque/show')
 
 
-@admin_article.route('/admin/article/edit', methods=['GET'])
-def edit_article():
+@admin_article.route('/admin/casque/edit', methods=['GET'])
+def edit_casque():
     id_article=request.args.get('id_article')
     mycursor = get_db().cursor()
     sql = '''
@@ -119,7 +119,7 @@ def edit_article():
     # mycursor.execute(sql, id_article)
     # declinaisons_article = mycursor.fetchall()
 
-    return render_template('admin/article/edit_article.html'
+    return render_template('admin/casque/edit_article.html'
                            ,article=article
                            ,types_article=types_article
                          #  ,declinaisons_article=declinaisons_article
@@ -172,7 +172,7 @@ def admin_avis(id):
     mycursor = get_db().cursor()
     article=[]
     commentaires = {}
-    return render_template('admin/article/show_avis.html'
+    return render_template('admin/casque/show_avis.html'
                            , article=article
                            , commentaires=commentaires
                            )
