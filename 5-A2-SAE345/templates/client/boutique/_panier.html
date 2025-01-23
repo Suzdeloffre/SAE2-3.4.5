@@ -21,7 +21,7 @@
                             </td>
                             <td>{{item_panier.quantite}}</td>
                             <td>{{item_panier.prix}}</td>
-                            <td>{{ "{:,.2f} €".format((item_panier.prix * item_panier.quantite)) }}{#{(panier.article.prix * panier.quantite)|number_format(2) }#}</td>
+                            <td>{{ "{:,.2f} €".format((item_panier.prix * item_panier.quantite)) }}{#{(panier.casque.prix * panier.quantite)|number_format(2) }#}</td>
                             <td>
 {# #}                            {% if item_panier.stock is defined %}
 {# #}                               {% if item_panier.stock > 0 %}

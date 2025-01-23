@@ -18,7 +18,7 @@ def add_declinaison_casque():
     tailles=None
     d_taille_uniq=None
     d_couleur_uniq=None
-    return render_template('admin/casque/add_declinaison_article.html'
+    return render_template('admin/casque/add_declinaison_casque.html'
                            , casque=casque
                            , couleurs=couleurs
                            , tailles=tailles

@@ -28,7 +28,7 @@ def client_casque_details():
     commandes_casque=[]
     nb_commentaires=[]
     if casque is None:
-        abort(404, "pb id article")
+        abort(404, "pb id casque")
     # sql = '''
     #
     # '''

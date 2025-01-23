@@ -119,10 +119,10 @@ def edit_casque():
     # mycursor.execute(sql, id_casque)
     # declinaisons_casque = mycursor.fetchall()
 
-    return render_template('admin/casque/edit_article.html'
-                           ,casque=casque
-                           ,types_casque=types_casque
-                         #  ,declinaisons_casque=declinaisons_casque
+    return render_template('admin/casque/edit_casque.html'
+                           , casque=casque
+                           , types_casque=types_casque
+                           #  ,declinaisons_casque=declinaisons_casque
                            )
 
 

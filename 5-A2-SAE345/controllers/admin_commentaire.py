@@ -19,7 +19,7 @@ def admin_article_details():
     casque = []
     sql = '''   requête admin_type_article_1_3   '''
     nb_commentaires = []
-    return render_template('admin/article/show_article_commentaires.html'
+    return render_template('admin/casque/show_casque_commentaires.html'
                            , commentaires=commentaires
                            , casque=casque
                            , nb_commentaires=nb_commentaires

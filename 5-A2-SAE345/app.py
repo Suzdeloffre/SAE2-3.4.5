@@ -39,7 +39,7 @@ def show_accueil():
         if session['role'] == 'ROLE_admin':
             return redirect('/admin/commande/index')
         else:
-            return redirect('/client/article/show')
+            return redirect('/client/casque/show')
     return render_template('auth/layout.html')
 
 ##################

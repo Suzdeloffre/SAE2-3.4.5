@@ -30,11 +30,11 @@ def client_panier_add():
     # else:
     #     sql = '''   '''
     #     mycursor.execute(sql, (id_casque))
-    #     article = mycursor.fetchone()
+    #     casquecasque = mycursor.fetchone()
     #     return render_template('client/boutique/declinaison_casque.html'
     #                                , declinaisons=declinaisons
     #                                , quantite=quantite
-    #                                , article=article)
+    #                                , casquecasque=casquecasque)
 
 # ajout dans le panier d'un casque
 
@@ -52,11 +52,11 @@ def client_panier_delete():
     # partie 2 : on supprime une déclinaison du casque
     # id_declinaison_casque = request.form.get('id_declinaison_casque', None)
 
-    sql = ''' selection de la ligne du panier pour l'article et l'utilisateur connecté'''
+    sql = ''' selection de la ligne du panier pour le casque et l'utilisateur connecté'''
     casque_panier=[]
 
     if not(casque_panier is None) and casque_panier['quantite'] > 1:
-        sql = ''' mise à jour de la quantité dans le panier => -1 article '''
+        sql = ''' mise à jour de la quantité dans le panier => -1 casque '''
     else:
         sql = ''' suppression de la ligne de panier'''
 
@@ -75,9 +75,9 @@ def client_panier_vider():
     sql = ''' sélection des lignes de panier'''
     items_panier = []
     for item in items_panier:
-        sql = ''' suppression de la ligne de panier de l'article pour l'utilisateur connecté'''
+        sql = ''' suppression de la ligne de panier de le casque pour l'utilisateur connecté'''
 
-        sql2=''' mise à jour du stock de l'article : stock = stock + qté de la ligne pour l'article'''
+        sql2=''' mise à jour du stock de le casque : stock = stock + qté de la ligne pour le casque'''
         get_db().commit()
     return redirect('/client/casque/show')
 
@@ -91,7 +91,7 @@ def client_panier_delete_line():
     sql = ''' selection de ligne du panier '''
 
     sql = ''' suppression de la ligne du panier '''
-    sql2=''' mise à jour du stock de l'article : stock = stock + qté de la ligne pour l'article'''
+    sql2=''' mise à jour du stock du casque: stock = stock + qté de la ligne pour le casque'''
 
     get_db().commit()
     return redirect('/client/casque/show')
