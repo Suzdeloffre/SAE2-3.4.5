@@ -1,12 +1,13 @@
-DROP TABLE IF EXISTS utilisateur;
+
 DROP TABLE IF EXISTS casque;
 DROP TABLE IF EXISTS type_casque;
 DROP TABLE IF EXISTS taille;
-DROP TABLE IF EXISTS etat;
+
 DROP TABLE IF EXISTS commande;
 DROP TABLE IF EXISTS ligne_commande;
-DROP TABLE IF EXISTS est_de;
 DROP TABLE IF EXISTS ligne_panier;
+DROP TABLE IF EXISTS etat;
+DROP TABLE IF EXISTS utilisateur;
 
 
 CREATE TABLE utilisateur(
@@ -24,6 +25,11 @@ CREATE TABLE utilisateur(
     PRIMARY KEY (id_utilisateur)
     )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE taille(
+    id_taille INT AUTO_INCREMENT,
+    libelle_taille VARCHAR(200),
+    PRIMARY KEY (id_taille)
+);
 
 CREATE TABLE etat(
    id_etat INT AUTO_INCREMENT,
@@ -31,7 +37,27 @@ CREATE TABLE etat(
    PRIMARY KEY(id_etat)
 );
 
+CREATE TABLE type_casque(
+    id_type_casque INT AUTO_INCREMENT,
+    libelle_type_casque VARCHAR(200),
+    PRIMARY KEY (id_type_casque)
+);
 
+CREATE TABLE casque(
+    id_casque INT AUTO_INCREMENT,
+    nom_casque VARCHAR(200),
+    poids NUMERIC(6,2),
+    couleur VARCHAR(200),
+    prix_casque NUMERIC(6,2),
+    taille_id INT,
+    type_casque_id INT,
+    fournisseur VARCHAR(200),
+    marque VARCHAR(200),
+    image VARCHAR(200),
+    PRIMARY KEY (id_casque),
+    CONSTRAINT fk_casque_taille FOREIGN KEY (taille_id) REFERENCES taille(id_taille),
+    CONSTRAINT fk_casque_type_epoque FOREIGN KEY (type_casque_id) REFERENCES type_casque(id_type_casque)
+);
 CREATE TABLE commande(
    id_commande INT AUTO_INCREMENT,
    date_achat VARCHAR(200),
@@ -66,36 +92,10 @@ CREATE TABLE ligne_panier(
 );
 
 
-CREATE TABLE taille(
-    id_taille INT AUTO_INCREMENT,
-    libelle_taille VARCHAR(200),
-    PRIMARY KEY (id_taille)
-);
-
-
-CREATE TABLE type_casque(
-    id_type_casque INT AUTO_INCREMENT,
-    libelle_type_casque VARCHAR(200),
-    PRIMARY KEY (id_type_casque)
-);
 
 
 
-CREATE TABLE casque(
-    id_casque INT AUTO_INCREMENT,
-    nom_casque VARCHAR(200),
-    poids NUMERIC(6,2),
-    couleur VARCHAR(200),
-    prix_casque NUMERIC(6,2),
-    taille_id INT,
-    type_casque_id INT,
-    fournisseur VARCHAR(200),
-    marque VARCHAR(200),
-    image VARCHAR(200),
-    PRIMARY KEY (id_casque),
-    CONSTRAINT fk_casque_taille FOREIGN KEY (taille_id) REFERENCES taille(id_taille),
-    CONSTRAINT fk_casque_type_epoque FOREIGN KEY (type_casque_id) REFERENCES type_casque(id_type_casque)
-);
+
 
 
 INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) VALUES
@@ -153,7 +153,7 @@ INSERT INTO casque (id_casque, nom_casque, poids, couleur, prix_casque, taille_i
 (NULL, 'Casque militaire léger', 1200,'Marron', 149.90, 4, 5, 'Boutique Militaire', '', 'casque_militaire_marron_jpeg'),
 (NULL, 'Casque moto vintage avec visière', 1300,'Jaune', 109.00, 2, 6, 'Outlet Moto', 'Premier', 'casque_moto_avec_visiere_jaune.jpg'),
 (NULL, 'Casque Airoh Commander Boost', 1400,'Rouge', 469.99, 1, 6, 'Speedway', 'Airoh', 'casque_moto_avec_visiere_rouge.jpeg'),
-(NULL, 'ZHEN Flip-Up', 1560,'Rose', 142.95, 2, 6, 'Amazon', 'ZHEN', 'casque_moto_avec_visere_rose.jpeg'),
+(NULL, 'ZHEN Flip-Up', 1560,'Rose', 142.95, 2, 6, 'Amazon', 'ZHEN', 'casque_moto_avec_visere_rose.jpg'),
 (NULL, 'Westt Vintage Casque Moto sans visière blanc', 1050,'Blanc', 62.95, 5, 7, 'Amazon', 'Westt', 'casque_moto_sans_visere_blanc.jpg'),
 (NULL, 'Casque TEEN visor', 1300,'Gris', 59.99, 4, 7, 'Diezz', 'TEEN', 'casque_moto_sans_visiere_gris.jpeg'),
 (NULL, 'Casque Arctik sans visière', 960, 'Noir', 129.90, 2, 7, 'Diezz Sport', 'Diezz', 'casque_mot_sans_visiere_noir.png');
@@ -173,8 +173,7 @@ INSERT INTO commande (id_commande, date_achat, id_utilisateur, id_etat) VALUES
 (NULL, '28-02-2004', 3, 4);
 
 
-INSERT INTO ligne_commande (id_commande, id_casque, prix, quantite) VALUES
-(NULL, 1, )
+
 
 
 #Affiche tous les casques
