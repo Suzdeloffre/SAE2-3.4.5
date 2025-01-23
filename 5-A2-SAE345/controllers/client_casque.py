@@ -20,7 +20,8 @@ def client_casque_show():                                 # remplace client_inde
     condition_and = ""
     # utilisation du filtre
     sql3=''' prise en compte des commentaires et des notes dans le SQL    '''
-    casques =[]
+    mycursor.execute(sql)
+    casques =mycursor.fetchall()
 
 
     # pour le filtre
