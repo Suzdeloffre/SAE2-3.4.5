@@ -20,7 +20,7 @@ def client_panier_add():
     id_declinaison_casque = 1
 
 # ajout dans le panier d'une déclinaison d'un casque (si 1 declinaison : immédiat sinon => vu pour faire un choix
-    sql = '''   SELECT * FROM ligne_panier WHERE casque_id = %s AND utilisateur_id = %s '''
+    sql = '''   SELECT * FROM ligne_panier WHERE id_casque = %s AND id_utilisateur = %s '''
     mycursor.execute(sql, (id_casque, id_client))
     casque_panier = mycursor.fetchone()
 
