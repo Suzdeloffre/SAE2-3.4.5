@@ -89,7 +89,7 @@ CREATE TABLE ligne_panier(
    id_casque INT,
    quantite INT,
    date_ajout DATE,
-   PRIMARY KEY(id_utilisateur, id_casque),
+   PRIMARY KEY(id_utilisateur, id_casque, date_ajout),
    FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur),
    FOREIGN KEY(id_casque) REFERENCES casque(id_casque)
 );
