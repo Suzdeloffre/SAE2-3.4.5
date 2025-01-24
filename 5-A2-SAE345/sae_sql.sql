@@ -191,6 +191,15 @@ INSERT INTO ligne_commande(id_commande, id_casque, prix, quantite) VALUES
 (4, 20, 59.99, 1),
 (4, 21, 129.90, 1);
 
+INSERT INTO ligne_panier(id_utilisateur, id_casque, quantite, date_ajout) VALUES
+(1, 1, 1, '2023-12-02'),
+(1, 2, 1, '2022-06-24'),
+(1, 5, 1, '2022-11-15'),
+(1, 10, 1, '2024-01-24'),,
+(1, 15, 1, '2021-11-24'),
+(1, 19, 1, '2019-05-20'),
+(1, 21, 1, '2020-11-24');
+
 
 
 
