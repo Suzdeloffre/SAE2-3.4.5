@@ -23,7 +23,7 @@ types_article : tableau de dictionnaires
             <img class="card-img-top rounded mx-4 d-block"  style="width:200px; height:200px; border: 1px solid black; padding: 25px;"   id="img_output" src="{{ url_for('static', filename = 'images/') }}{{ article.image}}"  alt="image  de {{ article.nom }}" >
         {% endif %}
             <div class="w-25">
-                <form class="w-190" method="post" action="/admin/article/edit" enctype="multipart/form-data">
+                <form class="w-190" method="post" action="/admin/casque/edit" enctype="multipart/form-data">
                     <input type="hidden" value="{{ article.id_article }}" name="id_article">
                     <label for="nom">Nom :
                         <input name="nom" type="text" value="{{ article.nom }}" class="form-control">
@@ -49,7 +49,7 @@ types_article : tableau de dictionnaires
                     <button class="btn btn-primary mt-2">
                                 Modifier
                     </button>
-                    <a class="btn btn-secondary mt-2" href="/admin/article/show"  role="button">retour</a>
+                    <a class="btn btn-secondary mt-2" href="/admin/casque/show" role="button">retour</a>
                 </form>
 
                 <div class="container-fluid " style="width: 1000px;">

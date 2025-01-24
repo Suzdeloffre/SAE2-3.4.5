@@ -9,7 +9,7 @@ admin_commentaire = Blueprint('admin_commentaire', __name__,
                         template_folder='templates')
 
 
-@admin_commentaire.route('/admin/article/commentaires', methods=['GET'])
+@admin_commentaire.route('/admin/casque/commentaires', methods=['GET'])
 def admin_article_details():
     mycursor = get_db().cursor()
     id_casque =  request.args.get('id_casque', None)

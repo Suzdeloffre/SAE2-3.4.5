@@ -10,7 +10,7 @@
             <div class="col-5 bg-light p-3">
         <h3>répondre à un commentaire</h3>
             </div>
-                 <form  action="/admin/article/commentaires/repondre"  style="display: inline-block;"  method="post" >
+                 <form action="/admin/casque/commentaires/repondre" style="display: inline-block;" method="post" >
                       <input type="hidden" name="id_article" value="{{ id_article }}">
                       <input type="hidden" name="id_utilisateur" value="{{ id_utilisateur }}">
                       <input type="hidden" name="date_publication" value="{{ date_publication }}">
@@ -21,7 +21,7 @@
                       <button class="btn btn-primary mt-4 mb-4" href="/admin/article/commentaires/repondre"> répondre </button>
                  </form>
 
-        <a class="btn btn-outline-primary btn-lg" href="/admin/article/show">Retour vers la page d'accueil</a>
+        <a class="btn btn-outline-primary btn-lg" href="/admin/casque/show">Retour vers la page d'accueil</a>
     </div>
 
 {% endblock %}

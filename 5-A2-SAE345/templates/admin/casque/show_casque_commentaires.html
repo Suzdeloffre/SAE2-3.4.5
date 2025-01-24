@@ -50,14 +50,14 @@
                             {{ commentaire.commentaire }}
                         </td>
                         <td>
-                                  <form  action="/admin/article/commentaires/delete"  style="display: inline-block;"  method="post" >
+                                  <form action="/admin/casque/commentaires/delete" style="display: inline-block;" method="post" >
                                       <input type="hidden" name="id_article" value="{{ commentaire.id_article }}">
                                       <input type="hidden" name="id_utilisateur" value="{{ commentaire.id_utilisateur }}">
                                       <input type="hidden" name="date_publication" value="{{ commentaire.date_publication }}">
                                       <button class="btn btn-primary" > supprimer </button>
                                   </form>
                             {% if commentaire.utilisateur_id != session['id_user'] %}
-                                  <form  action="/admin/article/commentaires/repondre"  style="display: inline-block;"  method="GET" >
+                                  <form action="/admin/casque/commentaires/repondre" style="display: inline-block;" method="GET" >
                                       <input type="hidden" name="id_article" value="{{ commentaire.id_article }}">
                                       <input type="hidden" name="id_utilisateur" value="{{ commentaire.id_utilisateur }}">
                                       <input type="hidden" name="date_publication" value="{{ commentaire.date_publication }}">
@@ -73,7 +73,7 @@
             </tbody>
         </table>
        <a class="btn btn-primary m-4 col-2" href="/admin/article/commentaires/valider?id_article={{ article.id_article }}">valider les commenaires</a>
-       <a class="btn btn-outline-primary btn-lg" href="/admin/article/show">Retour vers la page d'accueil</a>
+       <a class="btn btn-outline-primary btn-lg" href="/admin/casque/show">Retour vers la page d'accueil</a>
     </div>
 
 {% endblock %}
