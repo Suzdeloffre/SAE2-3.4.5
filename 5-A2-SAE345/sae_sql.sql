@@ -143,7 +143,7 @@ INSERT INTO casque (id_casque, nom_casque, poids, couleur, prix_casque, taille_i
 (NULL, 'Casque AirBikeBlue', 1050, 'Bleu', 89.99, 1, 1, 'Holland Bikes', 'Lazer Sphere',5, 'casque_vtt_bleu.jpg'),
 (NULL, 'Casque VTT SCOTT Supra', 270,'Rouge', 49.90, 4, 1, 'Fun Sports Cycles', 'Scott',6, 'casque_vtt_rouge.jpg'),
 (NULL, 'Casque AirBreaker', 200, 'Noir', 199.95, 4, 2, 'Material-velo', 'Abus',4,'casque_velo_route_noir.jpg'),
-(NULL, 'Casque de Cyclisme Contre-le-montre', 410,'Blanc', 350.00, 4, 2, 'Motus',3, 'Met', 'casque_velo_route_blanc.jpg'),
+(NULL, 'Casque de Cyclisme Contre-le-montre', 410,'Blanc', 350.00, 4, 2, 'Motus', 'Met',2, 'casque_velo_route_blanc.jpg'),
 (NULL, 'Casque Vélo Climbert', 250,'Rose', 129.00, 6, 2, 'Bjorka', 'Bjorka', 2,  'casque_velo_route_rose.jpeg'),
 (NULL, 'Casque Changrutier', 1000, 'Jaune', 6.99, 5, 3, 'Austral Horizon', 'EPI-Equipements',1,  'casque_chantier_jaune.jpg'),
 (NULL, 'Casque protection tête', 317, 'Bleu', 4.95, 7, 3, 'Charles Service',  'EP_Equipements',1, 'casque_chantier_bleu.jpeg'),
