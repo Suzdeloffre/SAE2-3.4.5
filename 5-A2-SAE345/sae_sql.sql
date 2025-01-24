@@ -55,6 +55,7 @@ CREATE TABLE casque(
     type_casque_id INT,
     fournisseur VARCHAR(200),
     marque VARCHAR(200),
+    stock INT,
     image VARCHAR(200),
     PRIMARY KEY (id_casque),
     CONSTRAINT fk_casque_taille FOREIGN KEY (taille_id) REFERENCES taille(id_taille),
@@ -137,28 +138,28 @@ INSERT INTO type_casque (id_type_casque, libelle_type_casque) VALUES
 (NULL, 'Casque de moto sans visière');
 
 
-INSERT INTO casque (id_casque, nom_casque, poids, couleur, prix_casque, taille_id, type_casque_id, fournisseur, marque, image) VALUES
-(NULL, 'Casque Integral Kenny Downhill', 730, 'Vert', 90.00, 7, 1, 'Sarenne Sports Boutique', 'Kenny', 'casque_vtt_vert.jpeg'),
-(NULL, 'Casque AirBikeBlue', 1050, 'Bleu', 89.99, 1, 1, 'Holland Bikes', 'Lazer Sphere', 'casque_vtt_bleu.jpg'),
-(NULL, 'Casque VTT SCOTT Supra', 270,'Rouge', 49.90, 4, 1, 'Fun Sports Cycles', 'Scott', 'casque_vtt_rouge.jpg'),
-(NULL, 'Casque AirBreaker', 200, 'Noir', 199.95, 4, 2, 'Material-velo', 'Abus', 'casque_velo_route_noir.jpg'),
-(NULL, 'Casque de Cyclisme Contre-le-montre', 410,'Blanc', 350.00, 4, 2, 'Motus', 'Met', 'casque_velo_route_blanc.jpg'),
-(NULL, 'Casque Vélo Climbert', 250,'Rose', 129.00, 6, 2, 'Bjorka', 'Bjorka', 'casque_velo_route_rose.jpeg'),
-(NULL, 'Casque Changrutier', 1000, 'Jaune', 6.99, 5, 3, 'Austral Horizon', 'EPI-Equipements', 'casque_chantier_jaune.jpg'),
-(NULL, 'Casque protection tête', 317, 'Bleu', 4.95, 7, 3, 'Charles Service', 'EP_Equipements', 'casque_chantier_bleu.jpeg'),
-(NULL, 'Casque de chantier en polyéthylène', 317,'Orange', 3.30, 7, 3, 'Krenobat', 'SINGER Safety', 'casque_chantier_orange.jpg'),
-(NULL, 'Casque Storm 2.0', 550,'Noir', 74.50, 6, 4, 'Monti Sport', 'Briko', 'casque_ski_noir.jpg'),
-(NULL, 'Casque de ski Sentinel$',530, 'Vert', 148.00, 5, 4, 'Ultra-fun', 'Vola Racing', 'casque_ski_vert.jpg'),
-(NULL, 'Bolle casque de ski synergy', 490,'Violet', 109.00, 6, 4, 'Easy-gliss', 'Bollé', 'casque_ski_violet.jpeg'),
-(NULL, 'Nvg Mount pour airsoft', 800, 'Noir', 107.28, 4, 5, 'Amazon', 'Avluz', 'casque_militaire_noir.jpg'),
-(NULL, 'Casque militaire Warhammer style M88', 570,'Vert', 37.90, 3, 5, 'Action Airsoft', 'AG-Tactical', 'casque_militaire_vert.jpeg'),
-(NULL, 'Casque militaire léger', 1200,'Marron', 149.90, 4, 5, 'Boutique Militaire', '', 'casque_militaire_marron_jpeg'),
-(NULL, 'Casque moto vintage avec visière', 1300,'Jaune', 109.00, 2, 6, 'Outlet Moto', 'Premier', 'casque_moto_avec_visiere_jaune.jpg'),
-(NULL, 'Casque Airoh Commander Boost', 1400,'Rouge', 469.99, 1, 6, 'Speedway', 'Airoh', 'casque_moto_avec_visiere_rouge.jpeg'),
-(NULL, 'ZHEN Flip-Up', 1560,'Rose', 142.95, 2, 6, 'Amazon', 'ZHEN', 'casque_moto_avec_visere_rose.jpg'),
-(NULL, 'Westt Vintage Casque Moto sans visière blanc', 1050,'Blanc', 62.95, 5, 7, 'Amazon', 'Westt', 'casque_moto_sans_visere_blanc.jpg'),
-(NULL, 'Casque TEEN visor', 1300,'Gris', 59.99, 4, 7, 'Diezz', 'TEEN', 'casque_moto_sans_visiere_gris.jpeg'),
-(NULL, 'Casque Arctik sans visière', 960, 'Noir', 129.90, 2, 7, 'Diezz Sport', 'Diezz', 'casque_mot_sans_visiere_noir.png');
+INSERT INTO casque (id_casque, nom_casque, poids, couleur, prix_casque, taille_id, type_casque_id, fournisseur, marque, stock, image) VALUES
+(NULL, 'Casque Integral Kenny Downhill', 730, 'Vert', 90.00, 7, 1, 'Sarenne Sports Boutique', 'Kenny', 1, 'casque_vtt_vert.jpeg'),
+(NULL, 'Casque AirBikeBlue', 1050, 'Bleu', 89.99, 1, 1, 'Holland Bikes', 'Lazer Sphere',5, 'casque_vtt_bleu.jpg'),
+(NULL, 'Casque VTT SCOTT Supra', 270,'Rouge', 49.90, 4, 1, 'Fun Sports Cycles', 'Scott',6, 'casque_vtt_rouge.jpg'),
+(NULL, 'Casque AirBreaker', 200, 'Noir', 199.95, 4, 2, 'Material-velo', 'Abus',4,'casque_velo_route_noir.jpg'),
+(NULL, 'Casque de Cyclisme Contre-le-montre', 410,'Blanc', 350.00, 4, 2, 'Motus',3, 'Met', 'casque_velo_route_blanc.jpg'),
+(NULL, 'Casque Vélo Climbert', 250,'Rose', 129.00, 6, 2, 'Bjorka', 'Bjorka', 2,  'casque_velo_route_rose.jpeg'),
+(NULL, 'Casque Changrutier', 1000, 'Jaune', 6.99, 5, 3, 'Austral Horizon', 'EPI-Equipements',1,  'casque_chantier_jaune.jpg'),
+(NULL, 'Casque protection tête', 317, 'Bleu', 4.95, 7, 3, 'Charles Service',  'EP_Equipements',1, 'casque_chantier_bleu.jpeg'),
+(NULL, 'Casque de chantier en polyéthylène', 317,'Orange', 3.30, 7, 3, 'Krenobat', 'SINGER Safety', 1, 'casque_chantier_orange.jpg'),
+(NULL, 'Casque Storm 2.0', 550,'Noir', 74.50, 6, 4, 'Monti Sport', 'Briko', 2, 'casque_ski_noir.jpg'),
+(NULL, 'Casque de ski Sentinel$',530, 'Vert', 148.00, 5, 4, 'Ultra-fun', 'Vola Racing', 2, 'casque_ski_vert.jpg'),
+(NULL, 'Bolle casque de ski synergy', 490,'Violet', 109.00, 6, 4, 'Easy-gliss', 'Bollé',5,  'casque_ski_violet.jpeg'),
+(NULL, 'Nvg Mount pour airsoft', 800, 'Noir', 107.28, 4, 5, 'Amazon', 'Avluz',3,  'casque_militaire_noir.jpg'),
+(NULL, 'Casque militaire Warhammer style M88', 570,'Vert', 37.90, 3, 5, 'Action Airsoft', 'AG-Tactical',4,  'casque_militaire_vert.jpeg'),
+(NULL, 'Casque militaire léger', 1200,'Marron', 149.90, 4, 5, 'Boutique Militaire', '',5, 'casque_militaire_marron_jpeg'),
+(NULL, 'Casque moto vintage avec visière', 1300,'Jaune', 109.00, 2, 6, 'Outlet Moto', 'Premier',3, 'casque_moto_avec_visiere_jaune.jpg'),
+(NULL, 'Casque Airoh Commander Boost', 1400,'Rouge', 469.99, 1, 6, 'Speedway', 'Airoh',4, 'casque_moto_avec_visiere_rouge.jpeg'),
+(NULL, 'ZHEN Flip-Up', 1560,'Rose', 142.95, 2, 6, 'Amazon', 'ZHEN', 5,'casque_moto_avec_visere_rose.jpg'),
+(NULL, 'Westt Vintage Casque Moto sans visière blanc', 1050,'Blanc', 62.95, 5, 7, 'Amazon', 'Westt', 1,'casque_moto_sans_visere_blanc.jpg'),
+(NULL, 'Casque TEEN visor', 1300,'Gris', 59.99, 4, 7, 'Diezz', 'TEEN', 2, 'casque_moto_sans_visiere_gris.jpeg'),
+(NULL, 'Casque Arctik sans visière', 960, 'Noir', 129.90, 2, 7, 'Diezz Sport', 'Diezz', 3,'casque_mot_sans_visiere_noir.png');
 
 
 INSERT INTO etat (id_etat, libelle) VALUES

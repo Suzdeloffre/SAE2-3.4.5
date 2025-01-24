@@ -16,6 +16,7 @@ def client_casque_show():                                 # remplace client_inde
     id_client = session['id_user']
 
     sql = '''   SELECT * FROM casque   '''
+    #faire le filtre
     list_param = []
     condition_and = ""
     # utilisation du filtre
