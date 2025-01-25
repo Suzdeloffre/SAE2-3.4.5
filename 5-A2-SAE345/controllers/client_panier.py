@@ -20,7 +20,7 @@ def client_panier_add():
     id_declinaison_casque = 1
 
 # ajout dans le panier d'une déclinaison d'un casque (si 1 declinaison : immédiat sinon => vu pour faire un choix
-    sql = '''   SELECT * FROM ligne_panier WHERE id_casque = %s AND id_utilisateur = %s '''
+    sql = '''   SELECT * FROM ligne_panier WHERE casque_id = %s AND utilisateur_id = %s '''
     mycursor.execute(sql, (id_casque, id_client))
     casque_panier = mycursor.fetchone()
 
@@ -28,7 +28,7 @@ def client_panier_add():
     casques = mycursor.fetchone()
     if (casque_panier is None )and casques['stock'] > 1:
         tuple_update = (quantite, id_casque, id_client)
-        sql = ''' UPDATE ligne_panier SET quantite = %s WHERE casque_id = %s AND utilisateur_id = %s '''
+        sql = ''' UPDATE ligne_panier SET quantite = %s WHERE casque_id = %s AND utilisateur_id = %s  '''
         mycursor.execute(sql, tuple_update)
     else:
         tuple_insert = (id_casque, id_client, quantite)
