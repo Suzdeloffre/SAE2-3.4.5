@@ -14,14 +14,14 @@ admin_casque = Blueprint('admin_casque', __name__,
                           template_folder='templates')
 
 
-@admin_casque.route('/admin//show')
+@admin_casque.route('/admin/casque/show')
 def show_casque():
     mycursor = get_db().cursor()
-    sql = '''  requête admin_article_1
-    '''
+    sql = '''  SELECT * FROM casque'''
+
     mycursor.execute(sql)
     casque = mycursor.fetchall()
-    return render_template('admin/casque/show_casque.html', casque=casque)
+    return render_template('admin/casque/show_casque.html', casques=casque)
 
 
 @admin_casque.route('/admin/casque/add', methods=['GET'])
