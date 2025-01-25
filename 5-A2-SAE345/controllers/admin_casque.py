@@ -52,7 +52,7 @@ def valid_add_casque():
         print("erreur")
         filename=None
 
-    sql = '''  requête admin_article_2 '''
+    sql = '''  requête admin_casque_2 '''
 
     tuple_add = (nom, filename, prix, type_casque_id, description)
     print(tuple_add)
@@ -71,20 +71,20 @@ def valid_add_casque():
 def delete_casque():
     id_casque=request.args.get('id_casque')
     mycursor = get_db().cursor()
-    sql = ''' requête admin_article_3 '''
+    sql = ''' requête admin_casque_3 '''
     mycursor.execute(sql, id_casque)
     nb_declinaison = mycursor.fetchone()
     if nb_declinaison['nb_declinaison'] > 0:
         message= u'il y a des declinaisons dans ce casque : vous ne pouvez pas le supprimer'
         flash(message, 'alert-warning')
     else:
-        sql = ''' requête admin_article_4 '''
+        sql = ''' requête admin_casque_4 '''
         mycursor.execute(sql, id_casque)
         casque = mycursor.fetchone()
         print(casque)
         image = casque['image']
 
-        sql = ''' requête admin_article_5  '''
+        sql = ''' requête admin_casque_5  '''
         mycursor.execute(sql, id_casque)
         get_db().commit()
         if image != None:
@@ -102,19 +102,19 @@ def edit_casque():
     id_casque=request.args.get('id_casque')
     mycursor = get_db().cursor()
     sql = '''
-    requête admin_article_6    
+    requête admin_casque_6    
     '''
     mycursor.execute(sql, id_casque)
     casque = mycursor.fetchone()
     print(casque)
     sql = '''
-    requête admin_article_7
+    requête admin_casque_7
     '''
     mycursor.execute(sql)
     types_casque = mycursor.fetchall()
 
     # sql = '''
-    # requête admin_article_6
+    # requête admin_casque_6
     # '''
     # mycursor.execute(sql, id_casque)
     # declinaisons_casque = mycursor.fetchall()
@@ -136,7 +136,7 @@ def valid_edit_casque():
     prix = request.form.get('prix', '')
     description = request.form.get('description')
     sql = '''
-       requête admin_article_8
+       requête admin_casque_8
        '''
     mycursor.execute(sql, id_casque)
     image_nom = mycursor.fetchone()
@@ -151,7 +151,7 @@ def valid_edit_casque():
             image.save(os.path.join('static/images/', filename))
             image_nom = filename
 
-    sql = '''  requête admin_article_9 '''
+    sql = '''  requête admin_casque_9 '''
     mycursor.execute(sql, (nom, image_nom, prix, type_casque_id, description, id_casque))
 
     get_db().commit()

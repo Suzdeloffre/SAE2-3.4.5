@@ -31,7 +31,7 @@ def valid_add_type_casque():
     get_db().commit()
     message = u'type ajouté , libellé :'+libelle
     flash(message, 'alert-success')
-    return redirect('/admin/type-casque/show') #url_for('show_type_article')
+    return redirect('/admin/type-casque/show') #url_for('show_type_casque')
 
 @admin_type_casque.route('/admin/type-casque/delete', methods=['GET'])
 def delete_type_casque():

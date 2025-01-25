@@ -1,7 +1,7 @@
 {% extends 'admin/layout_admin.html' %}
 
 {% block title %}
-    <title>ajouter un type d'article</title>
+    <title>ajouter un type d'casque</title>
 {% endblock %}
 
 {% block body %}
@@ -9,12 +9,12 @@
   {% if error %}
     <p class=error><strong>Error:</strong> {{ error }}
   {% endif %}
-  <form method="post" action="/admin/type-article/add" {#action="{{ url_for('valid_add_type_article') }}#}>
+  <form method="post" action="/admin/type-casque/add" {#action="{{ url_for('valid_add_type_casque') }}#}>
     <fieldset>
-        <legend> Créer un type d'article</legend>
+        <legend> Créer un type d'casque</legend>
 <div class="mb-3">
         <label class="form-label" for="libelle">libellé</label><br>
-        <input  class="form-select" id="libelle" type="text" name="libelle" size="18" value="" placeholder="Saisir le libelle du type de l'article"><br>
+        <input  class="form-select" id="libelle" type="text" name="libelle" size="18" value="" placeholder="Saisir le libelle du type de l'casque"><br>
 </div>
         <div class="col-12">
         <button class="btn btn-primary" type="submit">Valider</button>

@@ -14,7 +14,7 @@ client_commentaire = Blueprint('client_commentaire', __name__,
 @client_commentaire.route('/client/casque/details', methods=['GET'])
 def client_casque_details():
     mycursor = get_db().cursor()
-    id_article =  request.args.get('id_article', None)
+    id_casque =  request.args.get('id_casque', None)
     id_client = session['id_user']
 
     ## partie 4
@@ -22,7 +22,7 @@ def client_casque_details():
 
     sql = '''
     '''
-    #mycursor.execute(sql, id_article)
+    #mycursor.execute(sql, id_casque)
     #casque = mycursor.fetchone()
     casque=[]
     commandes_casque=[]
@@ -32,11 +32,11 @@ def client_casque_details():
     # sql = '''
     #
     # '''
-    # mycursor.execute(sql, ( id_article))
+    # mycursor.execute(sql, ( id_casque))
     # commentaires = mycursor.fetchall()
     # sql = '''
     # '''
-    # mycursor.execute(sql, (id_client, id_article))
+    # mycursor.execute(sql, (id_client, id_casque))
     # commandes_casque = mycursor.fetchone()
     # sql = '''
     # '''
@@ -88,7 +88,7 @@ def client_comment_detete():
     tuple_delete=(id_client,id_casque,date_publication)
     mycursor.execute(sql, tuple_delete)
     get_db().commit()
-    return redirect('/client/casque/details?id_article='+id_casque)
+    return redirect('/client/casque/details?id_casque='+id_casque)
 
 @client_commentaire.route('/client/note/add', methods=['POST'])
 def client_note_add():

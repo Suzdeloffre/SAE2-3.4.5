@@ -16,7 +16,7 @@ def client_panier_add():
     id_casque = request.form.get('id_casque')
     quantite = request.form.get('quantite')
     # ---------
-    #id_declinaison_article=request.form.get('id_declinaison_casque',None)
+    #id_declinaison_casque=request.form.get('id_declinaison_casque',None)
     id_declinaison_casque = 1
 
 # ajout dans le panier d'une déclinaison d'un casque (si 1 declinaison : immédiat sinon => vu pour faire un choix

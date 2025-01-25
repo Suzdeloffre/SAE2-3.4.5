@@ -10,14 +10,14 @@ admin_commentaire = Blueprint('admin_commentaire', __name__,
 
 
 @admin_commentaire.route('/admin/casque/commentaires', methods=['GET'])
-def admin_article_details():
+def admin_casque_details():
     mycursor = get_db().cursor()
     id_casque =  request.args.get('id_casque', None)
-    sql = '''    requête admin_type_article_1    '''
+    sql = '''    requête admin_type_casque_1    '''
     commentaires = {}
-    sql = '''   requête admin_type_article_1_bis   '''
+    sql = '''   requête admin_type_casque_1_bis   '''
     casque = []
-    sql = '''   requête admin_type_article_1_3   '''
+    sql = '''   requête admin_type_casque_1_3   '''
     nb_commentaires = []
     return render_template('admin/casque/show_casque_commentaires.html'
                            , commentaires=commentaires
@@ -31,7 +31,7 @@ def admin_comment_delete():
     id_utilisateur = request.form.get('id_utilisateur', None)
     id_casque = request.form.get('id_casque', None)
     date_publication = request.form.get('date_publication', None)
-    sql = '''    requête admin_type_article_2   '''
+    sql = '''    requête admin_type_casque_2   '''
     tuple_delete=(id_utilisateur,id_casque,date_publication)
     get_db().commit()
     return redirect('/admin/casque/commentaires?id_casque='+id_casque)
@@ -50,7 +50,7 @@ def admin_comment_add():
     id_casque = request.form.get('id_casque', None)
     date_publication = request.form.get('date_publication', None)
     commentaire = request.form.get('commentaire', None)
-    sql = '''    requête admin_type_article_3   '''
+    sql = '''    requête admin_type_casque_3   '''
     get_db().commit()
     return redirect('/admin/casque/commentaires?id_casque='+id_casque)
 
@@ -59,6 +59,6 @@ def admin_comment_add():
 def admin_comment_valider():
     id_casque = request.args.get('id_casque', None)
     mycursor = get_db().cursor()
-    sql = '''   requête admin_type_article_4   '''
+    sql = '''   requête admin_type_casque_4   '''
     get_db().commit()
     return redirect('/admin/casque/commentaires?id_casque='+id_casque)

@@ -55,7 +55,7 @@ def client_historique_add(casque_id, client_id):
 @client_liste_envies.route('/client/envies/down', methods=['get'])
 @client_liste_envies.route('/client/envies/last', methods=['get'])
 @client_liste_envies.route('/client/envies/first', methods=['get'])
-def client_liste_envies_article_move():
+def client_liste_envies_casque_move():
     mycursor = get_db().cursor()
     id_client = session['id_user']
     id_casque = request.args.get('id_casque')

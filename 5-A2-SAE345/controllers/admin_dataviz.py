@@ -17,7 +17,7 @@ def show_type_casque_stock():
     # mycursor.execute(sql)
     # datas_show = mycursor.fetchall()
     # labels = [str(row['libelle']) for row in datas_show]
-    # values = [int(row['nbr_articles']) for row in datas_show]
+    # values = [int(row['nbr_casques']) for row in datas_show]
 
     # sql = '''
     #         

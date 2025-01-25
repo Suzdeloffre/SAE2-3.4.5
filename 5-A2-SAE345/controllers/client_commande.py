@@ -14,7 +14,7 @@ client_commande = Blueprint('client_commande', __name__,
 def client_commande_valide():
     mycursor = get_db().cursor()
     id_client = session['id_user']
-    sql = ''' selection des articles d'un panier 
+    sql = ''' selection des casques d'un panier 
     '''
     casque_panier = []
     if len(casque_panier) >= 1:
@@ -42,7 +42,7 @@ def client_commande_add():
     sql = ''' selection du contenu du panier de l'utilisateur '''
     items_ligne_panier = []
     # if items_ligne_panier is None or len(items_ligne_panier) < 1:
-    #     flash(u'Pas d\'articles dans le ligne_panier', 'alert-warning')
+    #     flash(u'Pas d\'casques dans le ligne_panier', 'alert-warning')
     #     return redirect('/client/casque/show')
                                            # https://pynative.com/python-mysql-transaction-management-using-commit-rollback/
     #a = datetime.strptime('my date', "%b %d %Y %H:%M")
