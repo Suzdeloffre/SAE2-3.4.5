@@ -73,9 +73,9 @@ casques (tableau de dictionnaires)
                   </td>
                   <td>{{ ligne.image }}
                         {%  if ligne.image is not none %}
-                            <img style="width:40px;height:40px"  src="{{ url_for('static', filename = 'images/' + ligne['image']) }}"  alt="image  de {{ ligne.nom }}" >
+                            <img style="width:40px;height:40px"  src="{{ url_for('static', filename = 'images-casque/' + ligne['image']) }}"  alt="image  de {{ ligne.nom }}" >
                         {% else %}
-                            <img style="width:40px;height:40px"   src="{{ url_for('static', filename='images/no_photo.jpeg')}}"  alt="pas d image" >
+                            <img style="width:40px;height:40px"   src="{{ url_for('static', filename='images-casque/no_photo.jpeg')}}"  alt="pas d image" >
                         {% endif %}
                   </td>
                   <td>
