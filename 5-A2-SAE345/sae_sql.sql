@@ -64,34 +64,34 @@ CREATE TABLE casque(
 CREATE TABLE commande(
    id_commande INT AUTO_INCREMENT,
    date_achat VARCHAR(200),
-   id_utilisateur INT NOT NULL,
-   id_etat INT NOT NULL,
+   utilisateur_id INT NOT NULL,
+   etat_id INT NOT NULL,
    PRIMARY KEY(id_commande),
-   FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur),
-   FOREIGN KEY(id_etat) REFERENCES etat(id_etat)
+   FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur),
+   FOREIGN KEY(etat_id) REFERENCES etat(id_etat)
 );
 
 
 CREATE TABLE ligne_commande(
-   id_commande INT,
-   id_casque INT,
+   commande_id INT,
+   casque_id INT,
    prix NUMERIC(6,2),
    quantite INT,
-   PRIMARY KEY(id_commande, id_casque),
-   FOREIGN KEY(id_commande) REFERENCES commande(id_commande),
-   FOREIGN KEY(id_casque) REFERENCES casque(id_casque)
+   PRIMARY KEY(commande_id, casque_id),
+   FOREIGN KEY(commande_id) REFERENCES commande(id_commande),
+   FOREIGN KEY(casque_id) REFERENCES casque(id_casque)
 );
 
 
 
 CREATE TABLE ligne_panier(
-   id_utilisateur INT,
-   id_casque INT,
+   utilisateur_id INT,
+   casque_id INT,
    quantite INT,
    date_ajout DATE,
-   PRIMARY KEY(id_utilisateur, id_casque, date_ajout),
-   FOREIGN KEY(id_utilisateur) REFERENCES utilisateur(id_utilisateur),
-   FOREIGN KEY(id_casque) REFERENCES casque(id_casque)
+   PRIMARY KEY(utilisateur_id, casque_id, date_ajout),
+   FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur),
+   FOREIGN KEY(casque_id) REFERENCES casque(id_casque)
 );
 
 INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) VALUES
@@ -159,13 +159,13 @@ INSERT INTO etat (id_etat, libelle) VALUES
 (NULL, 'confirmé');
 
 
-INSERT INTO commande (id_commande, date_achat, id_utilisateur, id_etat) VALUES
+INSERT INTO commande (id_commande, date_achat, utilisateur_id,etat_id) VALUES
 (NULL, '10-01-2006', 1, 1),
 (NULL, '26-09-2007', 3, 2),
 (NULL, '24-11-2021', 2, 3),
 (NULL, '28-02-2004', 3, 4);
 
-INSERT INTO ligne_commande(id_commande, id_casque, prix, quantite) VALUES
+INSERT INTO ligne_commande(commande_id,casque_id, prix, quantite) VALUES
 (1, 1, 90.00, 1),
 (1, 2, 89.99, 1),
 (2, 3, 49.90, 1),
@@ -179,7 +179,7 @@ INSERT INTO ligne_commande(id_commande, id_casque, prix, quantite) VALUES
 (4, 15, 109.00, 1),
 (4, 17, 59.99, 1);
 
-INSERT INTO ligne_panier(id_utilisateur, id_casque, quantite, date_ajout) VALUES
+INSERT INTO ligne_panier(utilisateur_id, casque_id, quantite, date_ajout)VALUES
 (1, 1, 1, '2023-12-02'),
 (1, 2, 1, '2022-06-24'),
 (1, 3, 1, '2022-06-24'),
