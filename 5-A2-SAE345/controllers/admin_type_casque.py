@@ -11,10 +11,10 @@ admin_type_casque = Blueprint('admin_type_casque', __name__,
 @admin_type_casque.route('/admin/type-casque/show')
 def show_type_casque():
     mycursor = get_db().cursor()
-    # sql = '''         '''
-    # mycursor.execute(sql)
-    # types_casque = mycursor.fetchall()
-    types_casque=[]
+    sql = '''     SELECT * FROM type_casque'''
+    mycursor.execute(sql)
+    types_casque = mycursor.fetchall()
+    #types_casque=[]
     return render_template('admin/type_casque/show_type_casque.html', types_casque=types_casque)
 
 @admin_type_casque.route('/admin/type-casque/add', methods=['GET'])
