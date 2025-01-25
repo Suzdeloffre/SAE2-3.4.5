@@ -94,13 +94,6 @@ CREATE TABLE ligne_panier(
    FOREIGN KEY(id_casque) REFERENCES casque(id_casque)
 );
 
-
-
-
-
-
-
-
 INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) VALUES
 (1,'admin','admin@admin.fr',
     'pbkdf2:sha256:1000000$eQDrpqICHZ9eaRTn$446552ca50b5b3c248db2dde6deac950711c03c5d4863fe2bd9cef31d5f11988',
@@ -156,10 +149,6 @@ INSERT INTO casque (id_casque, nom_casque, poids, couleur, prix_casque, taille_i
 (NULL, 'Casque moto vintage avec visière', 1300,'Jaune', 109.00, 2, 6, 'Outlet Moto', 'Premier',3, 'casque_moto_avec_visiere_jaune.jpg'),
 (NULL, 'Casque Airoh Commander Boost', 1400,'Rouge', 469.99, 1, 6, 'Speedway', 'Airoh',4, 'casque_moto_avec_visiere_rouge.jpeg'),
 (NULL, 'Casque TEEN visor', 1300,'Gris', 59.99, 4, 7, 'Diezz', 'TEEN', 2, 'casque_moto_sans_visiere_gris.jpeg');
-#(NULL, 'Casque Arctik sans visière', 960, 'Noir', 129.90, 2, 7, 'Diezz Sport', 'Diezz', 3,'casque_mot_sans_visiere_noir.png'),
-#(NULL, 'ZHEN Flip-Up', 1560,'Rose', 142.95, 2, 6, 'Amazon', 'ZHEN', 5,'casque_moto_avec_visere_rose.jpg'),
-#(NULL, 'Westt Vintage Casque Moto sans visière blanc', 1050,'Blanc', 62.95, 5, 7, 'Amazon', 'Westt', 1,'casque_moto_sans_visere_blanc.jpg'),
-#(NULL, 'Casque militaire léger', 1200,'Marron', 149.90, 4, 5, 'Boutique Militaire', '',5, 'casque_militaire_marron_jpeg'),
 
 
 
@@ -187,20 +176,20 @@ INSERT INTO ligne_commande(id_commande, id_casque, prix, quantite) VALUES
 (4, 8, 4.95, 1),
 (4, 9, 3.30, 1),
 (4, 10, 74.50, 1),
-(4, 18, 142.95, 1),
-(4, 19, 62.95, 1),
-(4, 20, 59.99, 1),
-(4, 21, 129.90, 1);
+(4, 15, 109.00, 1),
+(4, 17, 59.99, 1);
 
 INSERT INTO ligne_panier(id_utilisateur, id_casque, quantite, date_ajout) VALUES
 (1, 1, 1, '2023-12-02'),
 (1, 2, 1, '2022-06-24'),
-(1, 5, 1, '2022-11-15'),
-(1, 10, 1, '2024-01-24'),
-
-(1, 15, 1, '2021-11-24'),
-(1, 19, 1, '2019-05-20'),
-(1, 21, 1, '2020-11-24');
+(1, 3, 1, '2022-06-24'),
+(1, 4, 1, '2022-06-24'),
+(1, 6, 1, '2022-06-24'),
+(1, 8, 1, '2022-06-24'),
+(1, 14, 1, '2022-06-24'),
+(1, 15, 1, '2022-06-24'),
+(1, 16, 1, '2022-06-24'),
+(1, 17, 1, '2022-06-24');
 
 
 

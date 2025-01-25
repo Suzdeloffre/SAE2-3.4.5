@@ -67,8 +67,8 @@
                                  {% else %}
                                     <small class="text-muted">Casque  momentanément indisponible</small>
                                  {% endif %}
-                                {% if casque.nb_declinaison is defined and casque.nb_declinaison != None %}
-                                    ({{ casque.nb_declinaison }} d.)
+                                {% if casque.taille_id is defined and casque.taille_id != None %}
+                                    ({{ casque.taille_id }} d.)
                                 {% endif %}
                                 <br>
                             {% endif %}
