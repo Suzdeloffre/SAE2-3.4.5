@@ -26,7 +26,10 @@ def client_casque_show():                                 # remplace client_inde
 
 
     # pour le filtre
-    types_casque = []
+    sql = '''   SELECT * FROM  type_casque  '''
+    mycursor.execute(sql)
+    types_casque = mycursor.fetchall()
+    #types_casque = []
 
 
     casques_panier = []
