@@ -63,7 +63,7 @@ CREATE TABLE casque(
 );
 CREATE TABLE commande(
    id_commande INT AUTO_INCREMENT,
-   date_achat VARCHAR(200),
+   date_achat DATE,
    utilisateur_id INT NOT NULL,
    etat_id INT NOT NULL,
    PRIMARY KEY(id_commande),
@@ -160,10 +160,10 @@ INSERT INTO etat (id_etat, libelle) VALUES
 
 
 INSERT INTO commande (id_commande, date_achat, utilisateur_id,etat_id) VALUES
-(NULL, '10-01-2006', 1, 1),
-(NULL, '26-09-2007', 3, 2),
-(NULL, '24-11-2021', 2, 3),
-(NULL, '28-02-2004', 3, 4);
+(NULL, '2006-01-10', 1, 1),
+(NULL, '2007-09-26', 3, 2),
+(NULL, '2021-11-24', 2, 3),
+(NULL, '2004-02-28', 3, 4);
 
 INSERT INTO ligne_commande(commande_id,casque_id, prix, quantite) VALUES
 (1, 1, 90.00, 1),
@@ -172,11 +172,11 @@ INSERT INTO ligne_commande(commande_id,casque_id, prix, quantite) VALUES
 (2, 4, 199.95, 1),
 (3, 5, 350.00, 1),
 (3, 6, 129.00, 1),
-(4, 7, 6.99, 1),
+(4, 7, 20.97, 3),
 (4, 8, 4.95, 1),
 (4, 9, 3.30, 1),
 (4, 10, 74.50, 1),
-(4, 15, 109.00, 1),
+(4, 15, 218.00, 2),
 (4, 17, 59.99, 1);
 
 INSERT INTO ligne_panier(utilisateur_id, casque_id, quantite, date_ajout)VALUES

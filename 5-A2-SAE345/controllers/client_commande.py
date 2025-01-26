@@ -66,15 +66,30 @@ def client_commande_add():
 def client_commande_show():
     mycursor = get_db().cursor()
     id_client = session['id_user']
-    sql = '''  selection des commandes ordonnées par état puis par date d'achat descendant '''
-    commandes = []
+    sql = '''   SELECT commande.id_commande,
+                        commande.date_achat, 
+                        etat.libelle,
+                        SUM(ligne_commande.prix) AS prix_total, 
+                        SUM(ligne_commande.quantite) AS nbr_casques FROM commande
+                JOIN ligne_commande ON commande.id_commande = ligne_commande.commande_id
+                JOIN utilisateur ON utilisateur.id_utilisateur = commande.utilisateur_id
+                JOIN etat ON commande.etat_id = etat.id_etat
+                WHERE utilisateur.id_utilisateur = %s
+                GROUP BY commande.id_commande, date_achat, etat.libelle
+                ORDER BY libelle, date_achat'''
+    mycursor.execute(sql, (id_client))
+    commandes = mycursor.fetchall()
 
     casque_commande = None
     commande_adresses = None
     id_commande = request.args.get('id_commande', None)
     if id_commande != None:
         print(id_commande)
-        sql = ''' selection du détails d'une commande '''
+        sql = ''' SELECT casque.nom_casque, ligne_commande.quantite, prix_casque AS prix, prix AS prix_ligne FROM ligne_commande
+                    JOIN casque ON ligne_commande.casque_id = casque.id_casque
+                    WHERE commande_id = %s'''
+        mycursor.execute(sql, (id_commande))
+        casque_commande = mycursor.fetchall()
 
         # partie 2 : selection de l'adresse de livraison et de facturation de la commande selectionnée
         sql = ''' selection des adressses '''
