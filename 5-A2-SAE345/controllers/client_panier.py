@@ -92,23 +92,22 @@ def client_panier_delete():
     get_db().commit()
     return redirect('/client/casque/show')
 
-
-
-
-
 @client_panier.route('/client/panier/vider', methods=['POST'])
 def client_panier_vider():
     mycursor = get_db().cursor()
     client_id = session['id_user']
-    sql = ''' sélection des lignes de panier'''
-    items_panier = []
+    sql = ''' SELECT * FROM ligne_panier WHERE utilisateur_id = %s '''
+    mycursor.execute(sql, (client_id))
+    items_panier = mycursor.fetchall()
     for item in items_panier:
-        sql = ''' suppression de la ligne de panier de le casque pour l'utilisateur connecté'''
+        sql = ''' DELETE FROM ligne_panier WHERE casque_id = %s AND utilisateur_id = %s '''
+        mycursor.execute(sql, (item["casque_id"], client_id))
 
-        sql2=''' mise à jour du stock de le casque : stock = stock + qté de la ligne pour le casque'''
+        sql2 = ''' UPDATE casque SET stock = stock+%s WHERE id_casque = %s '''
+        mycursor.execute(sql2, (item["quantite"], item["casque_id"]))
+
         get_db().commit()
     return redirect('/client/casque/show')
-
 
 @client_panier.route('/client/panier/delete/line', methods=['POST'])
 def client_panier_delete_line():
@@ -129,7 +128,6 @@ def client_panier_delete_line():
 
     get_db().commit()
     return redirect('/client/casque/show')
-
 
 @client_panier.route('/client/panier/filtre', methods=['POST'])
 def client_panier_filtre():
