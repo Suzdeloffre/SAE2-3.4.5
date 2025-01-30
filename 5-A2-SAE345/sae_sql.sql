@@ -35,7 +35,6 @@ CREATE TABLE adresse(
     adresse VARCHAR(200),
     code_postal INT,
     ville VARCHAR(200),
-    pays VARCHAR(200),
     primary key (id_adresse),
     FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
 );
@@ -123,10 +122,10 @@ INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) 
     'ROLE_client','client2','1');
 
 
-INSERT INTO adresse(id_adresse, utilisateur_id, adresse, code_postal, ville, pays) VALUES
-(NULL, 1, '1 rue de la paix', 75000, 'Paris', 'France'),
-(NULL, 2, '2 rue de la liberté', 69000, 'Lyon', 'France'),
-(NULL, 3, '3 rue de la fraternité', 13000, 'Marseille', 'France');
+INSERT INTO adresse(id_adresse, utilisateur_id, adresse, code_postal, ville) VALUES
+(NULL, 1, '1 rue de la paix', 75000, 'Paris'),
+(NULL, 2, '2 rue de la liberté', 69000, 'Lyon'),
+(NULL, 3, '3 rue de la fraternité', 13000, 'Marseille');
 
 
 INSERT INTO taille (id_taille, libelle_taille) VALUES

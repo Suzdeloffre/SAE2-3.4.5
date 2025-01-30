@@ -35,10 +35,6 @@ def admin_commande_show():
     id_commande = request.args.get('id_commande', None)
     print(id_commande)
 
-
-
-
-
     if id_commande != None:
         sql = '''   SELECT casque.nom_casque as nom, casque.couleur, lc.prix, lc.quantite, commande.date_achat, u.login
                           FROM ligne_commande lc
@@ -64,13 +60,13 @@ def admin_commande_show():
                     group by adresse, code_postal, ville, pays, u.login
                     '''
         mycursor.execute(sql, id_commande)
-        commande_adresses = mycursor.fetchall()
+        commande_adresse = mycursor.fetchall()
         get_db().commit()
 
     return render_template('admin/commandes/show.html'
                            , commandes=commande
                            , casques_commande=casque_commande
-                           , commande_adresses=commande_adresses
+                           , commande_adresses=commande_adresse
                            )
 
 
