@@ -26,7 +26,7 @@ def client_panier_add():
 
     mycursor.execute(''' SELECT * FROM casque WHERE id_casque = %s ''', (id_casque))
     casques = mycursor.fetchone()
-    if (casque_panier is None )and casques['stock'] >= 1:
+    if not (casque_panier is None )and casques['stock'] >= 1:
         tuple_update = (quantite, id_casque, id_client)
         sql = ''' UPDATE ligne_panier SET quantite = quantite+%s WHERE casque_id = %s AND utilisateur_id = %s  '''
         mycursor.execute(sql, tuple_update)
