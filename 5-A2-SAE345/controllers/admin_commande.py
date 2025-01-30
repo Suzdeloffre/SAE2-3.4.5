@@ -32,6 +32,9 @@ def admin_commande_show():
     mycursor.execute(sql)
     commande= mycursor.fetchall()
 
+    id_commande = request.args.get('id_commande', None)
+    print(id_commande)
+
     sql = '''   SELECT casque.nom_casque as nom, casque.couleur, lc.prix, lc.quantite, commande.date_achat, u.login
                    FROM ligne_commande lc
                    inner join commande
@@ -42,12 +45,12 @@ def admin_commande_show():
                    join casque  on lc.casque_id = casque.id_casque
                    group by u.login
                    '''
-    mycursor.execute(sql)
+    mycursor.execute(sql, id_commande)
     casque_commande = mycursor.fetchall()
 
+
     commande_adresses = None
-    id_commande = request.args.get('id_commande', None)
-    print(id_commande)
+
     if id_commande != None:
         sql = '''  '''
         commande_adresses =mycursor.fetchall()

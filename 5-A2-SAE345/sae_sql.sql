@@ -45,6 +45,8 @@ CREATE TABLE type_casque(
     PRIMARY KEY (id_type_casque)
 );
 
+
+
 CREATE TABLE casque(
     id_casque INT AUTO_INCREMENT,
     nom_casque VARCHAR(200),
