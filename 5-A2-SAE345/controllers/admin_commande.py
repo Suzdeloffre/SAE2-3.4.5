@@ -26,24 +26,35 @@ def admin_commande_show():
                 on commande.etat_id = etat.id_etat
                 inner join utilisateur u 
                 on commande.utilisateur_id = u.id_utilisateur
-                group by login, date_achat, etat.libelle
+                group by date_achat, u.login, etat.libelle
                 order by date_achat desc
                 '''
     mycursor.execute(sql)
-    commandes= mycursor.fetchall()
+    commande= mycursor.fetchall()
 
+    sql = '''   SELECT casque.nom_casque as nom, casque.couleur, lc.prix, lc.quantite, commande.date_achat, u.login
+                   FROM ligne_commande lc
+                   inner join commande
+                   on commande.id_commande = lc.commande_id
+                   inner join utilisateur u 
+                   on commande.utilisateur_id = u.id_utilisateur
+                   inner join casque 
+                   join casque  on lc.casque_id = casque.id_casque
+                   group by u.login
+                   '''
+    mycursor.execute(sql)
+    casque_commande = mycursor.fetchall()
 
-
-    casque_commande = None
     commande_adresses = None
     id_commande = request.args.get('id_commande', None)
     print(id_commande)
     if id_commande != None:
-        sql = '''    '''
-        commande_adresses = []
+        sql = '''  '''
+        commande_adresses =mycursor.fetchall()
+
     return render_template('admin/commandes/show.html'
-                           , commandes=commandes
-                           , casque_commande=casque_commande
+                           , commandes=commande
+                           , casques_commande=casque_commande
                            , commande_adresses=commande_adresses
                            )
 
