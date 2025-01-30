@@ -31,7 +31,7 @@ def client_casque_show():                                 # remplace client_inde
     types_casque = mycursor.fetchall()
     #types_casque = []
 
-    sql = '''   SELECT casque.prix_casque AS prix, quantite, casque.nom_casque AS nom FROM ligne_panier 
+    sql = '''   SELECT id_casque, casque.prix_casque AS prix, quantite, casque.nom_casque AS nom, casque.stock FROM ligne_panier 
                 JOIN casque ON ligne_panier.casque_id = casque.id_casque
                 WHERE utilisateur_id = %s '''
     mycursor.execute(sql, id_client)

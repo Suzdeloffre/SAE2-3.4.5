@@ -30,10 +30,15 @@ def client_panier_add():
         tuple_update = (quantite, id_casque, id_client)
         sql = ''' UPDATE ligne_panier SET quantite = quantite+%s WHERE casque_id = %s AND utilisateur_id = %s  '''
         mycursor.execute(sql, tuple_update)
+        sql = ''' UPDATE casque SET stock = stock-%s WHERE id_casque = %s '''
+        mycursor.execute(sql, (quantite, id_casque))
     else:
-        tuple_insert = (id_casque, id_client, quantite)
-        sql = ''' INSERT INTO ligne_panier (casque_id, utilisateur_id, quantite, date_ajout) VALUES (%s, %s, %s, current_timestamp) '''
-        mycursor.execute(sql, tuple_insert)
+        if casques['stock'] >= 1:
+            tuple_insert = (id_casque, id_client, quantite)
+            sql = ''' INSERT INTO ligne_panier (casque_id, utilisateur_id, quantite, date_ajout) VALUES (%s, %s, %s, current_timestamp) '''
+            mycursor.execute(sql, tuple_insert)
+            sql = ''' UPDATE casque SET stock = stock-%s WHERE id_casque = %s '''
+            mycursor.execute(sql, (quantite, id_casque))
 
     get_db().commit()
 
@@ -67,13 +72,21 @@ def client_panier_delete():
     # partie 2 : on supprime une déclinaison du casque
     # id_declinaison_casque = request.form.get('id_declinaison_casque', None)
 
-    sql = ''' selection de la ligne du panier pour le casque et l'utilisateur connecté'''
-    casque_panier=[]
+    sql = ''' SELECT * FROM ligne_panier WHERE casque_id = %s AND utilisateur_id = %s '''
+    mycursor.execute(sql, (id_casque, id_client))
+    casque_panier = mycursor.fetchone()
 
     if not(casque_panier is None) and casque_panier['quantite'] > 1:
-        sql = ''' mise à jour de la quantité dans le panier => -1 casque '''
+        tuple_update = (id_casque, id_client)
+        sql = ''' UPDATE ligne_panier SET quantite = quantite-1 WHERE casque_id = %s AND utilisateur_id = %s  '''
+        mycursor.execute(sql, tuple_update)
+        sql = ''' UPDATE casque SET stock = stock+1 WHERE id_casque = %s '''
+        mycursor.execute(sql, (id_casque))
     else:
-        sql = ''' suppression de la ligne de panier'''
+        sql = ''' DELETE FROM ligne_panier WHERE casque_id = %s AND utilisateur_id = %s '''
+        mycursor.execute(sql, (id_casque, id_client))
+        sql = ''' UPDATE casque SET stock = stock+1 WHERE id_casque = %s '''
+        mycursor.execute(sql, (id_casque))
 
     # mise à jour du stock du casque disponible
     get_db().commit()
@@ -101,12 +114,18 @@ def client_panier_vider():
 def client_panier_delete_line():
     mycursor = get_db().cursor()
     id_client = session['id_user']
+    id_casque = request.form.get('id_casque')
     #id_declinaison_casque = request.form.get('id_declinaison_casque')
 
-    sql = ''' selection de ligne du panier '''
+    sql = ''' SELECT quantite FROM ligne_panier WHERE casque_id = %s AND utilisateur_id = %s '''
+    mycursor.execute(sql, (id_casque, id_client))
+    quantite = mycursor.fetchone()["quantite"]
 
-    sql = ''' suppression de la ligne du panier '''
-    sql2=''' mise à jour du stock du casque: stock = stock + qté de la ligne pour le casque'''
+    sql = ''' DELETE FROM ligne_panier WHERE casque_id = %s AND utilisateur_id = %s '''
+    mycursor.execute(sql, (id_casque, id_client))
+    get_db().commit()
+    sql2= ''' UPDATE casque SET stock = stock+%s WHERE id_casque = %s '''
+    mycursor.execute(sql2, (quantite, id_casque))
 
     get_db().commit()
     return redirect('/client/casque/show')
