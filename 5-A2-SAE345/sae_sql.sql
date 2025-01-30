@@ -45,7 +45,16 @@ CREATE TABLE type_casque(
     PRIMARY KEY (id_type_casque)
 );
 
-
+CREATE TABLE adresse(
+    id_adresse INT AUTO_INCREMENT,
+    utilisateur_id INT,
+    adresse VARCHAR(200),
+    code_postal INT,
+    ville VARCHAR(200),
+    pays VARCHAR(200),
+    primary key (id_adresse),
+    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
+);
 
 CREATE TABLE casque(
     id_casque INT AUTO_INCREMENT,
