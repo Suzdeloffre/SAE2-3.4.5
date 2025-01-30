@@ -42,8 +42,8 @@ def admin_commande_show():
                    inner join utilisateur u 
                    on commande.utilisateur_id = u.id_utilisateur
                    inner join casque 
-                   join casque  on lc.casque_id = casque.id_casque
-                   group by u.login
+                   on lc.casque_id = casque.id_casque
+                   group by u.login, casque.nom_casque, casque.couleur, lc.prix, lc.quantite, commande.date_achat
                    '''
     mycursor.execute(sql, id_commande)
     casque_commande = mycursor.fetchall()
