@@ -5,11 +5,13 @@ DROP TABLE IF EXISTS casque;
 DROP TABLE IF EXISTS taille;
 DROP TABLE IF EXISTS etat;
 DROP TABLE IF EXISTS type_casque;
+DROP TABLE IF EXISTS adresse;
 
 
 
 
 DROP TABLE IF EXISTS utilisateur;
+
 
 
 CREATE TABLE utilisateur(
@@ -26,6 +28,17 @@ CREATE TABLE utilisateur(
 
     PRIMARY KEY (id_utilisateur)
     )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE adresse(
+    id_adresse INT AUTO_INCREMENT,
+    utilisateur_id INT,
+    adresse VARCHAR(200),
+    code_postal INT,
+    ville VARCHAR(200),
+    pays VARCHAR(200),
+    primary key (id_adresse),
+    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
+);
 
 CREATE TABLE taille(
     id_taille INT AUTO_INCREMENT,
@@ -44,6 +57,8 @@ CREATE TABLE type_casque(
     libelle_type_casque VARCHAR(200),
     PRIMARY KEY (id_type_casque)
 );
+
+
 
 CREATE TABLE casque(
     id_casque INT AUTO_INCREMENT,
@@ -65,10 +80,12 @@ CREATE TABLE commande(
    id_commande INT AUTO_INCREMENT,
    date_achat DATE,
    utilisateur_id INT NOT NULL,
+   adresse_id INT,
    etat_id INT NOT NULL,
    PRIMARY KEY(id_commande),
    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur),
-   FOREIGN KEY(etat_id) REFERENCES etat(id_etat)
+   FOREIGN KEY(etat_id) REFERENCES etat(id_etat),
+   FOREIGN KEY (adresse_id) REFERENCES adresse(id_adresse)
 );
 
 
@@ -106,7 +123,10 @@ INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) 
     'ROLE_client','client2','1');
 
 
-
+INSERT INTO adresse(id_adresse, utilisateur_id, adresse, code_postal, ville, pays) VALUES
+(NULL, 1, '1 rue de la paix', 75000, 'Paris', 'France'),
+(NULL, 2, '2 rue de la liberté', 69000, 'Lyon', 'France'),
+(NULL, 3, '3 rue de la fraternité', 13000, 'Marseille', 'France');
 
 
 INSERT INTO taille (id_taille, libelle_taille) VALUES
