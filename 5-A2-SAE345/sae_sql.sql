@@ -5,11 +5,13 @@ DROP TABLE IF EXISTS casque;
 DROP TABLE IF EXISTS taille;
 DROP TABLE IF EXISTS etat;
 DROP TABLE IF EXISTS type_casque;
+DROP TABLE IF EXISTS adresse;
 
 
 
 
 DROP TABLE IF EXISTS utilisateur;
+
 
 
 CREATE TABLE utilisateur(
@@ -26,6 +28,17 @@ CREATE TABLE utilisateur(
 
     PRIMARY KEY (id_utilisateur)
     )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE adresse(
+    id_adresse INT AUTO_INCREMENT,
+    utilisateur_id INT,
+    adresse VARCHAR(200),
+    code_postal INT,
+    ville VARCHAR(200),
+    pays VARCHAR(200),
+    primary key (id_adresse),
+    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
+);
 
 CREATE TABLE taille(
     id_taille INT AUTO_INCREMENT,
@@ -45,16 +58,7 @@ CREATE TABLE type_casque(
     PRIMARY KEY (id_type_casque)
 );
 
-CREATE TABLE adresse(
-    id_adresse INT AUTO_INCREMENT,
-    utilisateur_id INT,
-    adresse VARCHAR(200),
-    code_postal INT,
-    ville VARCHAR(200),
-    pays VARCHAR(200),
-    primary key (id_adresse),
-    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
-);
+
 
 CREATE TABLE casque(
     id_casque INT AUTO_INCREMENT,
