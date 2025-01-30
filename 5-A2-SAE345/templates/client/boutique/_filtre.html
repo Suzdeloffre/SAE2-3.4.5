@@ -3,10 +3,10 @@
         <input name="filter_word"  type="text" placeholder="Recherche" size="10" class="form-control"
                value="{% if session['filter_word'] %}{{ session['filter_word'] }}{% endif %}"  >
     </div>
-   {% if items_filtre is defined %}
+   {% if checked_type_casque is defined %}
     <div class="form-group">
         <h4>Types casques</h4>
-        {% for item_filtre in items_filtre %}
+        {% for item_filtre in checked_type_casque %}
         <input type="checkbox" name="filter_types" value="{{ item_filtre.id_type_casque }}"
                {% set id_item = item_filtre.id_type_casque | string %}
                {% if session['filter_types'] %}

@@ -14,21 +14,44 @@ client_casque = Blueprint('client_casque', __name__,
 def client_casque_show():                                 # remplace client_index
     mycursor = get_db().cursor()
     id_client = session['id_user']
+    recherche = request.form.get('filter_word','')
+    checked_list = request.form.getlist('filter_types')
+    prix_min = request.form.get('filter_prix_min','')
+    prix_max = request.form.get('filter_prix_max','')
 
-    sql = '''   SELECT * FROM casque   '''
-    #faire le filtre
-    list_param = []
-    condition_and = ""
-    # utilisation du filtre
-    sql3=''' prise en compte des commentaires et des notes dans le SQL    '''
+
+    if prix_min == "":
+        prix_min = 0
+    if prix_max == "":
+        sql = '''   SELECT MAX(prix_casque) AS filter_prix_max
+                    FROM casque;'''
+        mycursor.execute(sql)
+        prix_max = mycursor.fetchone()['filter_prix_max']
+
+    sql = '''   SELECT * FROM type_casque
+                ORDER BY id_type_casque;'''
     mycursor.execute(sql)
-    casques =mycursor.fetchall()
+    checked_type_casque = mycursor.fetchall()
 
 
-    # pour le filtre
-    sql = '''   SELECT * FROM  type_casque  '''
-    mycursor.execute(sql)
-    types_casque = mycursor.fetchall()
+    nom_recherche = "%" + recherche + "%"
+
+    if checked_list == []:
+        sql = '''   SELECT * FROM casque
+                    JOIN type_casque 
+                    ON casque.type_casque_id = type_casque.id_type_casque
+                    WHERE nom_casque LIKE %s AND (prix_casque >= %s AND prix_casque <= %s);'''
+        tuple_filter = (nom_recherche, prix_min, prix_max)
+        mycursor.execute(sql, tuple_filter)
+
+    else:
+        sql = '''   SELECT * FROM casque
+                    JOIN type_casque
+                    ON casque.type_casque_id = type_casque.id_type_casque
+                    WHERE (nom_casque LIKE %s) AND (type_casque_id IN %s) AND (prix_casque >= %s AND prix_casque <= %s);'''
+        tuple_filter = (nom_recherche, checked_list, prix_min, prix_max)
+        mycursor.execute(sql, tuple_filter)
+    casques = mycursor.fetchall()
     #types_casque = []
 
     sql = '''   SELECT id_casque, casque.prix_casque AS prix, quantite, casque.nom_casque AS nom, casque.stock FROM ligne_panier 
@@ -49,5 +72,7 @@ def client_casque_show():                                 # remplace client_inde
                            , casques=casques
                            , casques_panier=casques_panier
                            , prix_total=prix_total
-                           , items_filtre=types_casque
+                           , checked_type_casque = checked_type_casque
+                           , prix_max = prix_max
+                           , prix_min = prix_min
                            )
