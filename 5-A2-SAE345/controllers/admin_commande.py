@@ -48,12 +48,16 @@ def admin_commande_show():
     mycursor.execute(sql, id_commande)
     casque_commande = mycursor.fetchall()
 
-    sql=''' SELECT adresse, code_postal, ville, pays, u.login
+    sql = ''' SELECT adresse, code_postal, ville, pays, u.login
             FROM commande
             inner join adresse
             on adresse.id_adresse = commande.adresse_id
-    '''
-    commande_adresses = None
+            inner join utilisateur u
+            on adresse.utilisateur_id = u.id_utilisateur
+            group by adresse, code_postal, ville, pays, u.login
+            '''
+    mycursor.execute(sql, id_commande)
+    commande_adresses = mycursor.fetchall()
 
     if id_commande != None:
         sql = '''  '''
