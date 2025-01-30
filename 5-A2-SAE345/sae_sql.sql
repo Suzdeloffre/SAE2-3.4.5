@@ -80,10 +80,12 @@ CREATE TABLE commande(
    id_commande INT AUTO_INCREMENT,
    date_achat DATE,
    utilisateur_id INT NOT NULL,
+   adresse_id INT,
    etat_id INT NOT NULL,
    PRIMARY KEY(id_commande),
    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur),
-   FOREIGN KEY(etat_id) REFERENCES etat(id_etat)
+   FOREIGN KEY(etat_id) REFERENCES etat(id_etat),
+   FOREIGN KEY (adresse_id) REFERENCES adresse(id_adresse)
 );
 
 
