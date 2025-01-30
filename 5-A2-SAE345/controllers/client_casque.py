@@ -38,13 +38,16 @@ def client_casque_show():                                 # remplace client_inde
     casques_panier = mycursor.fetchall()
 
     if len(casques_panier) >= 1:
-        sql = ''' calcul du prix total du panier '''
-        prix_total = None
+        sql = '''   SELECT SUM(casque.prix_casque*quantite) AS prix_total FROM ligne_panier
+                    JOIN casque ON ligne_panier.casque_id = casque.id_casque
+                    WHERE utilisateur_id = %s '''
+        mycursor.execute(sql, id_client)
+        prix_total = mycursor.fetchone()["prix_total"]
     else:
         prix_total = None
     return render_template('client/boutique/panier_casque.html'
                            , casques=casques
                            , casques_panier=casques_panier
-                           #, prix_total=None
+                           , prix_total=prix_total
                            , items_filtre=types_casque
                            )
