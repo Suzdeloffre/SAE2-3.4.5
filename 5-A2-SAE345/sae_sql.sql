@@ -121,7 +121,10 @@ INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) 
     'ROLE_client','client2','1');
 
 
-
+INSERT INTO adresse(id_adresse, utilisateur_id, adresse, code_postal, ville, pays) VALUES
+(NULL, 1, '1 rue de la paix', 75000, 'Paris', 'France'),
+(NULL, 2, '2 rue de la liberté', 69000, 'Lyon', 'France'),
+(NULL, 3, '3 rue de la fraternité', 13000, 'Marseille', 'France');
 
 
 INSERT INTO taille (id_taille, libelle_taille) VALUES
