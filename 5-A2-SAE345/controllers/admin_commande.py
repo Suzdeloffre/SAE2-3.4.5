@@ -35,35 +35,37 @@ def admin_commande_show():
     id_commande = request.args.get('id_commande', None)
     print(id_commande)
 
-    sql = '''   SELECT casque.nom_casque as nom, casque.couleur, lc.prix, lc.quantite, commande.date_achat, u.login
-                   FROM ligne_commande lc
-                   inner join commande
-                   on commande.id_commande = lc.commande_id
-                   inner join utilisateur u 
-                   on commande.utilisateur_id = u.id_utilisateur
-                   inner join casque 
-                   on lc.casque_id = casque.id_casque
-                   WHERE commande.id_commande = %s
-                   group by u.login, casque.nom_casque, casque.couleur, lc.prix, lc.quantite, commande.date_achat
-                   '''
-    mycursor.execute(sql, ( id_commande))
-    casque_commande = mycursor.fetchall()
 
-    sql = ''' SELECT adresse, code_postal, ville, pays, u.login
-            FROM commande
-            inner join adresse
-            on adresse.id_adresse = commande.adresse_id
-            inner join utilisateur u
-            on adresse.utilisateur_id = u.id_utilisateur
-            WHERE commande.id_commande = %s
-            group by adresse, code_postal, ville, pays, u.login
-            '''
-    mycursor.execute(sql, (id_commande))
-    commande_adresses = mycursor.fetchall()
+
+
 
     if id_commande != None:
-        sql = '''  '''
-        commande_adresses =mycursor.fetchall()
+        sql = '''   SELECT casque.nom_casque as nom, casque.couleur, lc.prix, lc.quantite, commande.date_achat, u.login
+                          FROM ligne_commande lc
+                          inner join commande
+                          on commande.id_commande = lc.commande_id
+                          inner join utilisateur u 
+                          on commande.utilisateur_id = u.id_utilisateur
+                          inner join casque 
+                          on lc.casque_id = casque.id_casque
+                            WHERE commande.id_commande = %s
+                          group by u.login, casque.nom_casque, casque.couleur, lc.prix, lc.quantite, commande.date_achat
+                          '''
+        mycursor.execute(sql, id_commande)
+        casque_commande = mycursor.fetchall()
+
+        sql = ''' SELECT adresse, code_postal, ville, pays, u.login
+                    FROM commande
+                    inner join adresse
+                    on adresse.id_adresse = commande.adresse_id
+                    inner join utilisateur u
+                    on adresse.utilisateur_id = u.id_utilisateur
+                    WHERE commande.id_commande = %s
+                    group by adresse, code_postal, ville, pays, u.login
+                    '''
+        mycursor.execute(sql, id_commande)
+        commande_adresses = mycursor.fetchall()
+        get_db().commit()
 
     return render_template('admin/commandes/show.html'
                            , commandes=commande
