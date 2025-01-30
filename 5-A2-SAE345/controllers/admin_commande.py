@@ -50,14 +50,14 @@ def admin_commande_show():
         mycursor.execute(sql, id_commande)
         casque_commande = mycursor.fetchall()
 
-        sql = ''' SELECT adresse, code_postal, ville, pays, u.login
+        sql = ''' SELECT adresse, code_postal, ville, u.login
                     FROM commande
                     inner join adresse
                     on adresse.id_adresse = commande.adresse_id
                     inner join utilisateur u
                     on adresse.utilisateur_id = u.id_utilisateur
                     WHERE commande.id_commande = %s
-                    group by adresse, code_postal, ville, pays, u.login
+                    group by adresse, code_postal, ville, u.login
                     '''
         mycursor.execute(sql, id_commande)
         commande_adresse = mycursor.fetchall()
@@ -76,7 +76,13 @@ def admin_commande_valider():
     commande_id = request.form.get('id_commande', None)
     if commande_id != None:
         print(commande_id)
-        sql = '''           '''
+        sql = '''   UPDATE ligne_commande
+                    inner join commande
+                    on commande.id_commande = ligne_commande.commande_id   
+                    inner join etat
+                    on commande.etat_id = etat.id_etat
+                    SET etat_id = 3
+                    where ligne_commande.commande_id = %s'''
         mycursor.execute(sql, commande_id)
         get_db().commit()
     return redirect('/admin/commande/show')
