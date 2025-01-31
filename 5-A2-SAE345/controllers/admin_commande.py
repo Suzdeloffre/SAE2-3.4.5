@@ -74,6 +74,7 @@ def admin_commande_show():
 @admin_commande.route('/admin/commande/valider', methods=['get','post'])
 def admin_commande_valider():
     mycursor = get_db().cursor()
+
     commande_id = request.form.get('id_commande', None)
     if commande_id != None:
         print(commande_id)
