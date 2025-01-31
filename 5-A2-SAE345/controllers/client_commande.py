@@ -42,9 +42,9 @@ def client_commande_add():
     sql = ''' SELECT * FROM ligne_panier WHERE utilisateur_id = %s'''
     mycursor.execute(sql, id_client)
     items_ligne_panier = mycursor.fetchall()
-     if items_ligne_panier is None or len(items_ligne_panier) < 1:
+    if items_ligne_panier is None or len(items_ligne_panier) < 1:
         flash(u'Pas d\'casques dans le ligne_panier', 'alert-warning')
-         return redirect('/client/casque/show')
+        return redirect('/client/casque/show')
                                            # https://pynative.com/python-mysql-transaction-management-using-commit-rollback/
     date_commande = datetime.now().strptime('my date', "%b %d %Y %H:%M")
     tuple_insert = (date_commande, id_client, '1')
