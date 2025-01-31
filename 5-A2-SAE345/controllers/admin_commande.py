@@ -18,7 +18,7 @@ def admin_index():
 def admin_commande_show():
     mycursor = get_db().cursor()
     admin_id = session['id_user']
-    sql = '''   SELECT u.login,date_achat, COUNT(casque_id) as nb_casque, SUM(prix) as prix_total, etat.libelle
+    sql = '''   SELECT u.login,date_achat, COUNT(casque_id) as nb_casque, SUM(prix) as prix_total, etat.libelle,id_commande
                 FROM ligne_commande
                 inner join commande
                 on commande.id_commande = ligne_commande.commande_id
@@ -26,7 +26,7 @@ def admin_commande_show():
                 on commande.etat_id = etat.id_etat
                 inner join utilisateur u 
                 on commande.utilisateur_id = u.id_utilisateur
-                group by date_achat, u.login, etat.libelle
+                group by date_achat, u.login, etat.libelle, id_commande
                 order by date_achat desc
                 '''
     mycursor.execute(sql)
@@ -34,7 +34,8 @@ def admin_commande_show():
 
     id_commande = request.args.get('id_commande', None)
     print(id_commande)
-
+    casque_commande = []
+    commande_adresse = []
     if id_commande != None:
         sql = '''   SELECT casque.nom_casque as nom, casque.couleur, lc.prix, lc.quantite, commande.date_achat, u.login
                           FROM ligne_commande lc
