@@ -14,56 +14,50 @@ client_casque = Blueprint('client_casque', __name__,
 def client_casque_show():                                 # remplace client_index
     mycursor = get_db().cursor()
     id_client = session['id_user']
-    recherche = request.form.get('filter_word','')
-    checked_list = request.form.getlist('filter_types')
-    prix_min = request.form.get('filter_prix_min','')
-    prix_max = request.form.get('filter_prix_max','')
 
-
-    if prix_min == "":
-        prix_min = 0
-    if prix_max == "":
-        sql = '''   SELECT MAX(prix_casque) AS filter_prix_max
-                    FROM casque;'''
-        mycursor.execute(sql)
-        prix_max = mycursor.fetchone()['filter_prix_max']
-
-    sql = '''   SELECT * FROM type_casque
-                ORDER BY id_type_casque;'''
+    sql = '''   SELECT * FROM type_casque;'''
     mycursor.execute(sql)
     checked_type_casque = mycursor.fetchall()
 
+    list_param = []
+    condition_and = ""
 
-    nom_recherche = "%" + recherche + "%"
-
-    if checked_list == []:
-        sql = '''   SELECT * FROM casque
-                    JOIN type_casque 
-                    ON casque.type_casque_id = type_casque.id_type_casque
-                    WHERE nom_casque LIKE %s AND (prix_casque >= %s AND prix_casque <= %s);'''
-        tuple_filter = (nom_recherche, prix_min, prix_max)
-        mycursor.execute(sql, tuple_filter)
-
-    else:
-        sql = '''   SELECT * FROM casque
-                    JOIN type_casque
-                    ON casque.type_casque_id = type_casque.id_type_casque
-                    WHERE (nom_casque LIKE %s) AND (type_casque_id IN %s) AND (prix_casque >= %s AND prix_casque <= %s);'''
-        tuple_filter = (nom_recherche, checked_list, prix_min, prix_max)
-        mycursor.execute(sql, tuple_filter)
+    sql = '''   SELECT * FROM casque'''
+    if "filter_word" in session or "filter_prix_min" in session or "filter_prix_max" in session or "filter_types" in session:
+        sql = sql + " WHERE "
+    if "filter_word" in session:
+        sql = sql + " nom_casque LIKE %s "
+        recherche = "%" + session["filter_word"] + "%"
+        list_param.append(recherche)
+        condition_and = " AND "
+    if "filter_prix_min" in session or "filter_prix_max" in session:
+        sql = sql + condition_and + " prix_casque BETWEEN %s AND %s "
+        list_param.append(session["filter_prix_min"])
+        list_param.append(session["filter_prix_max"])
+        condition_and = " AND "
+    if "filter_types" in session:
+        sql = sql + condition_and + "("
+        last_item = session["filter_types"][-1]
+        for item in session["filter_types"]:
+            sql = sql + " type_casque_id = %s "
+            if item != last_item:
+                sql = sql + " OR "
+            list_param.append(item)
+        sql = sql + ")"
+    tuple_sql = tuple(list_param)
+    mycursor.execute(sql, tuple_sql)
     casques = mycursor.fetchall()
-    #types_casque = []
 
     sql = '''   SELECT id_casque, casque.prix_casque AS prix, quantite, casque.nom_casque AS nom, casque.stock FROM ligne_panier 
-                JOIN casque ON ligne_panier.casque_id = casque.id_casque
-                WHERE utilisateur_id = %s '''
+                        JOIN casque ON ligne_panier.casque_id = casque.id_casque
+                        WHERE utilisateur_id = %s '''
     mycursor.execute(sql, id_client)
     casques_panier = mycursor.fetchall()
 
     if len(casques_panier) >= 1:
         sql = '''   SELECT SUM(casque.prix_casque*quantite) AS prix_total FROM ligne_panier
-                    JOIN casque ON ligne_panier.casque_id = casque.id_casque
-                    WHERE utilisateur_id = %s '''
+                        JOIN casque ON ligne_panier.casque_id = casque.id_casque
+                        WHERE utilisateur_id = %s '''
         mycursor.execute(sql, id_client)
         prix_total = mycursor.fetchone()["prix_total"]
     else:
@@ -73,6 +67,6 @@ def client_casque_show():                                 # remplace client_inde
                            , casques_panier=casques_panier
                            , prix_total=prix_total
                            , checked_type_casque = checked_type_casque
-                           , prix_max = prix_max
-                           , prix_min = prix_min
+                           # , prix_max = prix_max
+                           # , prix_min = prix_min
                            )
