@@ -14,12 +14,16 @@ client_commande = Blueprint('client_commande', __name__,
 def client_commande_valide():
     mycursor = get_db().cursor()
     id_client = session['id_user']
-    sql = ''' selection des casques d'un panier 
-    '''
-    casque_panier = []
+    sql = ''' SELECT * FROM ligne_panier WHERE utilisateur_id = %s '''
+    mycursor.execute(sql, (id_client))
+    casque_panier = mycursor.fetchall()
     if len(casque_panier) >= 1:
-        sql = ''' calcul du prix total du panier '''
-        prix_total = None
+        sql = '''   SELECT SUM(quantite*prix_casque) AS prix_total FROM ligne_panier 
+                    JOIN casque ON ligne_panier.utilisateur_id = casque.id_casque
+                    WHERE utilisateur_id = %s 
+                    GROUP BY ligne_panier.utilisateur_id'''
+        mycursor.execute(sql, (id_client))
+        prix_total = mycursor.fetchone()
     else:
         prix_total = None
     # etape 2 : selection des adresses
@@ -46,7 +50,7 @@ def client_commande_add():
         flash(u'Pas d\'casques dans le ligne_panier', 'alert-warning')
         return redirect('/client/casque/show')
                                            # https://pynative.com/python-mysql-transaction-management-using-commit-rollback/
-    date_commande = datetime.now().strptime('my date', "%b %d %Y %H:%M")
+    date_commande = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     tuple_insert = (date_commande, id_client, '1')
     sql = ''' INSERT INTO commande(date_achat, utilisateur_id, etat_id) VALUES (%s, %s, %s)'''
     mycursor.execute(sql, tuple_insert)
@@ -58,14 +62,12 @@ def client_commande_add():
     # numéro de la dernière commande
     for item in items_ligne_panier:
         sql = ''' DELETE FROM ligne_panier WHERE utilisateur_id = %s AND casque_id = %s'''
-        mycursor.execute(sql, (item [id_client], item['casque_id']))
-        sql = '''  SELECT 1 AS prix_casque FROM casque WHERE id_casque = %s'''
+        mycursor.execute(sql, (item['utilisateur_id'], item['casque_id']))
+        sql = '''  SELECT prix_casque FROM casque WHERE id_casque = %s'''
         mycursor.execute(sql, item['casque_id'])
         prix_casque = mycursor.fetchone()
-        print(prix_casque)
         sql = ''' INSERT INTO ligne_commande(commande_id, casque_id, quantite, prix) VALUES (%s, %s, %s, %s)'''
-        tuple_insert = (commande_id, item['casque_id'], item['quantite'], prix_casque)
-        print (tuple_insert)
+        tuple_insert = (commande_id['last_insert_id'], item['casque_id'], item['quantite'], prix_casque['prix_casque'])
         mycursor.execute(sql, tuple_insert)
 
     get_db().commit()
