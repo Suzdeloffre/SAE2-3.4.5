@@ -37,7 +37,7 @@ def admin_commande_show():
     casque_commande = []
     commande_adresse = []
     if id_commande != None:
-        sql = '''   SELECT casque.nom_casque as nom, casque.couleur, lc.prix, lc.quantite, commande.date_achat, u.login
+        sql = '''   SELECT casque.nom_casque as nom, casque.couleur, casque.prix_casque AS prix, lc.prix AS prix_ligne, lc.quantite, commande.date_achat, u.login
                           FROM ligne_commande lc
                           inner join commande
                           on commande.id_commande = lc.commande_id
@@ -46,7 +46,7 @@ def admin_commande_show():
                           inner join casque 
                           on lc.casque_id = casque.id_casque
                             WHERE commande.id_commande = %s
-                          group by u.login, casque.nom_casque, casque.couleur, lc.prix, lc.quantite, commande.date_achat
+                          group by u.login, casque.nom_casque, casque.couleur, lc.prix, lc.quantite, commande.date_achat, casque.prix_casque
                           '''
         mycursor.execute(sql, id_commande)
         casque_commande = mycursor.fetchall()
@@ -83,7 +83,7 @@ def admin_commande_valider():
                     on commande.id_commande = ligne_commande.commande_id   
                     inner join etat
                     on commande.etat_id = etat.id_etat
-                    SET etat_id = 3
+                    SET etat_id = 2
                     where ligne_commande.commande_id = %s'''
         mycursor.execute(sql, commande_id)
         get_db().commit()

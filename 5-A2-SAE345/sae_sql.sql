@@ -172,17 +172,15 @@ INSERT INTO casque (id_casque, nom_casque, poids, couleur, prix_casque, taille_i
 
 
 INSERT INTO etat (id_etat, libelle) VALUES
-(NULL, 'en attente'),
-(NULL, 'expédié'),
-(NULL, 'validé'),
-(NULL, 'confirmé');
+(NULL, 'en cours de traitement'),
+(NULL, 'expédié');
 
 
 INSERT INTO commande (id_commande, date_achat, utilisateur_id,etat_id) VALUES
-(NULL, '2006-01-10', 1, 1),
+(NULL, '2006-01-10', 2, 1),
 (NULL, '2007-09-26', 3, 2),
-(NULL, '2021-11-24', 2, 3),
-(NULL, '2004-02-28', 3, 4);
+(NULL, '2021-11-24', 2, 2),
+(NULL, '2004-02-28', 3, 1);
 
 INSERT INTO ligne_commande(commande_id,casque_id, prix, quantite) VALUES
 (1, 1, 90.00, 1),
@@ -264,6 +262,3 @@ FROM casque
 JOIN type_casque ON casque.type_casque_id = type_casque.id_type_casque
 GROUP BY type_casque.libelle_type_casque
 ORDER BY ecart_prix ASC;
-
-
-
