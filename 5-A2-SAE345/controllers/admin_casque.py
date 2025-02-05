@@ -27,9 +27,11 @@ def show_casque():
 @admin_casque.route('/admin/casque/add', methods=['GET'])
 def add_casque():
     mycursor = get_db().cursor()
-
+    sql = ''' SELECT id_type_casque, libelle_type_casque AS libelle FROM type_casque '''
+    mycursor.execute(sql)
+    type_casque = mycursor.fetchall()
     return render_template('admin/casque/add_casque.html'
-                           #,types_casque=type_casque,
+                           ,types_casque=type_casque,
                            #,couleurs=colors
                            #,tailles=tailles
                             )
@@ -47,15 +49,15 @@ def valid_add_casque():
 
     if image:
         filename = 'img_upload'+ str(int(2147483647 * random())) + '.png'
-        image.save(os.path.join('static/images/', filename))
+        image.save(os.path.join('static/images-casque/', filename))
     else:
         print("erreur")
         filename=None
 
-    sql = '''  requête admin_casque_2 '''
+    sql = ''' INSERT INTO casque (id_casque, nom_casque, prix_casque, type_casque_id, stock, image) VALUES
+            (NULL, %s, %s, %s, 0, %s) '''
 
-    tuple_add = (nom, filename, prix, type_casque_id, description)
-    print(tuple_add)
+    tuple_add = (nom, prix, type_casque_id, filename)
     mycursor.execute(sql, tuple_add)
     get_db().commit()
 
@@ -71,20 +73,21 @@ def valid_add_casque():
 def delete_casque():
     id_casque=request.args.get('id_casque')
     mycursor = get_db().cursor()
-    sql = ''' requête admin_casque_3 '''
+    sql = ''' SELECT * FROM casque WHERE id_casque=%s '''
     mycursor.execute(sql, id_casque)
     nb_declinaison = mycursor.fetchone()
+    nb_declinaison['nb_declinaison'] = 0 # /!\ A supprimer quand les déclinaison seront fait
     if nb_declinaison['nb_declinaison'] > 0:
         message= u'il y a des declinaisons dans ce casque : vous ne pouvez pas le supprimer'
         flash(message, 'alert-warning')
     else:
-        sql = ''' requête admin_casque_4 '''
+        sql = ''' SELECT * FROM casque WHERE id_casque=%s '''
         mycursor.execute(sql, id_casque)
         casque = mycursor.fetchone()
         print(casque)
         image = casque['image']
 
-        sql = ''' requête admin_casque_5  '''
+        sql = ''' DELETE FROM casque WHERE id_casque=%s  '''
         mycursor.execute(sql, id_casque)
         get_db().commit()
         if image != None:

@@ -209,20 +209,18 @@ def fct_fixtures_load():
     mycursor.execute(sql)
 
     sql = '''
-    INSERT INTO etat (id_etat, libelle) VALUES
-(NULL, 'en attente'),
-(NULL, 'expédié'),
-(NULL, 'validé'),
-(NULL, 'confirmé');
+        INSERT INTO etat (id_etat, libelle) VALUES
+        (NULL, 'en cours de traitement'),
+        (NULL, 'expédié');
     '''
     mycursor.execute(sql)
 
     sql = '''
     INSERT INTO commande (id_commande, date_achat, utilisateur_id,etat_id) VALUES
-(NULL, '2006-01-10', 1, 1),
+(NULL, '2006-01-10', 2, 1),
 (NULL, '2007-09-26', 3, 2),
-(NULL, '2021-11-24', 2, 3),
-(NULL, '2004-02-28', 3, 4);
+(NULL, '2021-11-24', 2, 2),
+(NULL, '2004-02-28', 3, 1);
     '''
     mycursor.execute(sql)
 
