@@ -11,7 +11,9 @@ admin_type_casque = Blueprint('admin_type_casque', __name__,
 @admin_type_casque.route('/admin/type-casque/show')
 def show_type_casque():
     mycursor = get_db().cursor()
-    sql = '''     SELECT * FROM type_casque'''
+    sql = '''     SELECT id_type_casque, libelle_type_casque, COUNT(id_casque) AS nbr_casques FROM type_casque
+                JOIN casque ON type_casque.id_type_casque = casque.type_casque_id
+                GROUP BY id_type_casque'''
     mycursor.execute(sql)
     types_casque = mycursor.fetchall()
     #types_casque=[]
