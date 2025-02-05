@@ -27,7 +27,7 @@ def admin_commande_show():
                 inner join utilisateur u 
                 on commande.utilisateur_id = u.id_utilisateur
                 group by date_achat, u.login, etat.libelle, id_commande
-                order by date_achat desc
+                order by etat_id, date_achat desc
                 '''
     mycursor.execute(sql)
     commande= mycursor.fetchall()
