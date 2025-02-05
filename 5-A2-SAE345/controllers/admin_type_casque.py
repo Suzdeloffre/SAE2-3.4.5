@@ -12,11 +12,10 @@ admin_type_casque = Blueprint('admin_type_casque', __name__,
 def show_type_casque():
     mycursor = get_db().cursor()
     sql = '''     SELECT id_type_casque, libelle_type_casque, COUNT(id_casque) AS nbr_casques FROM type_casque
-                JOIN casque ON type_casque.id_type_casque = casque.type_casque_id
+                LEFT JOIN casque ON type_casque.id_type_casque = casque.type_casque_id
                 GROUP BY id_type_casque'''
     mycursor.execute(sql)
     types_casque = mycursor.fetchall()
-    #types_casque=[]
     return render_template('admin/type_casque/show_type_casque.html', types_casque=types_casque)
 
 @admin_type_casque.route('/admin/type-casque/add', methods=['GET'])
@@ -26,10 +25,9 @@ def add_type_casque():
 @admin_type_casque.route('/admin/type-casque/add', methods=['POST'])
 def valid_add_type_casque():
     libelle = request.form.get('libelle', '')
-    tuple_insert = (libelle,)
     mycursor = get_db().cursor()
-    sql = '''         '''
-    mycursor.execute(sql, tuple_insert)
+    sql = ''' INSERT INTO type_casque (id_type_casque, libelle_type_casque) VALUES (NULL, %s); '''
+    mycursor.execute(sql, libelle)
     get_db().commit()
     message = u'type ajouté , libellé :'+libelle
     flash(message, 'alert-success')
@@ -47,7 +45,7 @@ def delete_type_casque():
 def edit_type_casque():
     id_type_casque = request.args.get('id_type_casque', '')
     mycursor = get_db().cursor()
-    sql = '''   '''
+    sql = ''' SELECT id_type_casque, libelle_type_casque AS libelle FROM type_casque WHERE id_type_casque = %s '''
     mycursor.execute(sql, (id_type_casque,))
     type_casque = mycursor.fetchone()
     return render_template('admin/type_casque/edit_type_casque.html', type_casque=type_casque)
@@ -58,7 +56,7 @@ def valid_edit_type_casque():
     id_type_casque = request.form.get('id_type_casque', '')
     tuple_update = (libelle, id_type_casque)
     mycursor = get_db().cursor()
-    sql = '''   '''
+    sql = ''' UPDATE type_casque SET libelle_type_casque = %s WHERE id_type_casque = %s '''
     mycursor.execute(sql, tuple_update)
     get_db().commit()
     flash(u'type casque modifié, id: ' + id_type_casque + " libelle : " + libelle, 'alert-success')
