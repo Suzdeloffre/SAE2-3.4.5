@@ -105,13 +105,12 @@ def edit_casque():
     id_casque=request.args.get('id_casque')
     mycursor = get_db().cursor()
     sql = '''
-    requête admin_casque_6    
+    SELECT id_casque, nom_casque AS nom, prix_casque AS prix, image FROM casque WHERE id_casque=%s   
     '''
     mycursor.execute(sql, id_casque)
     casque = mycursor.fetchone()
-    print(casque)
     sql = '''
-    requête admin_casque_7
+    SELECT id_type_casque, libelle_type_casque AS libelle FROM type_casque
     '''
     mycursor.execute(sql)
     types_casque = mycursor.fetchall()
@@ -139,23 +138,23 @@ def valid_edit_casque():
     prix = request.form.get('prix', '')
     description = request.form.get('description')
     sql = '''
-       requête admin_casque_8
+       SELECT image FROM casque WHERE id_casque=%s
        '''
     mycursor.execute(sql, id_casque)
     image_nom = mycursor.fetchone()
     image_nom = image_nom['image']
     if image:
         if image_nom != "" and image_nom is not None and os.path.exists(
-                os.path.join(os.getcwd() + "/static/images/", image_nom)):
-            os.remove(os.path.join(os.getcwd() + "/static/images/", image_nom))
+                os.path.join(os.getcwd() + "/static/images-casque/", image_nom)):
+            os.remove(os.path.join(os.getcwd() + "/static/images-casque/", image_nom))
         # filename = secure_filename(image.filename)
         if image:
             filename = 'img_upload_' + str(int(2147483647 * random())) + '.png'
-            image.save(os.path.join('static/images/', filename))
+            image.save(os.path.join('static/images-casque/', filename))
             image_nom = filename
 
-    sql = '''  requête admin_casque_9 '''
-    mycursor.execute(sql, (nom, image_nom, prix, type_casque_id, description, id_casque))
+    sql = ''' UPDATE casque SET nom_casque= %s, image=%s, prix_casque=%s, type_casque_id=%s WHERE id_casque=%s '''
+    mycursor.execute(sql, (nom, image_nom, prix, type_casque_id, id_casque))
 
     get_db().commit()
     if image_nom is None:
