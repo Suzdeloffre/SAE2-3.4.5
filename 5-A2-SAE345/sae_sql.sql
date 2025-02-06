@@ -123,7 +123,6 @@ INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) 
 
 
 INSERT INTO adresse(id_adresse, utilisateur_id, adresse, code_postal, ville) VALUES
-(NULL, 1, '1 rue de la paix', 75000, 'Paris'),
 (NULL, 2, '2 rue de la liberté', 69000, 'Lyon'),
 (NULL, 3, '3 rue de la fraternité', 13000, 'Marseille');
 
@@ -195,21 +194,6 @@ INSERT INTO ligne_commande(commande_id,casque_id, prix, quantite) VALUES
 (4, 10, 74.50, 1),
 (4, 15, 218.00, 2),
 (4, 17, 59.99, 1);
-
-INSERT INTO ligne_panier(utilisateur_id, casque_id, quantite, date_ajout)VALUES
-(1, 1, 1, '2023-12-02'),
-(1, 2, 1, '2022-06-24'),
-(1, 3, 1, '2022-06-24'),
-(1, 4, 1, '2022-06-24'),
-(1, 6, 1, '2022-06-24'),
-(1, 8, 1, '2022-06-24'),
-(1, 14, 1, '2022-06-24'),
-(1, 15, 1, '2022-06-24'),
-(1, 16, 1, '2022-06-24'),
-(1, 17, 1, '2022-06-24');
-
-
-
 
 
 #Affiche tous les casques
