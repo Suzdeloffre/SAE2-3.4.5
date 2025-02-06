@@ -95,6 +95,9 @@ def client_coordonnee_add_adresse_valide():
     mycursor.execute(sql, tuple_insert)
     get_db().commit()
 
+    message = u'adresse ajoutée, nom:' + nom + '- adresse: ' + adresse + '- code_postal: ' + code_postal + '- ville: ' + ville
+    flash(message, 'alert-success')
+
     return redirect('/client/coordonnee/show')
 
 @client_coordonnee.route('/client/coordonnee/edit_adresse')
