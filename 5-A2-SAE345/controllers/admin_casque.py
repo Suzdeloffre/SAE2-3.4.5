@@ -46,6 +46,7 @@ def valid_add_casque():
     prix = request.form.get('prix', '')
     description = request.form.get('description', '')
     image = request.files.get('image', '')
+    stock = request.form.get('stock')
 
     if image:
         filename = 'img_upload'+ str(int(2147483647 * random())) + '.png'
@@ -55,9 +56,9 @@ def valid_add_casque():
         filename=None
 
     sql = ''' INSERT INTO casque (id_casque, nom_casque, prix_casque, type_casque_id, stock, image) VALUES
-            (NULL, %s, %s, %s, 0, %s) '''
+            (NULL, %s, %s, %s, %s, %s) '''
 
-    tuple_add = (nom, prix, type_casque_id, filename)
+    tuple_add = (nom, prix, type_casque_id, stock, filename)
     mycursor.execute(sql, tuple_add)
     get_db().commit()
 
