@@ -105,7 +105,7 @@ def edit_casque():
     id_casque=request.args.get('id_casque')
     mycursor = get_db().cursor()
     sql = '''
-    SELECT id_casque, nom_casque AS nom, prix_casque AS prix, image FROM casque WHERE id_casque=%s   
+    SELECT id_casque, nom_casque AS nom, prix_casque AS prix, image, stock FROM casque WHERE id_casque=%s   
     '''
     mycursor.execute(sql, id_casque)
     casque = mycursor.fetchone()
@@ -137,6 +137,8 @@ def valid_edit_casque():
     type_casque_id = request.form.get('type_casque_id', '')
     prix = request.form.get('prix', '')
     description = request.form.get('description')
+    stock = request.form.get('stock')
+    print(stock)
     sql = '''
        SELECT image FROM casque WHERE id_casque=%s
        '''
@@ -153,13 +155,13 @@ def valid_edit_casque():
             image.save(os.path.join('static/images-casque/', filename))
             image_nom = filename
 
-    sql = ''' UPDATE casque SET nom_casque= %s, image=%s, prix_casque=%s, type_casque_id=%s WHERE id_casque=%s '''
-    mycursor.execute(sql, (nom, image_nom, prix, type_casque_id, id_casque))
+    sql = ''' UPDATE casque SET nom_casque= %s, image=%s, prix_casque=%s, type_casque_id=%s, stock=%s WHERE id_casque=%s '''
+    mycursor.execute(sql, (nom, image_nom, prix, type_casque_id, stock, id_casque))
 
     get_db().commit()
     if image_nom is None:
         image_nom = ''
-    message = u'casque modifié , nom:' + nom + '- type_casque :' + type_casque_id + ' - prix:' + prix  + ' - image:' + image_nom + ' - description: ' + description
+    message = u'casque modifié , nom:' + nom + '- type_casque :' + type_casque_id + ' - prix:' + prix  + ' - image:' + image_nom + ' - description: ' + description + ' - stock:' + stock
     flash(message, 'alert-success')
     return redirect('/admin/casque/show')
 

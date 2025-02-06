@@ -18,99 +18,102 @@ types_casque : tableau de dictionnaires
 
 {% block body %}
     <h2>modifier un casque</h2>
-        <div class="row mt-5">
+    <div class="row mt-5">
         {%  if casque.image is not none %}
             <img style="width:220px;height:200px"  src="{{ url_for('static', filename = 'images-casque/' + casque['image']) }}"  alt="image  de {{ casque.nom }}" >
         {% endif %}
-            <div class="w-25">
-                <form class="w-190" method="post" action="/admin/casque/edit" enctype="multipart/form-data">
-                    <input type="hidden" value="{{ casque.id_casque }}" name="id_casque">
-                    <label for="nom">Nom :
-                        <input name="nom" type="text" value="{{ casque.nom }}" class="form-control">
-                    </label>
-                    <label for="prix" > Prix (€) :
-                        <input name="prix" type="number" min="0.0" step="0.01" value="{{ casque.prix }}" class="form-control" >
-                    </label>
-                    <label for="image">Image :                       {# à modifier #}
-                        <input name="image"  onchange="loadFile(event)" type="file" class="form-control" value="{{ casque.image }}">             {# à modifier #}
-                    </label>                                         {# à modifier #}
-{#                https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask#}
+        <div class="w-25">
+            <form class="w-190" method="post" action="/admin/casque/edit" enctype="multipart/form-data">
+                <input type="hidden" value="{{ casque.id_casque }}" name="id_casque">
+                <label for="nom">Nom :
+                    <input name="nom" type="text" value="{{ casque.nom }}" class="form-control">
+                </label>
+                <label for="prix" > Prix (€) :
+                    <input name="prix" type="number" min="0.0" step="0.01" value="{{ casque.prix }}" class="form-control" >
+                </label>
+                <label for="image">Image :                       {# à modifier #}
+                    <input name="image"  onchange="loadFile(event)" type="file" class="form-control" value="{{ casque.image }}">             {# à modifier #}
+                </label>                                         {# à modifier #}
+                {#                https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask#}
 
                 <label for="type_casque_id">Type de l'casque :
                     <select name="type_casque_id" class="form-select">
-                            {% for type in types_casque %}
-                                 <option value="{{ type.id_type_casque }}" {% if type.id_type_casque == casque.type_casque_id %} selected {% endif %}> {{ type.libelle }}</option>
-                            {% endfor %}
-                        </select>
-                    </label>
-                    <label for="description">Description :
-                        <input name="description" type="text" value="{{ casque.description }}" class="form-control">
-                    </label>
-                    <button class="btn btn-primary mt-2">
-                                Modifier
-                    </button>
-                    <a class="btn btn-secondary mt-2" href="/admin/casque/show" role="button">retour</a>
-                </form>
+                        {% for type in types_casque %}
+                            <option value="{{ type.id_type_casque }}" {% if type.id_type_casque == casque.type_casque_id %} selected {% endif %}> {{ type.libelle }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label for="description">Description :
+                    <input name="description" type="text" value="{{ casque.description }}" class="form-control">
+                </label>
+                <label for="stock">Stock :
+                    <input name="stock" type="number" value="{{ casque.stock }}" class="form-control">
+                </label>
+                <button class="btn btn-primary mt-2">
+                    Modifier
+                </button>
+                <a class="btn btn-secondary mt-2" href="/admin/casque/show" role="button">retour</a>
+            </form>
 
-                <div class="container-fluid " style="width: 1000px;">
+            <div class="container-fluid " style="width: 1000px;">
 
-                    <div style="display: flex; justify-content: space-between">
-                        <h3>déclinaison en fonction de la taille/couleur (variante)</h3>
-                        <a class="img-fluid" href="/admin/declinaison_casque/add?id_casque={{ casque.id_casque }}">
-                            <button class="btn btn-primary">
-                                Ajouter une déclinaison (variante)
-                            </button>
-                        </a>
-                    </div>
-                    <table class="table table-hover table-responsive">
-
-                        <th style="width: 300px">taille</th>
-                        <th style="width: 300px">couleur</th>
-                        <th style="width: 300px">stock</th>
-                        <th style="width: 300px">opérations</th>
-
-                        {% if declinaisons_casque | length == 0 %}
-                            <tr>
-                                <td>Aucun modèle</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        {% else %}
-                            {% for declinaison_casque in declinaisons_casque %}
-                                <tr>
-                                    <td>
-                                        {{ declinaison_casque.libelle_taille }}
-                                    </td>
-                                    <td>
-                                        {{ declinaison_casque.libelle_couleur }}
-                                    </td>
-                                    <td>{{ declinaison_casque.stock }}</td>
-                                    <td style="display: flex">
-                                        <a class="img-fluid" href="/admin/declinaison_casque/delete?id_declinaison_casque={{ declinaison_casque.id_declinaison_casque }}&amp;id_casque={{ declinaison_casque.casque_id }}">
-                                            <button class="btn btn-primary mx-1">
-                                                supprimer
-                                            </button>
-                                        </a>
-                                        <a class="img-fluid" href="/admin/declinaison_casque/edit?id_declinaison_casque={{ declinaison_casque.id_declinaison_casque }}">
-                                            <button class="btn btn-primary mx-1">
-                                                editer
-                                            </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        {% endif %}
-                    </table>
-
+                <div style="display: flex; justify-content: space-between">
+                    <h3>déclinaison en fonction de la taille/couleur (variante)</h3>
+                    <a class="img-fluid" href="/admin/declinaison_casque/add?id_casque={{ casque.id_casque }}">
+                        <button class="btn btn-primary">
+                            Ajouter une déclinaison (variante)
+                        </button>
+                    </a>
                 </div>
+                <table class="table table-hover table-responsive">
+
+                    <th style="width: 300px">taille</th>
+                    <th style="width: 300px">couleur</th>
+                    <th style="width: 300px">stock</th>
+                    <th style="width: 300px">opérations</th>
+
+                    {% if declinaisons_casque | length == 0 %}
+                        <tr>
+                            <td>Aucun modèle</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    {% else %}
+                        {% for declinaison_casque in declinaisons_casque %}
+                            <tr>
+                                <td>
+                                    {{ declinaison_casque.libelle_taille }}
+                                </td>
+                                <td>
+                                    {{ declinaison_casque.libelle_couleur }}
+                                </td>
+                                <td>{{ declinaison_casque.stock }}</td>
+                                <td style="display: flex">
+                                    <a class="img-fluid" href="/admin/declinaison_casque/delete?id_declinaison_casque={{ declinaison_casque.id_declinaison_casque }}&amp;id_casque={{ declinaison_casque.casque_id }}">
+                                        <button class="btn btn-primary mx-1">
+                                            supprimer
+                                        </button>
+                                    </a>
+                                    <a class="img-fluid" href="/admin/declinaison_casque/edit?id_declinaison_casque={{ declinaison_casque.id_declinaison_casque }}">
+                                        <button class="btn btn-primary mx-1">
+                                            editer
+                                        </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
 
             </div>
-            {% if pb_taille_uniq is defined and pb_taille_uniq==1 %}
-                    <br><span style="color: #fd7e14">(⚠️ pb sur les tailles : une taille unique est définie avec d'autres tailles)</span>
-            {% endif %}
-            {% if pb_couleur_uniq is defined and pb_couleur_uniq==1 %}
-                    <br><span style="color: #fd7e14">(⚠️ pb sur les couleurs : une couleur unique est définie avec d'autres couleurs)</span>
-            {% endif %}
+
         </div>
+        {% if pb_taille_uniq is defined and pb_taille_uniq==1 %}
+            <br><span style="color: #fd7e14">(⚠️ pb sur les tailles : une taille unique est définie avec d'autres tailles)</span>
+        {% endif %}
+        {% if pb_couleur_uniq is defined and pb_couleur_uniq==1 %}
+            <br><span style="color: #fd7e14">(⚠️ pb sur les couleurs : une couleur unique est définie avec d'autres couleurs)</span>
+        {% endif %}
+    </div>
 {% endblock %}
