@@ -61,6 +61,13 @@ def client_coordonnee_delete_adresse():
     id_client = session['id_user']
     id_adresse= request.form.get('id_adresse')
 
+    sql = '''   DELETE FROM adresse WHERE id_adresse=%s;'''
+    mycursor.execute(sql, (id_adresse))
+    get_db().commit()
+
+    message = u'adresse supprimée, id_adresse:' + id_adresse
+    flash(message, 'alert-danger')
+
     return redirect('/client/coordonnee/show')
 
 @client_coordonnee.route('/client/coordonnee/add_adresse')
@@ -96,9 +103,17 @@ def client_coordonnee_edit_adresse():
     id_client = session['id_user']
     id_adresse = request.args.get('id_adresse')
 
+    sql = ''' SELECT * FROM utilisateur WHERE id_utilisateur=%s; '''
+    mycursor.execute(sql, (id_client))
+    utilisateur = mycursor.fetchone()
+
+    sql = '''   SELECT * FROM adresse WHERE id_adresse=%s;'''
+    mycursor.execute(sql, (id_adresse))
+    adresse = mycursor.fetchone()
+
     return render_template('/client/coordonnee/edit_adresse.html'
-                           # ,utilisateur=utilisateur
-                           # ,adresse=adresse
+                           ,utilisateur=utilisateur
+                           ,adresse=adresse
                            )
 
 @client_coordonnee.route('/client/coordonnee/edit_adresse',methods=['POST'])
@@ -106,9 +121,17 @@ def client_coordonnee_edit_adresse_valide():
     mycursor = get_db().cursor()
     id_client = session['id_user']
     nom= request.form.get('nom')
-    rue = request.form.get('rue')
+    adresse = request.form.get('adresse')
     code_postal = request.form.get('code_postal')
     ville = request.form.get('ville')
     id_adresse = request.form.get('id_adresse')
+
+    sql = '''   UPDATE adresse SET nom=%s, adresse=%s, code_postal=%s, ville=%s WHERE id_adresse=%s;'''
+    tuple_insert = (nom, adresse, code_postal, ville, id_adresse)
+    mycursor.execute(sql, tuple_insert)
+    get_db().commit()
+
+    message = u'adresse modifiée, nom:' + nom + '- adresse: ' + adresse + '- code_postal: ' + code_postal + '- ville: ' + ville
+    flash(message, 'alert-success')
 
     return redirect('/client/coordonnee/show')
