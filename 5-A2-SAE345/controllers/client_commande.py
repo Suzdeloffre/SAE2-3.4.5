@@ -92,7 +92,7 @@ def client_commande_show():
                 JOIN etat ON commande.etat_id = etat.id_etat
                 WHERE utilisateur.id_utilisateur = %s
                 GROUP BY commande.id_commande, date_achat, etat.libelle
-                ORDER BY libelle, date_achat, etat_id'''
+                ORDER BY date_achat, libelle, etat_id'''
     mycursor.execute(sql, (id_client))
     commandes = mycursor.fetchall()
 
