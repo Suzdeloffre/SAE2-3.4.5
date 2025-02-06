@@ -16,9 +16,13 @@ def client_coordonnee_show():
     sql = ''' SELECT * FROM utilisateur WHERE id_utilisateur=%s'''
     mycursor.execute(sql, (id_client))
     utilisateur=mycursor.fetchone()
+
+    sql = '''   SELECT * FROM adresse ORDER BY nom;'''
+    mycursor.execute(sql)
+    adresses = mycursor.fetchall()
     return render_template('client/coordonnee/show_coordonnee.html'
                            , utilisateur=utilisateur
-                         #  , adresses=adresses
+                           , adresses=adresses
                          #  , nb_adresses=nb_adresses
                            )
 
@@ -75,9 +79,15 @@ def client_coordonnee_add_adresse_valide():
     mycursor = get_db().cursor()
     id_client = session['id_user']
     nom= request.form.get('nom')
-    rue = request.form.get('rue')
+    adresse = request.form.get('adresse')
     code_postal = request.form.get('code_postal')
     ville = request.form.get('ville')
+
+    sql = '''   INSERT INTO adresse (nom, adresse, code_postal, ville) VALUES (%s, %s, %s, %s);'''
+    tuple_insert = (nom, adresse, code_postal, ville)
+    mycursor.execute(sql, tuple_insert)
+    get_db().commit()
+
     return redirect('/client/coordonnee/show')
 
 @client_coordonnee.route('/client/coordonnee/edit_adresse')

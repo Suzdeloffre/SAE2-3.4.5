@@ -32,6 +32,7 @@ CREATE TABLE utilisateur(
 CREATE TABLE adresse(
     id_adresse INT AUTO_INCREMENT,
     utilisateur_id INT,
+    nom VARCHAR(200),
     adresse VARCHAR(200),
     code_postal INT,
     ville VARCHAR(200),
@@ -122,9 +123,9 @@ INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) 
     'ROLE_client','client2','1');
 
 
-INSERT INTO adresse(id_adresse, utilisateur_id, adresse, code_postal, ville) VALUES
-(NULL, 2, '2 rue de la liberté', 69000, 'Lyon'),
-(NULL, 3, '3 rue de la fraternité', 13000, 'Marseille');
+INSERT INTO adresse(id_adresse, utilisateur_id, nom, adresse, code_postal, ville) VALUES
+(NULL, 2, 'Paul', '2 rue de la liberté', 69000, 'Lyon'),
+(NULL, 3, 'Pierre', '3 rue de la fraternité', 13000, 'Marseille');
 
 
 INSERT INTO taille (id_taille, libelle_taille) VALUES

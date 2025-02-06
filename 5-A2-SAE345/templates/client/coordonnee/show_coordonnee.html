@@ -45,7 +45,7 @@
                         <td>{{ adresse.nom }}
                             {% if adresse.favori is defined and adresse.favori==1 %}💛{% endif %}
                         </td>
-                        <td>{{ adresse.rue }}</td>
+                        <td>{{ adresse.adresse }}</td>
                         <td>{{ adresse.code_postal }}</td>
                         <td>{{ adresse.ville }}</td>
                         <td> {% if adresse.nbr_commandes is defined %}{{ adresse.nbr_commandes }} {% endif %} </td>
