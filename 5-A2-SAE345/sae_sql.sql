@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS commentaire;
+DROP TABLE IF EXISTS note;
 DROP TABLE IF EXISTS ligne_commande;
 DROP TABLE IF EXISTS ligne_panier;
 DROP TABLE IF EXISTS commande;
@@ -112,17 +113,25 @@ CREATE TABLE ligne_panier(
    FOREIGN KEY(casque_id) REFERENCES casque(id_casque)
 );
 
+CREATE TABLE note(
+    id_note INT AUTO_INCREMENT,
+    utilisateur_id INT,
+    casque_id INT,
+    note INT,
+    PRIMARY KEY (id_note),
+    FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id_utilisateur),
+    FOREIGN KEY (casque_id) REFERENCES casque(id_casque)
+);
+
 CREATE TABLE commentaire(
      id_commantaire INT AUTO_INCREMENT,
      utilisateur_id INT,
      casque_id INT,
-     commande_id INT,
-     note INT,
      libelle VARCHAR(255),
-     PRIMARY KEY (id_commantaire,utilisateur_id),
+     date_publication DATE,
+     PRIMARY KEY (id_commantaire),
      FOREIGN KEY (utilisateur_id)REFERENCES utilisateur(id_utilisateur),
-     FOREIGN KEY (casque_id) REFERENCES casque(id_casque),
-     FOREIGN KEY (commande_id) REFERENCES commande(id_commande)
+     FOREIGN KEY (casque_id) REFERENCES casque(id_casque)
 );
 
 INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) VALUES
@@ -210,9 +219,18 @@ INSERT INTO ligne_commande(commande_id,casque_id, prix, quantite) VALUES
 (4, 15, 218.00, 2),
 (4, 17, 59.99, 1);
 
-INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id,commande_id,note, libelle) VALUES
-(1, 2, 1,1, 16,'Très bon casque. confortable et solide' ),
-(2, 2, 3,2,15, 'Parfait et reçu rapidement');
+INSERT INTO note(id_note, utilisateur_id, casque_id, note)VALUES
+(NULL,2, 2, 15),
+(NULL, 3, 4, 13),
+(NULL, 3, 15, 17),
+(NULL, 2, 6, 12),
+(NULL, 3, 3, 10);
+
+INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id, libelle, date_publication) VALUES
+(NULL,2, 2,'Parfait, le casque est confortable', 21/02/2024),
+(NULL, 3, 4, 'le casque à l\'air solide. La livraison était rapide !',01/05/2018  ),
+(NULL, 3,15, 'Parfait', 15/06/2020),
+(NULL, 2,6, 'la livraison a pris plus d\'un mois... et la couleur n\'est pas la même que sur la photo', 06/11/2023);
 
 
 #Affiche tous les casques
