@@ -1,5 +1,6 @@
 #! /usr/bin/python
 # -*- coding:utf-8 -*-
+from apport import warning
 from flask import Blueprint
 from flask import request, render_template, redirect, abort, flash, session
 
@@ -26,19 +27,21 @@ def client_panier_add():
 
     mycursor.execute(''' SELECT * FROM casque WHERE id_casque = %s ''', (id_casque))
     casques = mycursor.fetchone()
-    if not (casque_panier is None )and casques['stock'] >= 1:
+    if not (casque_panier is None )and casques['stock'] >= int(quantite):
         tuple_update = (quantite, id_casque, id_client)
         sql = ''' UPDATE ligne_panier SET quantite = quantite+%s WHERE casque_id = %s AND utilisateur_id = %s  '''
         mycursor.execute(sql, tuple_update)
         sql = ''' UPDATE casque SET stock = stock-%s WHERE id_casque = %s '''
         mycursor.execute(sql, (quantite, id_casque))
     else:
-        if casques['stock'] >= 1:
+        if casques['stock'] >= int(quantite):
             tuple_insert = (id_casque, id_client, quantite)
             sql = ''' INSERT INTO ligne_panier (casque_id, utilisateur_id, quantite, date_ajout) VALUES (%s, %s, %s, current_timestamp) '''
             mycursor.execute(sql, tuple_insert)
             sql = ''' UPDATE casque SET stock = stock-%s WHERE id_casque = %s '''
             mycursor.execute(sql, (quantite, id_casque))
+        else:
+            flash(u"Le stock n'est pas suffisant, il y a moins de "+quantite+" article(s) en stock", 'alert-danger')
 
     get_db().commit()
 
