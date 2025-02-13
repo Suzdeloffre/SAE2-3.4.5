@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS commentaire;
 DROP TABLE IF EXISTS ligne_commande;
 DROP TABLE IF EXISTS ligne_panier;
 DROP TABLE IF EXISTS commande;
@@ -111,6 +112,19 @@ CREATE TABLE ligne_panier(
    FOREIGN KEY(casque_id) REFERENCES casque(id_casque)
 );
 
+CREATE TABLE commentaire(
+     id_commantaire INT AUTO_INCREMENT,
+     utilisateur_id INT,
+     casque_id INT,
+     commande_id INT,
+     note INT,
+     libelle VARCHAR(255),
+     PRIMARY KEY (id_commantaire,utilisateur_id),
+     FOREIGN KEY (utilisateur_id)REFERENCES utilisateur(id_utilisateur),
+     FOREIGN KEY (casque_id) REFERENCES casque(id_casque),
+     FOREIGN KEY (commande_id) REFERENCES commande(id_commande)
+);
+
 INSERT INTO utilisateur(id_utilisateur,login,email,password,role,nom,est_actif) VALUES
 (1,'admin','admin@admin.fr',
     'pbkdf2:sha256:1000000$eQDrpqICHZ9eaRTn$446552ca50b5b3c248db2dde6deac950711c03c5d4863fe2bd9cef31d5f11988',
@@ -195,6 +209,10 @@ INSERT INTO ligne_commande(commande_id,casque_id, prix, quantite) VALUES
 (4, 10, 74.50, 1),
 (4, 15, 218.00, 2),
 (4, 17, 59.99, 1);
+
+INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id,commande_id,note, libelle) VALUES
+(1, 2, 1,1, 16,'Très bon casque. confortable et solide' ),
+(2, 2, 3,2,15, 'Parfait et reçu rapidement');
 
 
 #Affiche tous les casques

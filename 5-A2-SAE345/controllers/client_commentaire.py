@@ -14,41 +14,49 @@ client_commentaire = Blueprint('client_commentaire', __name__,
 @client_commentaire.route('/client/casque/details', methods=['GET'])
 def client_casque_details():
     mycursor = get_db().cursor()
-    id_casque =  request.args.get('id_casque', None)
+    id_casque = request.args.get('id_casque', None)
     id_client = session['id_user']
 
     ## partie 4
     # client_historique_add(id_casque, id_client)
 
-    sql = '''
+    sql = '''SELECT nom_casque, prix_casque, image
+             FROM casque
+             where id_casque =%s
     '''
-    #mycursor.execute(sql, id_casque)
-    #casque = mycursor.fetchone()
-    casque=[]
+    mycursor.execute(sql, id_casque)
+    casque = mycursor.fetchone()
+
     commandes_casque=[]
     nb_commentaires=[]
     if casque is None:
         abort(404, "pb id casque")
-    # sql = '''
-    #
-    # '''
-    # mycursor.execute(sql, ( id_casque))
-    # commentaires = mycursor.fetchall()
-    # sql = '''
-    # '''
-    # mycursor.execute(sql, (id_client, id_casque))
-    # commandes_casque = mycursor.fetchone()
-    # sql = '''
-    # '''
-    # mycursor.execute(sql, (id_client, id_casque))
-    # note = mycursor.fetchone()
-    # print('note',note)
-    # if note:
-    #     note=note['note']
-    # sql = '''
-    # '''
-    # mycursor.execute(sql, (id_client, id_casque))
-    # nb_commentaires = mycursor.fetchone()
+    sql = ''' SELECT id_commantaire, libelle, utilisateur_id
+                FROM commentaire
+                WHERE casque_id =%s
+     '''
+    mycursor.execute(sql, ( id_casque))
+    commentaires = mycursor.fetchall()
+
+    sql = '''SELECT sum(quantite) AS nb_commandes_casque
+            FROM ligne_commande
+            inner join commande c on ligne_commande.commande_id = c.id_commande
+            where utilisateur_id=%s and casque_id=%s 
+     '''
+    mycursor.execute(sql, (id_client, id_casque))
+    commandes_casque = mycursor.fetchone()
+
+    sql = '''
+    '''
+    mycursor.execute(sql, (id_client, id_casque))
+    note = mycursor.fetchone()
+    print('note',note)
+    if note:
+         note=note['note']
+    sql = '''
+    '''
+    mycursor.execute(sql, (id_client, id_casque))
+    nb_commentaires = mycursor.fetchone()
     return render_template('client/casque_info/casque_details.html'
                            , casque=casque
                            # , commentaires=commentaires
