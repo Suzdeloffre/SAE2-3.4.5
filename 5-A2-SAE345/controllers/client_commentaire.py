@@ -47,18 +47,18 @@ def client_casque_details():
     commandes_casque = mycursor.fetchone()
 
     sql = '''SELECT note
-            FROM commentaire
-            where casque_id=%s
+            FROM note
+            where utilisateur_id=%s and casque_id=%s
     '''
     mycursor.execute(sql, (id_client, id_casque))
     note = mycursor.fetchone()
     print('note',note)
     if note:
          note=note['note']
-    sql = ''' 
-    '''
-    mycursor.execute(sql, (id_client, id_casque))
-    nb_commentaires = mycursor.fetchone()
+    #sql = '''
+    #'''
+    #mycursor.execute(sql, (id_client, id_casque))
+    #nb_commentaires = mycursor.fetchone()
     return render_template('client/casque_info/casque_details.html'
                            , casque=casque
                            , commentaires=commentaires
