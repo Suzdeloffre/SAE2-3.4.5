@@ -1,6 +1,6 @@
 #! /usr/bin/python
 # -*- coding:utf-8 -*-
-from apport import warning
+
 from flask import Blueprint
 from flask import request, render_template, redirect, abort, flash, session
 
