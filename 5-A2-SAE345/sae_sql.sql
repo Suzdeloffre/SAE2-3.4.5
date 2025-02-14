@@ -127,7 +127,7 @@ CREATE TABLE commentaire(
      id_commantaire INT AUTO_INCREMENT,
      utilisateur_id INT,
      casque_id INT,
-     commentaire VARCHAR(255),
+     libelle_comm VARCHAR(255),
      date_publication DATE,
      validation BOOLEAN,
      PRIMARY KEY (id_commantaire, casque_id, utilisateur_id, date_publication),
@@ -227,7 +227,7 @@ INSERT INTO note(id_note, utilisateur_id, casque_id, note)VALUES
 (NULL, 2, 6, 12),
 (NULL, 3, 3, 10);
 
-INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id, commentaire, date_publication, validation) VALUES
+INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id, libelle_comm, date_publication, validation) VALUES
 (NULL,2, 2,'Parfait, le casque est confortable', 21/02/2024, 1),
 (NULL, 3, 4, 'le casque à l\'air solide. La livraison était rapide !',01/05/2018 ,0),
 (NULL, 3,15, 'Parfait', 15/06/2020, 1),
