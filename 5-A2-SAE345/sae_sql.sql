@@ -118,7 +118,7 @@ CREATE TABLE note(
     utilisateur_id INT,
     casque_id INT,
     note INT,
-    PRIMARY KEY (id_note),
+    PRIMARY KEY (id_note, utilisateur_id, casque_id),
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id_utilisateur),
     FOREIGN KEY (casque_id) REFERENCES casque(id_casque)
 );
@@ -127,9 +127,10 @@ CREATE TABLE commentaire(
      id_commantaire INT AUTO_INCREMENT,
      utilisateur_id INT,
      casque_id INT,
-     libelle VARCHAR(255),
+     commentaire VARCHAR(255),
      date_publication DATE,
-     PRIMARY KEY (id_commantaire),
+     validation BOOLEAN,
+     PRIMARY KEY (id_commantaire, casque_id, utilisateur_id, date_publication),
      FOREIGN KEY (utilisateur_id)REFERENCES utilisateur(id_utilisateur),
      FOREIGN KEY (casque_id) REFERENCES casque(id_casque)
 );
@@ -226,11 +227,11 @@ INSERT INTO note(id_note, utilisateur_id, casque_id, note)VALUES
 (NULL, 2, 6, 12),
 (NULL, 3, 3, 10);
 
-INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id, libelle, date_publication) VALUES
-(NULL,2, 2,'Parfait, le casque est confortable', 21/02/2024),
-(NULL, 3, 4, 'le casque à l\'air solide. La livraison était rapide !',01/05/2018  ),
-(NULL, 3,15, 'Parfait', 15/06/2020),
-(NULL, 2,6, 'la livraison a pris plus d\'un mois... et la couleur n\'est pas la même que sur la photo', 06/11/2023);
+INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id, commentaire, date_publication, validation) VALUES
+(NULL,2, 2,'Parfait, le casque est confortable', 21/02/2024, 1),
+(NULL, 3, 4, 'le casque à l\'air solide. La livraison était rapide !',01/05/2018 ,0),
+(NULL, 3,15, 'Parfait', 15/06/2020, 1),
+(NULL, 2,6, 'la livraison a pris plus d\'un mois... et la couleur n\'est pas la même que sur la photo', 06/11/2023, 1);
 
 
 #Affiche tous les casques
