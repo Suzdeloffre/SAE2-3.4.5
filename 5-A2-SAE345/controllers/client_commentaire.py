@@ -81,47 +81,25 @@ def client_casque_details():
         'nb_notes': nb_notes
     }
 
-    sql_utilisateur = ''' 
-        SELECT count(id_commantaire) as nb_commentaires_utilisateur
-        FROM commentaire 
-        WHERE casque_id=%s AND utilisateur_id=%s;
+    sql = ''' SELECT COUNT(CASE WHEN utilisateur_id = %s THEN 1 END) AS nb_commentaires_utilisateur,
+            COUNT(CASE WHEN utilisateur_id = %s THEN 1 END) AS nb_commentaires_utilisateur_valide,
+            COUNT(*) AS nb_commentaires_total, 
+            COUNT(CASE WHEN validation = 1 THEN 1 END) AS nb_commentaires_total_valide
+            FROM commentaire
+            WHERE casque_id = %s;
     '''
-
-    sql_total = ''' 
-        SELECT count(id_commantaire) as nb_commentaires_total
-        FROM commentaire
-        WHERE casque_id=%s;
-    '''
-    sql_utilisateur_valide = '''
-        SELECT count(id_commantaire) as nb_commentaires_utilisateur_valide
-        FROM commentaire
-        WHERE casque_id=%s and utilisateur_id=%s and validation=1;
-    '''
-    sql_total_valide = '''
-        SELECT count(id_commantaire) as nb_commentaires_total_valide
-        FROM commentaire
-        WHERE casque_id=%s and validation=1;
-    '''
-
-    mycursor.execute(sql_utilisateur, (id_casque, id_client))
-    nb_commentaires_utilisateur = mycursor.fetchone()
-
-    mycursor.execute(sql_total, (id_casque,))
-    nb_commentaires_total = mycursor.fetchone()
-
-    mycursor.execute(sql_utilisateur_valide, (id_casque, id_client))
-    nb_commentaires_utilisateur_valide = mycursor.fetchone()
-
-    mycursor.execute(sql_total_valide, (id_casque,))
-    nb_commentaires_total_valide = mycursor.fetchone()
+    mycursor.execute(sql, (id_client, id_client, id_casque))
+    nb_commentaires= mycursor.fetchone()
 
     nb_commentaires = {
-        'nb_commentaires_utilisateur': nb_commentaires_utilisateur[
-            'nb_commentaires_utilisateur'] if nb_commentaires_utilisateur else 0,
-        'nb_commentaires_total': nb_commentaires_total['nb_commentaires_total'] if nb_commentaires_total else 0,
-        'nb_commentaires_utilisateur_valide': nb_commentaires_utilisateur_valide[
-            'nb_commentaires_utilisateur_valide'] if nb_commentaires_utilisateur_valide else 0,
-        'nb_commentaires_total_valide': nb_commentaires_total_valide['nb_commentaires_total_valide'] if nb_commentaires_total_valide else 0
+        'nb_commentaires_utilisateur': nb_commentaires['nb_commentaires_utilisateur']
+        if nb_commentaires[ 'nb_commentaires_utilisateur'] is not None else 0,
+        'nb_commentaires_utilisateur_valide': nb_commentaires['nb_commentaires_utilisateur_valide']
+        if nb_commentaires['nb_commentaires_utilisateur_valide'] is not None else 0,
+        'nb_commentaires_total': nb_commentaires['nb_commentaires_total']
+        if nb_commentaires[ 'nb_commentaires_total'] is not None else 0,
+        'nb_commentaires_total_valide': nb_commentaires['nb_commentaires_total_valide']
+        if nb_commentaires[ 'nb_commentaires_total_valide'] is not None else 0
     }
 
     return render_template('client/casque_info/casque_details.html'
