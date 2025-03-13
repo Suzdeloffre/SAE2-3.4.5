@@ -48,15 +48,15 @@
                         <td>{{ adresse.adresse }}</td>
                         <td>{{ adresse.code_postal }}</td>
                         <td>{{ adresse.ville }}</td>
-                        <td> {% if adresse.nbr_commandes is defined %}{{ adresse.nbr_commandes }} {% endif %} </td>
+                        <td> {% if adresse.nbr_commandes is defined %}{{ adresse.nbr_commandes }}{% else %}0{% endif %} </td>
                         <td>
                             {% if adresse.valide is defined and adresse.valide==0 %}
                                 <span style="color: darkorange">*</span>
                             {% else %}
                                 <a class="btn btn-primary" href="/client/coordonnee/edit_adresse?id_adresse={{ adresse.id_adresse }}"> Modifier </a>
-                            <form action="/client/coordonnee/delete_adresse" style="display: inline-block;"  method="post">
+                            <form action="/client/coordonnee/delete_adresse" style="display: inline-block;"  method="POST">
                                 <input type="hidden"  name="id_adresse" value="{{ adresse.id_adresse }}">
-                                <button class="btn btn-primary" > Supprimer </button>
+                                <button class="btn btn-primary"> Supprimer </button>
                             </form>
                             {% endif %}
                         </td>
@@ -66,7 +66,7 @@
         </table>
         <div>
             {% if nb_adresses is defined %}
-                {% if nb_adresses <4 %}
+                {% if nb_adresses <= 4 %}
                         <span style="color: darkorange">* adresse non valide</span><br><span style="color: blue; font-weight: bolder;">* favori 💛</span>
                   <a href="/client/coordonnee/add_adresse" class="btn btn-primary m-2">Ajouter une adresse</a>
                 {% endif %}
