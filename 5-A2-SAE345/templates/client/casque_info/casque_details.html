@@ -146,8 +146,8 @@
                         <td>
                             {% if commentaire.utilisateur_id == session['id_user'] %}
                                   <form  action="/client/commentaire/delete"  style="display: inline-block;"  method="post" >
-                                      <input type="hidden" name="id_casque" value="{{ commentaire.id_casque }}">
-                                      <input type="hidden" name="id_utilisateur" value="{{ commentaire.id_utilisateur }}">
+                                      <input type="hidden" name="id_casque" value="{{ commentaire.casque_id }}">
+                                      <input type="hidden" name="id_utilisateur" value="{{ commentaire.utilisateur_id }}">
                                       <input type="hidden" name="date_publication" value="{{ commentaire.date_publication }}">
                                       <button class="btn btn-primary" > supprimer </button>
                                   </form>

@@ -31,7 +31,7 @@ def client_casque_details():
     nb_commentaires=[]
     if casque is None:
         abort(404, "pb id casque")
-    sql = ''' SELECT id_commantaire, libelle_comm, utilisateur_id, utilisateur.nom, utilisateur.login
+    sql = ''' SELECT *, utilisateur.nom, utilisateur.login
                 FROM commentaire
                 inner join utilisateur on commentaire.utilisateur_id = utilisateur.id_utilisateur
                 WHERE casque_id =%s
@@ -46,6 +46,7 @@ def client_casque_details():
      '''
     mycursor.execute(sql, (id_client, id_casque))
     commandes_casque = mycursor.fetchone()
+    commandes_casque = commandes_casque['nb_commandes_casque'] if commandes_casque else 0
 
     sql = '''SELECT note
             FROM note
@@ -74,7 +75,6 @@ def client_comment_add():
     commentaire = request.form.get('commentaire', None)
     id_client = session['id_user']
     id_casque = request.form.get('id_casque')
-    print(id_casque)
 
     if commentaire == '':
         flash(u'Commentaire non prise en compte')
@@ -94,11 +94,12 @@ def client_comment_add():
 @client_commentaire.route('/client/commentaire/delete', methods=['POST'])
 def client_comment_detete():
     mycursor = get_db().cursor()
+    print(f"Form data: {request.form}")
     id_client = session['id_user']
     id_casque = request.form.get('id_casque', None)
     date_publication = request.form.get('date_publication', None)
 
-    sql = '''  DELETE FROM commentaire WHERE libelle_comm=%s and utilisateur_id=%s and casque_id=%s and date_publication=%s;'''
+    sql = '''  DELETE  FROM commentaire WHERE utilisateur_id=%s and casque_id=%s and date_publication=%s;'''
     tuple_delete=(id_client,id_casque,date_publication)
     mycursor.execute(sql, tuple_delete)
     get_db().commit()
