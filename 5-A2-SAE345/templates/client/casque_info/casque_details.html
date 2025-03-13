@@ -131,20 +131,20 @@
 
                 {% for commentaire in commentaires %}
                     <tr>
-                        <td>{{ commentaire.nom }}({{ commentaire.id_utilisateur }})</td>
+                        <td>{{ commentaire.nom }}({{ commentaire.login }})</td>
                         <td>{% if commentaire.utilisateur_id == 1 %}
                             <span style="color: red">(réponse de l'administrateur du site (webmaster) ) :</span>
                             {% endif %}
-                            {{ commentaire.commentaire }}
+                            {{ commentaire.libelle_comm }}
                             {% if commentaire.valider == 1 %}
                             <span style="color: red">(v)</span>
                             {% endif %}
                         </td>
 {#                        <td>{{ commentaire.note }}#}
-{#                        {{ commentaire.__dict__ }}#}
+{#                        {{#commentaire.__dict__ }}#}
 {#                        </td>#}
                         <td>
-                            {% if commentaire.id_utilisateur == session['id_user'] %}
+                            {% if commentaire.utilisateur_id == session['id_user'] %}
                                   <form  action="/client/commentaire/delete"  style="display: inline-block;"  method="post" >
                                       <input type="hidden" name="id_casque" value="{{ commentaire.id_casque }}">
                                       <input type="hidden" name="id_utilisateur" value="{{ commentaire.id_utilisateur }}">

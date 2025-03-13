@@ -31,8 +31,9 @@ def client_casque_details():
     nb_commentaires=[]
     if casque is None:
         abort(404, "pb id casque")
-    sql = ''' SELECT id_commantaire, libelle_comm, utilisateur_id
+    sql = ''' SELECT id_commantaire, libelle_comm, utilisateur_id, utilisateur.nom, utilisateur.login
                 FROM commentaire
+                inner join utilisateur on commentaire.utilisateur_id = utilisateur.id_utilisateur
                 WHERE casque_id =%s
      '''
     mycursor.execute(sql, ( id_casque))
