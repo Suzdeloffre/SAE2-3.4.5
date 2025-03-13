@@ -55,7 +55,7 @@ def client_casque_details():
     print('note',note)
     if note:
          note=note['note']
-    sql = ''' SELECT count(*) as nb_commentaires from commentaire where casque_id=%s
+    sql = ''' SELECT count(*) as nb_commentaires from commentaire where casque_id=%s and utilisateur_id=%s
     '''
     mycursor.execute(sql, (id_client, id_casque))
     nb_commentaires = mycursor.fetchone()
