@@ -49,7 +49,7 @@ def client_casque_details():
     #commandes_casque = commandes_casque['nb_commandes_casque'] if commandes_casque else 0
 
     sql = '''
-        SELECT note
+        SELECT *
         FROM note
         WHERE utilisateur_id=%s and casque_id=%s
     '''
@@ -58,8 +58,6 @@ def client_casque_details():
 
     if note:
         note = note['note']
-    else:
-        note = None
 
     sql_moyenne_notes = '''
         SELECT AVG(note) as moyenne_notes, COUNT(note) as nb_notes
@@ -76,6 +74,7 @@ def client_casque_details():
         nb_notes = 0
 
     casque = {
+        'id_casque': casque['id_casque'],
         'note': note,
         'moyenne_notes': moyenne_notes,
         'nb_notes': nb_notes
@@ -143,7 +142,7 @@ def client_comment_add():
         flash(u'Commentaire non prise en compte')
         return redirect('/client/casque/details?id_casque='+id_casque)
     if commentaire != None and len(commentaire)>0 and len(commentaire) <3 :
-        flash(u'Commentaire avec plus de 2 caractères','alert-warning')              # 
+        flash(u'Commentaire avec plus de 2 caractères','alert-warning')
         return redirect('/client/casque/details?id_casque='+id_casque)
 
     tuple_insert = (commentaire, id_client, id_casque)

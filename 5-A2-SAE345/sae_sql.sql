@@ -229,10 +229,10 @@ INSERT INTO note(id_note, utilisateur_id, casque_id, note)VALUES
 (NULL, 3, 3, 10);
 
 INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id, libelle_comm, date_publication, validation) VALUES
-(NULL,2, 2,'Parfait, le casque est confortable', '2020-02-07', 1),
-(NULL, 3, 4, 'le casque à l\'air solide. La livraison était rapide !','2018-10-20' ,0),
-(NULL, 3,15, 'Parfait', '2020-05-14', 1),
-(NULL, 2,6, 'la livraison a pris plus d\'un mois... et la couleur n\'est pas la même que sur la photo', '2023-08-03', 1);
+(NULL,2, 2,'Parfait, le casque est confortable', 02/01/2020, 1),
+(NULL, 3, 4, 'le casque à l\'air solide. La livraison était rapide !', 14/06/2019 ,0),
+(NULL, 3,15, 'Parfait', 16/09/2023, 1),
+(NULL, 2,6, 'la livraison a pris plus d\'un mois... et la couleur n\'est pas la même que sur la photo', 25/05/2021, 1);
 
 
 #Affiche tous les casques
