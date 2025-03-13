@@ -46,21 +46,84 @@ def client_casque_details():
      '''
     mycursor.execute(sql, (id_client, id_casque))
     commandes_casque = mycursor.fetchone()
-    commandes_casque = commandes_casque['nb_commandes_casque'] if commandes_casque else 0
+    #commandes_casque = commandes_casque['nb_commandes_casque'] if commandes_casque else 0
 
-    sql = '''SELECT note
-            FROM note
-            where utilisateur_id=%s and casque_id=%s
+    sql = '''
+        SELECT note
+        FROM note
+        WHERE utilisateur_id=%s and casque_id=%s
     '''
     mycursor.execute(sql, (id_client, id_casque))
     note = mycursor.fetchone()
-    print('note',note)
+
     if note:
-         note=note['note']
-    sql = ''' SELECT count(*) as nb_commentaires from commentaire where casque_id=%s and utilisateur_id=%s
+        note = note['note']
+    else:
+        note = None
+
+    sql_moyenne_notes = '''
+        SELECT AVG(note) as moyenne_notes, COUNT(note) as nb_notes
+        FROM note
+        WHERE casque_id = %s
     '''
-    mycursor.execute(sql, (id_client, id_casque))
-    nb_commentaires = mycursor.fetchone()
+    mycursor.execute(sql_moyenne_notes, (id_casque,))
+    result = mycursor.fetchone()
+    if result:
+        moyenne_notes = result['moyenne_notes'] if result['moyenne_notes'] is not None else None
+        nb_notes = result['nb_notes'] if result['nb_notes'] is not None else 0
+    else:
+        moyenne_notes = None
+        nb_notes = 0
+
+    casque = {
+        'note': note,
+        'moyenne_notes': moyenne_notes,
+        'nb_notes': nb_notes
+    }
+
+    sql_utilisateur = ''' 
+        SELECT count(id_commantaire) as nb_commentaires_utilisateur
+        FROM commentaire 
+        WHERE casque_id=%s AND utilisateur_id=%s;
+    '''
+
+    sql_total = ''' 
+        SELECT count(id_commantaire) as nb_commentaires_total
+        FROM commentaire
+        WHERE casque_id=%s;
+    '''
+    sql_utilisateur_valide = '''
+        SELECT count(id_commantaire) as nb_commentaires_utilisateur_valide
+        FROM commentaire
+        WHERE casque_id=%s and utilisateur_id=%s and validation=1;
+    '''
+    sql_total_valide = '''
+        SELECT count(id_commantaire) as nb_commentaires_total_valide
+        FROM commentaire
+        WHERE casque_id=%s and validation=1;
+    '''
+
+    mycursor.execute(sql_utilisateur, (id_casque, id_client))
+    nb_commentaires_utilisateur = mycursor.fetchone()
+
+    mycursor.execute(sql_total, (id_casque,))
+    nb_commentaires_total = mycursor.fetchone()
+
+    mycursor.execute(sql_utilisateur_valide, (id_casque, id_client))
+    nb_commentaires_utilisateur_valide = mycursor.fetchone()
+
+    mycursor.execute(sql_total_valide, (id_casque,))
+    nb_commentaires_total_valide = mycursor.fetchone()
+
+    nb_commentaires = {
+        'nb_commentaires_utilisateur': nb_commentaires_utilisateur[
+            'nb_commentaires_utilisateur'] if nb_commentaires_utilisateur else 0,
+        'nb_commentaires_total': nb_commentaires_total['nb_commentaires_total'] if nb_commentaires_total else 0,
+        'nb_commentaires_utilisateur_valide': nb_commentaires_utilisateur_valide[
+            'nb_commentaires_utilisateur_valide'] if nb_commentaires_utilisateur_valide else 0,
+        'nb_commentaires_total_valide': nb_commentaires_total_valide['nb_commentaires_total_valide'] if nb_commentaires_total_valide else 0
+    }
+
     return render_template('client/casque_info/casque_details.html'
                            , casque=casque
                            , commentaires=commentaires
