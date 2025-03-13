@@ -14,13 +14,13 @@ client_commentaire = Blueprint('client_commentaire', __name__,
 @client_commentaire.route('/client/casque/details', methods=['GET'])
 def client_casque_details():
     mycursor = get_db().cursor()
-    id_casque = request.args.get('id_casque', None)
+    id_casque = request.args.get('id_casque')
     id_client = session['id_user']
 
     ## partie 4
     # client_historique_add(id_casque, id_client)
 
-    sql = '''SELECT nom_casque, prix_casque, image
+    sql = '''SELECT nom_casque, prix_casque, image, id_casque
              FROM casque
              where id_casque =%s
     '''
@@ -55,10 +55,10 @@ def client_casque_details():
     print('note',note)
     if note:
          note=note['note']
-    #sql = '''
-    #'''
-    #mycursor.execute(sql, (id_client, id_casque))
-    #nb_commentaires = mycursor.fetchone()
+    sql = ''' SELECT count(*) as nb_commentaires from commentaire where casque_id=%s
+    '''
+    mycursor.execute(sql, (id_client, id_casque))
+    nb_commentaires = mycursor.fetchone()
     return render_template('client/casque_info/casque_details.html'
                            , casque=casque
                            , commentaires=commentaires
@@ -72,7 +72,9 @@ def client_comment_add():
     mycursor = get_db().cursor()
     commentaire = request.form.get('commentaire', None)
     id_client = session['id_user']
-    id_casque = request.form.get('id_casque', None)
+    id_casque = request.form.get('id_casque')
+    print(id_casque)
+
     if commentaire == '':
         flash(u'Commentaire non prise en compte')
         return redirect('/client/casque/details?id_casque='+id_casque)
@@ -81,8 +83,8 @@ def client_comment_add():
         return redirect('/client/casque/details?id_casque='+id_casque)
 
     tuple_insert = (commentaire, id_client, id_casque)
-    print(tuple_insert)
-    sql = '''  '''
+    sql = ''' INSERT INTO commentaire ( libelle_comm, utilisateur_id, casque_id, date_publication) VALUES (%s,%s,%s, CURRENT_DATE )'''
+
     mycursor.execute(sql, tuple_insert)
     get_db().commit()
     return redirect('/client/casque/details?id_casque='+id_casque)
@@ -94,7 +96,8 @@ def client_comment_detete():
     id_client = session['id_user']
     id_casque = request.form.get('id_casque', None)
     date_publication = request.form.get('date_publication', None)
-    sql = '''   '''
+
+    sql = '''  DELETE FROM commentaire WHERE libelle_comm=%s and utilisateur_id=%s and casque_id=%s and date_publication=%s;'''
     tuple_delete=(id_client,id_casque,date_publication)
     mycursor.execute(sql, tuple_delete)
     get_db().commit()
