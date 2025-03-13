@@ -75,6 +75,7 @@ def client_casque_details():
 
     casque = {
         'id_casque': casque['id_casque'],
+        'image': casque['image'],
         'note': note,
         'moyenne_notes': moyenne_notes,
         'nb_notes': nb_notes
