@@ -46,7 +46,7 @@ def client_casque_details():
      '''
     mycursor.execute(sql, (id_client, id_casque))
     commandes_casque = mycursor.fetchone()
-    #commandes_casque = commandes_casque['nb_commandes_casque'] if commandes_casque else 0
+    nb_commandes_casque = commandes_casque['nb_commandes_casque'] if commandes_casque and commandes_casque['nb_commandes_casque'] is not None else 0
 
     sql = '''
         SELECT *
@@ -154,7 +154,7 @@ def client_note_add():
     id_casque = request.form.get('id_casque', None)
     tuple_insert = (note, id_client, id_casque)
     print(tuple_insert)
-    sql = '''   '''
+    sql = '''  INSERT INTO note (note, utilisateur_id, casque_id) VALUES (%s,%s,%s)'''
     mycursor.execute(sql, tuple_insert)
     get_db().commit()
     return redirect('/client/casque/details?id_casque='+id_casque)
@@ -167,7 +167,7 @@ def client_note_edit():
     id_casque = request.form.get('id_casque', None)
     tuple_update = (note, id_client, id_casque)
     print(tuple_update)
-    sql = '''  '''
+    sql = ''' UPDATE note SET note=%s WHERE utilisateur_id=%s and casque_id=%s; '''
     mycursor.execute(sql, tuple_update)
     get_db().commit()
     return redirect('/client/casque/details?id_casque='+id_casque)
@@ -179,7 +179,7 @@ def client_note_delete():
     id_casque = request.form.get('id_casque', None)
     tuple_delete = (id_client, id_casque)
     print(tuple_delete)
-    sql = '''  '''
+    sql = ''' DELETE FROM note WHERE utilisateur_id=%s and casque_id=%s; '''
     mycursor.execute(sql, tuple_delete)
     get_db().commit()
     return redirect('/client/casque/details?id_casque='+id_casque)
