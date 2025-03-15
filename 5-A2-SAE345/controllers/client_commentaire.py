@@ -35,6 +35,7 @@ def client_casque_details():
                 FROM commentaire
                 inner join utilisateur on commentaire.utilisateur_id = utilisateur.id_utilisateur
                 WHERE casque_id =%s
+                ORDER BY date_publication DESC
      '''
     mycursor.execute(sql, ( id_casque))
     commentaires = mycursor.fetchall()
@@ -59,12 +60,12 @@ def client_casque_details():
     if note:
         note = note['note']
 
-    sql_moyenne_notes = '''
+    sql = '''
         SELECT AVG(note) as moyenne_notes, COUNT(note) as nb_notes
         FROM note
         WHERE casque_id = %s
     '''
-    mycursor.execute(sql_moyenne_notes, (id_casque,))
+    mycursor.execute(sql, (id_casque,))
     result = mycursor.fetchone()
     if result:
         moyenne_notes = result['moyenne_notes'] if result['moyenne_notes'] is not None else None

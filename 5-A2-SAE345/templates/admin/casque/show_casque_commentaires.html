@@ -47,7 +47,7 @@
                         <td> {% if commentaire.utilisateur_id == session['id_user'] %}
                             <span style="color: red">(réponse de l'administrateur du site (webmaster) :</span>
                             {% endif %}
-                            {{ commentaire.commentaire }}
+                            {{ commentaire.libelle_comm }}
                         </td>
                         <td>
                                   <form action="/admin/casque/commentaires/delete" style="display: inline-block;" method="post" >

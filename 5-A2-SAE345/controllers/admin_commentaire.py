@@ -13,12 +13,38 @@ admin_commentaire = Blueprint('admin_commentaire', __name__,
 def admin_casque_details():
     mycursor = get_db().cursor()
     id_casque =  request.args.get('id_casque', None)
-    sql = '''    requête admin_type_casque_1    '''
-    commentaires = {}
-    sql = '''   requête admin_type_casque_1_bis   '''
-    casque = []
-    sql = '''   requête admin_type_casque_1_3   '''
-    nb_commentaires = []
+    sql = '''   SELECT *, u.nom, u.login
+                FROM commentaire 
+                inner join utilisateur u on commentaire.utilisateur_id = u.id_utilisateur
+                WHERE casque_id = %s
+    '''
+    mycursor.execute(sql, (id_casque))
+    commentaires = mycursor.fetchall()
+
+
+    sql = '''  SELECT nom_casque as nom, id_casque,
+                AVG(note) as moyenne_notes, 
+                COUNT(note) as nb_notes
+                FROM note
+                inner join casque c on note.casque_id = c.id_casque
+                where id_casque=%s '''
+    mycursor.execute(sql, id_casque)
+    casque = mycursor.fetchall()
+    nb_note = casque[0]['nb_notes'] if casque[0]['nb_notes'] else 0
+    moyenne_notes = casque[0]['moyenne_notes'] if casque[0]['moyenne_notes'] else 0
+
+
+    sql = '''  SELECT 
+                COUNT(CASE WHEN validation = 1 THEN 1 END) as nb_commentaires_valider, 
+                COUNT(*) as nb_commentaire_total
+                FROM commentaire
+                WHERE casque_id = %s
+                 '''
+    mycursor.execute(sql, id_casque)
+    nb_commentaires = mycursor.fetchone()
+    nb_commentaire_total = nb_commentaires['nb_commentaire_total'] if nb_commentaires else 0
+    nb_commentaire_valider = nb_commentaires['nb_commentaires_valider'] if nb_commentaires else 0
+
     return render_template('admin/casque/show_casque_commentaires.html'
                            , commentaires=commentaires
                            , casque=casque

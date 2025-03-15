@@ -118,7 +118,7 @@ CREATE TABLE note(
     id_note INT AUTO_INCREMENT,
     utilisateur_id INT,
     casque_id INT,
-    note INT,
+    note FLOAT,
     PRIMARY KEY (id_note, utilisateur_id, casque_id),
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id_utilisateur),
     FOREIGN KEY (casque_id) REFERENCES casque(id_casque)
