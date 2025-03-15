@@ -29,10 +29,7 @@ def admin_casque_details():
                 inner join casque c on note.casque_id = c.id_casque
                 where id_casque=%s '''
     mycursor.execute(sql, id_casque)
-    casque = mycursor.fetchall()
-    nb_note = casque[0]['nb_notes'] if casque[0]['nb_notes'] else 0
-    moyenne_notes = casque[0]['moyenne_notes'] if casque[0]['moyenne_notes'] else 0
-
+    casque = mycursor.fetchone()
 
     sql = '''  SELECT 
                 COUNT(CASE WHEN validation = 1 THEN 1 END) as nb_commentaires_valider, 
