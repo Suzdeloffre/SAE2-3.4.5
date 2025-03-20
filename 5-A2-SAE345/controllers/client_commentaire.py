@@ -47,7 +47,9 @@ def client_casque_details():
      '''
     mycursor.execute(sql, (id_client, id_casque))
     commandes_casque = mycursor.fetchone()
-    nb_commandes_casque = commandes_casque['nb_commandes_casque'] if commandes_casque and commandes_casque['nb_commandes_casque'] is not None else 0
+    nb_commandes_casque = commandes_casque['nb_commandes_casque']
+    if nb_commandes_casque == None:
+        commandes_casque['nb_commandes_casque'] = 0
 
     sql = '''
         SELECT *
