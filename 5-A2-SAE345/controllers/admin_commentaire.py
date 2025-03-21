@@ -39,8 +39,12 @@ def admin_casque_details():
                  '''
     mycursor.execute(sql, id_casque)
     nb_commentaires = mycursor.fetchone()
-    nb_commentaire_total = nb_commentaires['nb_commentaire_total'] if nb_commentaires else 0
-    nb_commentaire_valider = nb_commentaires['nb_commentaires_valider'] if nb_commentaires else 0
+    nb_commentaire_total = nb_commentaires['nb_commentaire_total']
+    if nb_commentaire_total == None:
+        nb_commentaires['nb_commentaire_total'] = 0
+    nb_commentaires_valider = nb_commentaires['nb_commentaires_valider']
+    if nb_commentaires_valider== None :
+        nb_commentaires['nb_commentaires_valider'] = 0
 
     return render_template('admin/casque/show_casque_commentaires.html'
                            , commentaires=commentaires
@@ -54,7 +58,7 @@ def admin_comment_delete():
     id_utilisateur = request.form.get('id_utilisateur', None)
     id_casque = request.form.get('id_casque', None)
     date_publication = request.form.get('date_publication', None)
-    sql = '''    requête admin_type_casque_2   '''
+    sql = ''' DELETE FROM commentaire WHERE utilisateur_id = %s AND casque_id = %s AND date_publication = %s '''
     tuple_delete=(id_utilisateur,id_casque,date_publication)
     get_db().commit()
     return redirect('/admin/casque/commentaires?id_casque='+id_casque)
@@ -73,7 +77,8 @@ def admin_comment_add():
     id_casque = request.form.get('id_casque', None)
     date_publication = request.form.get('date_publication', None)
     commentaire = request.form.get('commentaire', None)
-    sql = '''    requête admin_type_casque_3   '''
+    sql = '''  UPDATE commentaire SET validation = 1, reponse=%s
+                WHERE utilisateur_id = %s AND casque_id = %s AND date_publication = %s '''
     get_db().commit()
     return redirect('/admin/casque/commentaires?id_casque='+id_casque)
 
