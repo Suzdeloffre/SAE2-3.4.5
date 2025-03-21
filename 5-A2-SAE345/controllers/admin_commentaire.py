@@ -22,6 +22,7 @@ def admin_casque_details():
     commentaires = mycursor.fetchall()
 
 
+
     sql = '''  SELECT nom_casque as nom, id_casque,
                 AVG(note) as moyenne_notes, 
                 COUNT(note) as nb_notes

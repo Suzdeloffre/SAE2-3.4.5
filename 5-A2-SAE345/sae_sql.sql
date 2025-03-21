@@ -130,7 +130,6 @@ CREATE TABLE commentaire(
      casque_id INT,
      libelle_comm VARCHAR(255),
      date_publication DATE,
-     reponse VARCHAR(255),
      validation BOOLEAN,
      PRIMARY KEY (id_commantaire, casque_id, utilisateur_id, date_publication),
      FOREIGN KEY (utilisateur_id)REFERENCES utilisateur(id_utilisateur),
@@ -229,11 +228,13 @@ INSERT INTO note(id_note, utilisateur_id, casque_id, note)VALUES
 (NULL, 2, 6, 3),
 (NULL, 3, 3, 3.5);
 
-INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id, libelle_comm, date_publication, validation, reponse) VALUES
-(NULL,2, 2,'Parfait, le casque est confortable', 02/01/2020, 1, 'Merci pour votre commentaire'),
-(NULL, 3, 4, 'le casque à l\'air solide. La livraison était rapide !', 14/06/2019 ,0, null),
-(NULL, 3,15, 'Parfait', 16/09/2023, 1, null),
-(NULL, 2,6, 'la livraison a pris plus d\'un mois... et la couleur n\'est pas la même que sur la photo', 25/05/2021, 1,'Nous sommes navrés pour ce désagrément, nous allons faire le nécessaire pour améliorer notre service');
+INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id, libelle_comm, date_publication, validation) VALUES
+(NULL,2, 2,'Parfait, le casque est confortable', 02/01/2020, 1),
+(NULL, 3, 4, 'le casque à l\'air solide. La livraison était rapide !', 14/06/2019 ,0),
+(NULL, 3,15, 'Parfait', 16/09/2023, 1),
+(NULL, 2,6, 'la livraison a pris plus d\'un mois... et la couleur n\'est pas la même que sur la photo', 25/05/2021, 1),
+(NULL,1, 2,'Merci pour votre commentaire', 10/01/2020, 1),
+(NULL, 1,6, 'Nous sommes navrés que la couleur ne soit pas la même. Nous améliorerons nos services grâce à votre commentaire', 29/05/2021, 0);
 
 
 #Affiche tous les casques
