@@ -35,7 +35,7 @@ def client_casque_details():
                 FROM commentaire
                 inner join utilisateur on commentaire.utilisateur_id = utilisateur.id_utilisateur
                 WHERE casque_id =%s
-                ORDER BY date_publication DESC
+                ORDER BY date_publication DESC, utilisateur_id desc
      '''
     mycursor.execute(sql, ( id_casque))
     commentaires = mycursor.fetchall()

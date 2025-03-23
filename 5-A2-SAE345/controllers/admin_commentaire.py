@@ -17,6 +17,7 @@ def admin_casque_details():
                 FROM commentaire 
                 inner join utilisateur u on commentaire.utilisateur_id = u.id_utilisateur
                 WHERE casque_id = %s
+                order by date_publication desc
     '''
     mycursor.execute(sql, (id_casque))
     commentaires = mycursor.fetchall()
