@@ -11,25 +11,38 @@ admin_dataviz = Blueprint('admin_dataviz', __name__,
 @admin_dataviz.route('/admin/dataviz/etat1')
 def show_type_casque_stock():
     mycursor = get_db().cursor()
-    sql = '''
-    
-           '''
-    # mycursor.execute(sql)
-    # datas_show = mycursor.fetchall()
-    # labels = [str(row['libelle']) for row in datas_show]
-    # values = [int(row['nbr_casques']) for row in datas_show]
+    sql = '''SELECT  type_casque.id_type_casque, 
+             libelle_type_casque AS libelle, 
+             COUNT(DISTINCT c.id_casque) AS nbr_casques
+             FROM type_casque
+             LEFT JOIN casque c ON type_casque.id_type_casque = c.type_casque_id
+             GROUP BY type_casque.id_type_casque'''
 
-    # sql = '''
-    #         
-    #        '''
-    datas_show=[]
-    labels=[]
-    values=[]
+    mycursor.execute(sql)
+    datas_show = mycursor.fetchall()
+    labels = [str(row['libelle']) for row in datas_show]
+    values = [int(row['nbr_casques']) for row in datas_show]
+    nb_casque_total = sum(values)
+
+    sql = '''SELECT tc.id_type_casque, 
+                        tc.libelle_type_casque AS libelle, 
+                        IFNULL(COUNT(c.id_casque), 0) AS nbr_casques_stock
+                 FROM type_casque tc
+                 LEFT JOIN casque c ON tc.id_type_casque = c.type_casque_id
+                 GROUP BY tc.id_type_casque'''
+
+    mycursor.execute(sql)
+    types_casques_nb = mycursor.fetchall()
+    nbr_casques_stock = [int(row['nbr_casques_stock']) for row in types_casques_nb]
+
+    print(nbr_casques_stock)
 
     return render_template('admin/dataviz/dataviz_etat_1.html'
                            , datas_show=datas_show
                            , labels=labels
-                           , values=values)
+                           , values=values
+                           ,types_casques_nb=types_casques_nb
+                           ,nb_casque_total=nb_casque_total)
 
 
 # sujet 3 : adresses

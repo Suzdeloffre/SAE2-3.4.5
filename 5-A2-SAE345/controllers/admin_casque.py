@@ -19,8 +19,9 @@ def show_casque():
     mycursor = get_db().cursor()
     sql =''' SELECT * ,IFNULL(COUNT( distinct (c.id_commantaire)), 0) as nb_commentaires_nouveaux
             FROM casque
-            left join commentaire c on casque.id_casque = c.casque_id
-            group by casque.id_casque'''
+            left join commentaire c on casque.id_casque = c.casque_id and c.validation = 0
+            group by casque.id_casque
+            '''
     mycursor.execute(sql)
     casque = mycursor.fetchall()
 
