@@ -17,22 +17,15 @@ admin_casque = Blueprint('admin_casque', __name__,
 @admin_casque.route('/admin/casque/show')
 def show_casque():
     mycursor = get_db().cursor()
-    sql = '''  SELECT * FROM casque'''
-
+    sql =''' SELECT * ,IFNULL(COUNT( distinct (c.id_commantaire)), 0) as nb_commentaires_nouveaux
+            FROM casque
+            left join commentaire c on casque.id_casque = c.casque_id
+            group by casque.id_casque'''
     mycursor.execute(sql)
     casque = mycursor.fetchall()
 
-    sql="""SELECT id_casque, COALESCE(COUNT(*), 0) as nb_commentaires_nouveaux
-    from commentaire
-    right join casque on commentaire.casque_id = casque.id_casque
-    where validation = 0
-    group by casque.id_casque"""
-    mycursor.execute(sql)
-    nb_commentaires_nouveaux = mycursor.fetchall()
-    print(nb_commentaires_nouveaux)
 
-    return render_template('admin/casque/show_casque.html', casques=casque,
-                           nb_commentaires_nouveaux=nb_commentaires_nouveaux)
+    return render_template('admin/casque/show_casque.html', casques=casque)
 
 
 @admin_casque.route('/admin/casque/add', methods=['GET'])
