@@ -248,8 +248,11 @@ INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id, libelle_comm,
 (NULL, 3, 10, 'Bonne aération et ajustement facile.', '2024-02-14', 1),
 (NULL, 3, 15, 'Casque confortable, mais un peu cher.', '2024-03-05', 1),
 (NULL, 3, 17, 'Parfait pour les trajets quotidiens.', '2024-03-20', 1),
-(NULL, 2, 14, 'Casque militaire robuste et confortable, parfait pour les longues missions.', '2024-03-25', 1);
-
+(NULL, 2, 14, 'Casque militaire robuste et confortable, parfait pour les longues missions.', '2024-03-25', 1),
+(NULL, 2, 10, 'Très confortable, parfait pour mes sorties en montagne!', '2022-12-15', 1),
+(NULL, 3, 10, 'Bon casque mais un peu lourd. Bonne protection.', '2023-01-10', 1),
+(NULL, 2, 12, 'Bon casque de qualité, je me sens bien protégé', '2022-11-05', 1),
+(NULL, 3, 17, 'Bonne qualité, mais il manque un peu de confort au niveau des oreilles.', '2023-03-15', 1);
 
 #Affiche tous les casques
 SELECT * FROM casque;

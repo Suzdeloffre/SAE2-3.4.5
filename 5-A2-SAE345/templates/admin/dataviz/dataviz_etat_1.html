@@ -21,6 +21,16 @@
 
     <h2> nombre de commentaires:
  <span style="color: red;">{{ total_commentaires }}</span></h2>
+    <h3>Selectionner un type de casque </h3>
+    <form action="/admin/dataviz/etat_1" method="post">
+        <label for="type_casque">Type de casque</label>
+        <select name="type_casque" id="type_casque">
+            <option value="0">tous les types de casques</option>
+            {% for type_casque in datas_show %}
+                <option value="{{ type_casque.id_type_casque }}">{{ type_casque.libelle }}</option>
+            {% endfor %}
+        </select>
+    </form>
 
 <table class="table">
     <thead class="thead-dark">

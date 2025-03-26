@@ -11,19 +11,39 @@ admin_dataviz = Blueprint('admin_dataviz', __name__,
 @admin_dataviz.route('/admin/dataviz/etat1')
 def show_type_casque_stock():
     mycursor = get_db().cursor()
-    sql = '''SELECT  type_casque.id_type_casque, 
-             libelle_type_casque AS libelle, 
-             COUNT(DISTINCT com.id_commantaire ) AS nbr_commentaires
-             FROM type_casque
-             LEFT JOIN casque c ON type_casque.id_type_casque = c.type_casque_id
-             left join commentaire com on c.id_casque = com.casque_id
-             GROUP BY type_casque.id_type_casque'''
+    id_type = request.form.get('type_casque')
 
-    mycursor.execute(sql)
-    datas_show = mycursor.fetchall()
-    labels = [str(row['libelle']) for row in datas_show]
-    values = [int(row['nbr_commentaires']) for row in datas_show]
-    total_commentaires = sum(values)
+    if id_type:
+        sql = '''SELECT  type_casque.id_type_casque, 
+                    libelle_type_casque AS libelle, 
+                    COUNT(DISTINCT com.id_commantaire ) AS nbr_commentaires
+                 FROM type_casque
+                 LEFT JOIN casque c ON type_casque.id_type_casque = c.type_casque_id
+                 LEFT JOIN commentaire com ON c.id_casque = com.casque_id
+                 WHERE id_type_casque = %s
+                 GROUP BY type_casque.id_type_casque
+                 '''
+        mycursor.execute(sql, (id_type,))
+        datas_show = mycursor.fetchall()
+        labels = [str(row['libelle']) for row in datas_show]
+        values = [int(row['nbr_commentaires']) for row in datas_show]
+        total_commentaires = sum(values)
+
+    else:
+        sql = '''SELECT  type_casque.id_type_casque, 
+                 libelle_type_casque AS libelle, 
+                 COUNT(DISTINCT com.id_commantaire ) AS nbr_commentaires
+                 FROM type_casque
+                 LEFT JOIN casque c ON type_casque.id_type_casque = c.type_casque_id
+                 LEFT JOIN commentaire com ON c.id_casque = com.casque_id
+                 GROUP BY type_casque.id_type_casque
+                 '''
+        mycursor.execute(sql)
+        datas_show = mycursor.fetchall()
+        labels = [str(row['libelle']) for row in datas_show]
+        values = [int(row['nbr_commentaires']) for row in datas_show]
+        total_commentaires = sum(values)
+
 
     sql = '''SELECT tc.id_type_casque, 
                         tc.libelle_type_casque AS libelle, 
