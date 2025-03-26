@@ -234,7 +234,21 @@ INSERT INTO commentaire(id_commantaire, utilisateur_id, casque_id, libelle_comm,
 (NULL, 3,15, 'Parfait', 16/09/2023, 1),
 (NULL, 2,6, 'la livraison a pris plus d\'un mois... et la couleur n\'est pas la même que sur la photo', 25/05/2021, 1),
 (NULL,1, 2,'Merci pour votre commentaire', 10/01/2020, 1),
-(NULL, 1,6, 'Nous sommes navrés que la couleur ne soit pas la même. Nous améliorerons nos services grâce à votre commentaire', 29/05/2021, 0);
+(NULL, 1,6, 'Nous sommes navrés que la couleur ne soit pas la même. Nous améliorerons nos services grâce à votre commentaire', 29/05/2021, 0),
+(NULL, 1, 4, 'Merci pour votre commentaire', 10/01/2020, 1),
+(NULL, 2, 1, 'Très bon casque, léger et confortable.', '2023-05-12', 1),
+(NULL, 2, 2, 'Bonne qualité, mais la taille est un peu juste.', '2023-06-08', 1),
+(NULL, 3, 3, 'Excellent rapport qualité-prix, je recommande !', '2023-07-15', 1),
+(NULL, 3, 4, 'Solide et esthétique, parfait pour mes besoins.', '2023-08-21', 1),
+(NULL, 2, 5, 'Super casque, mais la livraison a pris du retard.', '2023-09-10', 0),
+(NULL, 2, 6, 'Couleur légèrement différente de la photo, mais toujours bien.', '2023-10-05', 1),
+(NULL, 3, 7, 'Prix très abordable, fait le job.', '2023-11-11', 1),
+(NULL, 3, 8, 'Un peu lourd, mais protège bien.', '2023-12-20', 0),
+(NULL, 3, 9, 'Simple mais efficace.', '2024-01-02', 1),
+(NULL, 3, 10, 'Bonne aération et ajustement facile.', '2024-02-14', 1),
+(NULL, 3, 15, 'Casque confortable, mais un peu cher.', '2024-03-05', 1),
+(NULL, 3, 17, 'Parfait pour les trajets quotidiens.', '2024-03-20', 1),
+(NULL, 2, 14, 'Casque militaire robuste et confortable, parfait pour les longues missions.', '2024-03-25', 1);
 
 
 #Affiche tous les casques

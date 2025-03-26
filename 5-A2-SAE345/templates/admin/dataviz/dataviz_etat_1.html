@@ -19,13 +19,13 @@
 {% block body %}
 <br>
 
-    <h2> nombre de casques :
- <span style="color: red;">{{ nb_casque_total }}</span></h2>
+    <h2> nombre de commentaires:
+ <span style="color: red;">{{ total_commentaires }}</span></h2>
 
 <table class="table">
     <thead class="thead-dark">
         <tr>
-           <th>types de casque</th> <th>(id)</th><th>nombre de casques</th>
+           <th>types de casque</th> <th>(id)</th><th>nombre de commentaires</th>
         </tr>
     </thead>
     <tbody>
@@ -35,8 +35,8 @@
                   <td>{{ ligne.libelle }}</td>
                   <td>{{ ligne.id_type_casque }}</td>
                    <td><span style="color: red">
-                       {% if ligne.nbr_casques_stock is not none %}  {{ ligne.nbr_casques_stock }} {% else %}
-                       pas d'casque {% endif %}
+                       {% if ligne.nbr_commentaires_total is not none %}  {{ ligne.nbr_commentaires_total }} {% else %}
+                       pas de commentaire{% endif %}
                    </span></td>
 
            </tr>
