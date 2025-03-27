@@ -30,25 +30,29 @@
             <tr>
                 <th>nom(pseudo)</th>
                 <th>Commentaires</th>
+                <th>Date</th>
+                <th>Action</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
 
                 {% for commentaire in commentaires %}
-                    {% if commentaire.valider == 1 and session['id_user']==commentaire.utilisateur_id %}
-                    <tr class="bg-success bg-opacity-25">
-                    {% elif commentaire.valider == 1 %}
-                    <tr class="bg-warning bg-opacity-25">
-                    {% else %}
+                    {% if commentaire.validation == 1 and session['id_user']==commentaire.utilisateur_id %}
+                    <tr class="bg-success bg-opacity-25" >
+                        {% elif commentaire.validation == 1 %}
+                        <tr class="bg-warning bg-opacity-25" >
+                        {% else %}
                     <tr>
                     {% endif %}
                         <td>{{ commentaire.nom }}({{ commentaire.id_utilisateur }})</td>
                         <td> {% if commentaire.utilisateur_id == session['id_user'] %}
-                            <span style="color: red">(réponse de l'administrateur du site (webmaster) :</span>
+                            <span style="color: red;">(réponse de l'administrateur du site (webmaster) :</span>
                             {% endif %}
                             {{ commentaire.libelle_comm }}
+
                         </td>
+                        <td>{{ commentaire.date_publication }}</td>
                         <td>
                                   <form action="/admin/casque/commentaires/delete" style="display: inline-block;" method="post" >
                                       <input type="hidden" name="id_casque" value="{{ commentaire.id_casque }}">

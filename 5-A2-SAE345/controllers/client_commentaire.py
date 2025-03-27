@@ -17,9 +17,6 @@ def client_casque_details():
     id_casque = request.args.get('id_casque')
     id_client = session['id_user']
 
-    ## partie 4
-    # client_historique_add(id_casque, id_client)
-
     sql = '''SELECT nom_casque, prix_casque, image, id_casque
              FROM casque
              where id_casque =%s
@@ -27,10 +24,7 @@ def client_casque_details():
     mycursor.execute(sql, id_casque)
     casque = mycursor.fetchone()
 
-    commandes_casque=[]
-    nb_commentaires=[]
-    if casque is None:
-        abort(404, "pb id casque")
+
     sql = ''' SELECT *, utilisateur.nom, utilisateur.login
                 FROM commentaire
                 inner join utilisateur on commentaire.utilisateur_id = utilisateur.id_utilisateur

@@ -8,63 +8,60 @@ from connexion_db import get_db
 admin_dataviz = Blueprint('admin_dataviz', __name__,
                         template_folder='templates')
 
-@admin_dataviz.route('/admin/dataviz/etat1')
+
+@admin_dataviz.route('/admin/dataviz/etat1', methods=['GET', 'POST'])
 def show_type_casque_stock():
     mycursor = get_db().cursor()
-    id_type = request.form.get('type_casque')
 
-    if id_type:
-        sql = '''SELECT  type_casque.id_type_casque, 
-                    libelle_type_casque AS libelle, 
-                    COUNT(DISTINCT com.id_commantaire ) AS nbr_commentaires
+    type_casque_id = request.form.get('type_casque')
+
+    sql = '''SELECT libelle_type_casque as libelle FROM type_casque'''
+    mycursor.execute(sql)
+    type_casques = mycursor.fetchall()
+
+
+    if type_casque_id is not None:
+        sql = '''SELECT *, type_casque.libelle_type_casque AS libelle, 
+                        COUNT(commentaire.id_commantaire) AS nbr_commentaires_total, 
+                        AVG(note.note) AS moyenne_notes, 
+                        COUNT(note.note) AS nb_notes
                  FROM type_casque
-                 LEFT JOIN casque c ON type_casque.id_type_casque = c.type_casque_id
-                 LEFT JOIN commentaire com ON c.id_casque = com.casque_id
-                 WHERE id_type_casque = %s
-                 GROUP BY type_casque.id_type_casque
-                 '''
-        mycursor.execute(sql, (id_type,))
+                 LEFT JOIN casque ON type_casque.id_type_casque = casque.type_casque_id
+                 LEFT JOIN commentaire ON casque.id_casque = commentaire.casque_id
+                 LEFT JOIN note ON casque.id_casque = note.casque_id
+                 WHERE type_casque.id_type_casque = %s
+                 GROUP BY type_casque.id_type_casque'''
+        mycursor.execute(sql, (type_casque_id,))
         datas_show = mycursor.fetchall()
-        labels = [str(row['libelle']) for row in datas_show]
-        values = [int(row['nbr_commentaires']) for row in datas_show]
-        total_commentaires = sum(values)
 
     else:
-        sql = '''SELECT  type_casque.id_type_casque, 
-                 libelle_type_casque AS libelle, 
-                 COUNT(DISTINCT com.id_commantaire ) AS nbr_commentaires
+        sql = '''SELECT *, type_casque.libelle_type_casque AS libelle,
+                        COUNT(commentaire.id_commantaire) AS nbr_commentaires_total, 
+                        AVG(note.note) AS moyenne_notes, 
+                        COUNT(note.note) AS nb_notes
                  FROM type_casque
-                 LEFT JOIN casque c ON type_casque.id_type_casque = c.type_casque_id
-                 LEFT JOIN commentaire com ON c.id_casque = com.casque_id
-                 GROUP BY type_casque.id_type_casque
-                 '''
+                 LEFT JOIN casque ON type_casque.id_type_casque = casque.type_casque_id
+                 LEFT JOIN commentaire ON casque.id_casque = commentaire.casque_id
+                 LEFT JOIN note ON casque.id_casque = note.casque_id
+                 GROUP BY type_casque.id_type_casque'''
         mycursor.execute(sql)
         datas_show = mycursor.fetchall()
-        labels = [str(row['libelle']) for row in datas_show]
-        values = [int(row['nbr_commentaires']) for row in datas_show]
-        total_commentaires = sum(values)
 
 
-    sql = '''SELECT tc.id_type_casque, 
-                        tc.libelle_type_casque AS libelle, 
-                        IFNULL(COUNT(c2.id_commantaire), 0) AS nbr_commentaires_total
-                 FROM type_casque tc
-                 LEFT JOIN casque c ON tc.id_type_casque = c.type_casque_id
-                 left join commentaire c2 on c.id_casque = c2.casque_id
-                 GROUP BY tc.id_type_casque'''
+    labels = [row['libelle'] for row in datas_show]
+    values = [row['nbr_commentaires_total'] for row in datas_show]
+    moyenne_notes = [row['moyenne_notes'] for row in datas_show]
+    nb_notes = [row['nb_notes'] for row in datas_show]
 
-    mycursor.execute(sql)
-    types_casques_nb = mycursor.fetchall()
-    nbr_commentaires_total = [int(row['nbr_commentaires_total']) for row in types_casques_nb]
 
-    print(nbr_commentaires_total)
+    mycursor.execute('SELECT COUNT(*) AS total_commentaires FROM commentaire')
+    total_commentaires = mycursor.fetchone()['total_commentaires']
 
-    return render_template('admin/dataviz/dataviz_etat_1.html'
-                           , datas_show=datas_show
-                           , labels=labels
-                           , values=values
-                           ,types_casques_nb=types_casques_nb
-                           ,nbr_commentaires_total=nbr_commentaires_total)
+    return render_template('admin/dataviz/dataviz_etat_1.html',
+                           labels=labels, values=values,
+                           moyenne_notes=moyenne_notes, nb_notes=nb_notes,
+                           total_commentaires=total_commentaires, datas_show=datas_show,
+                           type_casques=type_casques)
 
 
 # sujet 3 : adresses

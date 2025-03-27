@@ -13,16 +13,15 @@ admin_commentaire = Blueprint('admin_commentaire', __name__,
 def admin_casque_details():
     mycursor = get_db().cursor()
     id_casque =  request.args.get('id_casque', None)
-    sql = '''   SELECT *, u.nom, u.login
+    sql = '''   SELECT *, u.nom, u.login, casque_id AS id_casque
                 FROM commentaire 
                 inner join utilisateur u on commentaire.utilisateur_id = u.id_utilisateur
                 WHERE casque_id = %s
                 order by date_publication desc
     '''
-    mycursor.execute(sql, (id_casque))
+    mycursor.execute(sql, id_casque)
     commentaires = mycursor.fetchall()
-
-
+    date_publication = [commentaire['date_publication'] for commentaire in commentaires]
 
     sql = '''  SELECT nom_casque as nom, id_casque,
                 AVG(note) as moyenne_notes, 
@@ -57,11 +56,12 @@ def admin_casque_details():
 @admin_commentaire.route('/admin/casque/commentaires/delete', methods=['POST'])
 def admin_comment_delete():
     mycursor = get_db().cursor()
-    id_utilisateur = request.form.get('id_utilisateur', None)
     id_casque = request.form.get('id_casque', None)
+    id_utilisateur = request.form.get('id_utilisateur', None)
     date_publication = request.form.get('date_publication', None)
-    sql = ''' DELETE FROM commentaire WHERE utilisateur_id = %s AND casque_id = %s AND date_publication = %s '''
-    tuple_delete=(id_utilisateur,id_casque,date_publication)
+    sql = ''' DELETE  FROM commentaire WHERE date_publication=%s and casque_id = %s and utilisateur_id = %s '''
+    tuple_insert = (date_publication, id_casque, id_utilisateur)
+    mycursor.execute(sql, tuple_insert)
     get_db().commit()
     return redirect('/admin/casque/commentaires?id_casque='+id_casque)
 
@@ -75,12 +75,15 @@ def admin_comment_add():
         return render_template('admin/casque/add_commentaire.html',id_utilisateur=id_utilisateur,id_casque=id_casque,date_publication=date_publication )
 
     mycursor = get_db().cursor()
-    id_utilisateur = session['id_user']   #1 admin
+    id_utilisateur = session['id_user']
     id_casque = request.form.get('id_casque', None)
     date_publication = request.form.get('date_publication', None)
     commentaire = request.form.get('commentaire', None)
-    sql = '''  UPDATE commentaire SET validation = 1, reponse=%s
-                WHERE utilisateur_id = %s AND casque_id = %s AND date_publication = %s '''
+    sql = '''INSERT INTO commentaire (validation, libelle_comm, utilisateur_id, casque_id, date_publication) 
+             VALUES (%s, %s, %s, %s, %s)'''
+
+    tuple_insert = (1,commentaire, id_utilisateur, id_casque, date_publication)
+    mycursor.execute(sql, tuple_insert)
     get_db().commit()
     return redirect('/admin/casque/commentaires?id_casque='+id_casque)
 
@@ -89,6 +92,9 @@ def admin_comment_add():
 def admin_comment_valider():
     id_casque = request.args.get('id_casque', None)
     mycursor = get_db().cursor()
-    sql = '''   requête admin_type_casque_4   '''
+    sql = '''  UPDATE commentaire SET validation = 1
+                WHERE casque_id= %s '''
+    mycursor.execute(sql, id_casque)
+    flash(u'commentaires validés', 'alert-success')
     get_db().commit()
     return redirect('/admin/casque/commentaires?id_casque='+id_casque)
