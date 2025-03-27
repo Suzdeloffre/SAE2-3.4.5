@@ -18,15 +18,16 @@
     <h2>Nombre total de commentaires: <span style="color: red;">{{ total_commentaires }}</span></h2>
     <h3>Selectionner un type de casque </h3>
 
-    <form action="/admin/dataviz/etat_1" method="post">
+    <form action="/admin/dataviz/etat1" method="get">
         <label for="type_casque">Type de casque</label>
         <select name="type_casque" id="type_casque">
-            <option value="0">Tous les types de casques</option>
+            <option>Tous les types de casques</option>
             {% for type_casque in type_casques %}
                 <option value="{{ type_casque.id_type_casque }}">{{ type_casque.libelle }}</option>
             {% endfor %}
         </select>
-        <a class="btn btn-outline-warning"  href="/admin/dataviz/etat1?type_casque_id={{ type_casques.id_type_casque }}">Filtre</a>
+        <p>{{ type_casque_id }}</p>
+        <button type="submit" class="btn btn-primary">Filtrer</button>
     </form>
 
     <table class="table">

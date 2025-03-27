@@ -13,31 +13,30 @@ admin_dataviz = Blueprint('admin_dataviz', __name__,
 def show_type_casque_stock():
     mycursor = get_db().cursor()
 
-    type_casque_id = request.form.get('type_casque')
+    type_casque_id = request.args.get('type_casque', None)
 
-    sql = '''SELECT libelle_type_casque as libelle FROM type_casque'''
+
+    sql = '''SELECT id_type_casque, libelle_type_casque as libelle FROM type_casque'''
     mycursor.execute(sql)
     type_casques = mycursor.fetchall()
 
-
     if type_casque_id is not None:
-        sql = '''SELECT *, type_casque.libelle_type_casque AS libelle, 
-                        COUNT(commentaire.id_commantaire) AS nbr_commentaires_total, 
-                        AVG(note.note) AS moyenne_notes, 
+        sql = '''SELECT casque.nom_casque AS libelle,
+                        casque.id_casque,
+                        COUNT(commentaire.id_commantaire) AS nbr_commentaires_total,
+                        AVG(note.note) AS moyenne_notes,
                         COUNT(note.note) AS nb_notes
-                 FROM type_casque
-                 LEFT JOIN casque ON type_casque.id_type_casque = casque.type_casque_id
+                 FROM casque
                  LEFT JOIN commentaire ON casque.id_casque = commentaire.casque_id
                  LEFT JOIN note ON casque.id_casque = note.casque_id
-                 WHERE type_casque.id_type_casque = %s
-                 GROUP BY type_casque.id_type_casque'''
+                 WHERE casque.type_casque_id = %s
+                 GROUP BY casque.id_casque'''
         mycursor.execute(sql, (type_casque_id,))
-        datas_show = mycursor.fetchall()
-
     else:
-        sql = '''SELECT *, type_casque.libelle_type_casque AS libelle,
-                        COUNT(commentaire.id_commantaire) AS nbr_commentaires_total, 
-                        AVG(note.note) AS moyenne_notes, 
+        sql = '''SELECT type_casque.libelle_type_casque AS libelle,
+                        type_casque.id_type_casque,
+                        COUNT(commentaire.id_commantaire) AS nbr_commentaires_total,
+                        AVG(note.note) AS moyenne_notes,
                         COUNT(note.note) AS nb_notes
                  FROM type_casque
                  LEFT JOIN casque ON type_casque.id_type_casque = casque.type_casque_id
@@ -45,14 +44,13 @@ def show_type_casque_stock():
                  LEFT JOIN note ON casque.id_casque = note.casque_id
                  GROUP BY type_casque.id_type_casque'''
         mycursor.execute(sql)
-        datas_show = mycursor.fetchall()
 
+    datas_show = mycursor.fetchall()
 
     labels = [row['libelle'] for row in datas_show]
     values = [row['nbr_commentaires_total'] for row in datas_show]
     moyenne_notes = [row['moyenne_notes'] for row in datas_show]
     nb_notes = [row['nb_notes'] for row in datas_show]
-
 
     mycursor.execute('SELECT COUNT(*) AS total_commentaires FROM commentaire')
     total_commentaires = mycursor.fetchone()['total_commentaires']
@@ -61,7 +59,7 @@ def show_type_casque_stock():
                            labels=labels, values=values,
                            moyenne_notes=moyenne_notes, nb_notes=nb_notes,
                            total_commentaires=total_commentaires, datas_show=datas_show,
-                           type_casques=type_casques)
+                           type_casques=type_casques, type_casque_id=type_casque_id)
 
 
 # sujet 3 : adresses
