@@ -222,11 +222,16 @@ INSERT INTO ligne_commande(commande_id,casque_id, prix, quantite) VALUES
 (4, 17, 59.99, 1);
 
 INSERT INTO note(id_note, utilisateur_id, casque_id, note)VALUES
-(NULL,2, 2, 5),
-(NULL, 3, 4, 4.3),
+(NULL, 2, 1, 4.5),
+(NULL, 3, 3, 4.0),
+(NULL, 2, 5, 4.8),
+(NULL, 2, 6, 3.9),
+(NULL, 3, 7, 3.2),
+(NULL, 3, 8, 3.8),
+(NULL, 3, 9, 4.1),
+(NULL, 3, 10, 4.6),
 (NULL, 3, 15, 2.4),
-(NULL, 2, 6, 3),
-(NULL, 3, 3, 3.5);
+(NULL, 3, 17, 4.0);
 
 INSERT INTO commentaire (id_commantaire, utilisateur_id, casque_id, libelle_comm, date_publication, validation) VALUES
 (NULL,2, 2, 'Parfait, le casque est confortable', '2020-01-02', 1),

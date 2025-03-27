@@ -26,7 +26,6 @@
                 <option value="{{ type_casque.id_type_casque }}">{{ type_casque.libelle }}</option>
             {% endfor %}
         </select>
-        <p>{{ type_casque_id }}</p>
         <button type="submit" class="btn btn-primary">Filtrer</button>
     </form>
 
@@ -36,6 +35,8 @@
                 <th>Type de Casque</th>
                 <th>(id)</th>
                 <th>Nombre de Commentaires</th>
+                <th>Nombre de notes</th>
+                <th>Note moyenne</th>
             </tr>
         </thead>
         <tbody>
@@ -50,6 +51,24 @@
                                     {{ ligne.nbr_commentaires_total }}
                                 {% else %}
                                     Pas de commentaires
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <span style="color: red">
+                                {% if ligne.nb_notes %}
+                                    {{ ligne.nb_notes }}
+                                {% else %}
+                                    Pas de notes
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <span style="color: red">
+                                {% if ligne.moyenne_notes %}
+                                    {{ ligne.moyenne_notes }}
+                                {% else %}
+                                    Pas de notes
                                 {% endif %}
                             </span>
                         </td>
@@ -88,7 +107,7 @@
         });
     </script>
 
-    <h3>Graphique de la moyenne des notes par type de casque</h3>
+    <h3>Graphique du nombre de notes par type de casque</h3>
     <div style="width: 900px; height: 500px; border: #0a53be 1px solid;">
         <canvas id="Chart2"></canvas>
     </div>
@@ -99,9 +118,9 @@
             data: {
                 labels: {{ labels | safe }},
                 datasets: [{
-                    label: "Moyenne des notes par type de casque",
+                    label: "Nombre de notes par type de casque",
                     backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                    data: {{ moyenne_notes | safe }},
+                    data: {{ nb_notes | safe }},
                 }]
             },
             options: {
@@ -113,7 +132,7 @@
         });
     </script>
 
-    <h3>Graphique du nombre de notes par type de casque</h3>
+    <h3>Graphique de la moyenne de notes par type de casque</h3>
     <div style="width: 900px; height: 500px; border: #0a53be 1px solid;">
         <canvas id="Chart3"></canvas>
     </div>
@@ -122,10 +141,10 @@
         var Chart3 = new Chart(ctx3, {
             type: "bar",
             data: {
-                labels: {{ labels | safe }},
+                labels: {{ labels | tojson }},
                 datasets: [{
-                    label: "Nombre de notes par type de casque",
-                    data: {{ nb_notes | safe }},
+                    label: "Moyenne de notes par type de casque",
+                    data: {{ moyenne_notes | tojson }},
                     backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
                     borderColor: "rgb(75,192,192)",
                     lineTension: 0.1

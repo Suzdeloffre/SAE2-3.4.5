@@ -21,17 +21,17 @@ def show_type_casque_stock():
     type_casques = mycursor.fetchall()
 
     if type_casque_id is not None:
-        sql = '''SELECT casque.nom_casque AS libelle,
-                        casque.id_casque,
+        sql = '''SELECT libelle_type_casque AS libelle,
+                        id_type_casque,
                         COUNT(commentaire.id_commantaire) AS nbr_commentaires_total,
                         AVG(note.note) AS moyenne_notes,
                         COUNT(note.note) AS nb_notes
-                 FROM casque
+                 FROM type_casque
+                 left join casque ON type_casque.id_type_casque = casque.type_casque_id
                  LEFT JOIN commentaire ON casque.id_casque = commentaire.casque_id
                  LEFT JOIN note ON casque.id_casque = note.casque_id
-                 WHERE casque.type_casque_id = %s
-                 GROUP BY casque.id_casque'''
-        mycursor.execute(sql, (type_casque_id,))
+                 GROUP BY id_type_casque'''
+        mycursor.execute(sql)
     else:
         sql = '''SELECT type_casque.libelle_type_casque AS libelle,
                         type_casque.id_type_casque,
@@ -49,8 +49,10 @@ def show_type_casque_stock():
 
     labels = [row['libelle'] for row in datas_show]
     values = [row['nbr_commentaires_total'] for row in datas_show]
-    moyenne_notes = [row['moyenne_notes'] for row in datas_show]
+    moyenne_notes = [row['moyenne_notes'] for row in datas_show ]
+
     nb_notes = [row['nb_notes'] for row in datas_show]
+    print(moyenne_notes)
 
     mycursor.execute('SELECT COUNT(*) AS total_commentaires FROM commentaire')
     total_commentaires = mycursor.fetchone()['total_commentaires']
