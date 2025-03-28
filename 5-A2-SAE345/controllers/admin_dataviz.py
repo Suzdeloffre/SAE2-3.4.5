@@ -20,18 +20,18 @@ def show_type_casque_stock():
     mycursor.execute(sql)
     type_casques = mycursor.fetchall()
 
-    if type_casque_id != 'None' :
+    if type_casque_id != 'None' and None :
         sql = '''SELECT casque.nom_casque AS libelle,
-                        COUNT(commentaire.id_commantaire) AS nbr_commentaires_total,
-                        AVG(note.note) AS moyenne_notes,
-                        COUNT(note.note) AS nb_notes
-                 FROM casque
-                 left join type_casque ON casque.type_casque_id = type_casque.id_type_casque
-                 LEFT JOIN commentaire ON casque.id_casque = commentaire.casque_id
-                 LEFT JOIN note ON casque.id_casque = note.casque_id
-                 where type_casque.id_type_casque = %s
-                 GROUP BY casque.id_casque'''
-        mycursor.execute(sql, type_casque_id)
+                            COUNT(commentaire.id_commantaire) AS nbr_commentaires_total,
+                            AVG(note.note) AS moyenne_notes,
+                            COUNT(note.note) AS nb_notes
+                     FROM casque
+                     LEFT JOIN type_casque ON casque.type_casque_id = type_casque.id_type_casque
+                     LEFT JOIN commentaire ON casque.id_casque = commentaire.casque_id
+                     LEFT JOIN note ON casque.id_casque = note.casque_id
+                     WHERE type_casque.id_type_casque = %s  
+                     GROUP BY casque.id_casque'''
+        mycursor.execute(sql, (type_casque_id,))
         print("ici")
     else:
         sql = '''SELECT type_casque.libelle_type_casque AS libelle,
