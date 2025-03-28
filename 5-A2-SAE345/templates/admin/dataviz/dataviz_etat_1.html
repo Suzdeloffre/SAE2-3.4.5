@@ -1,12 +1,16 @@
-{% extends 'admin/layout_admin.html' %}
+    {% extends 'admin/layout_admin.html' %}
+
 
 {% block javascripts %}
-{ super() }
-<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.js') }}" ></script>
+{#    attention il faut importer la bibliotheque chart.js avant de définir l'objet chart#}
+    {{ super() }}
+   {# <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.js') }}" ></script>#}
 {% endblock %}
 
 {% block javascripts_head %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+{#    attention il faut importer la bibliotheque chart.js avant de définir l'objet chart#}
+{#    <script src="{{ url_for('static', filename='chart.js') }}" ></script>#}
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 {% endblock %}
 
 {% block title %}
@@ -32,7 +36,11 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                <th>Type de Casque</th>
+                <th>{% if type_casque_id =='None' %}
+                    Type de Casque
+                    {% else %}
+                    Casques
+                {% endif %}</th>
                 <th>(id)</th>
                 <th>Nombre de Commentaires</th>
                 <th>Nombre de notes</th>
