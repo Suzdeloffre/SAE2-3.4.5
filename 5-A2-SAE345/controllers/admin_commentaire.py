@@ -15,9 +15,14 @@ def admin_casque_details():
     id_casque =  request.args.get('id_casque', None)
     sql = '''   SELECT *, u.nom, u.login, casque_id AS id_casque
                 FROM commentaire 
-                inner join utilisateur u on commentaire.utilisateur_id = u.id_utilisateur
+                INNER JOIN utilisateur u ON commentaire.utilisateur_id = u.id_utilisateur
                 WHERE casque_id = %s
-                order by date_publication desc
+                ORDER BY 
+                    date_publication DESC, 
+                    CASE 
+                        WHEN utilisateur_id = 1 THEN 1 
+                        ELSE 0
+                    END;
     '''
     mycursor.execute(sql, id_casque)
     commentaires = mycursor.fetchall()

@@ -1,7 +1,7 @@
 {% extends 'admin/layout_admin.html' %}
 
 {% block title %}
-    <title>commentaire d'un casque</title>
+    <title>commentaires d'un casque</title>
 {% endblock %}
 
 {% block body %}
@@ -39,11 +39,11 @@
 
                 {% for commentaire in commentaires %}
                     {% if commentaire.validation == 1 and session['id_user']==commentaire.utilisateur_id %}
-                    <tr class="bg-success bg-opacity-25" >
-                        {% elif commentaire.validation == 1 %}
-                        <tr class="bg-warning bg-opacity-25" >
-                        {% else %}
-                    <tr>
+                        <tr class="bg-success bg-opacity-25" >
+                    {% elif commentaire.validation == 1 %}
+                            <tr class="bg-warning bg-opacity-25" >
+                    {% else %}
+                        <tr>
                     {% endif %}
                         <td>{{ commentaire.nom }}({{ commentaire.id_utilisateur }})</td>
                         <td> {% if commentaire.utilisateur_id == session['id_user'] %}
