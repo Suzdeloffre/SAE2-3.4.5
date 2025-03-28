@@ -14,24 +14,25 @@ def show_type_casque_stock():
     mycursor = get_db().cursor()
 
     type_casque_id = request.args.get('type_casque', None)
-
+    print(type_casque_id)
 
     sql = '''SELECT id_type_casque, libelle_type_casque as libelle FROM type_casque'''
     mycursor.execute(sql)
     type_casques = mycursor.fetchall()
 
-    if type_casque_id is not None:
-        sql = '''SELECT libelle_type_casque AS libelle,
-                        id_type_casque,
+    if type_casque_id != 'None' :
+        sql = '''SELECT casque.nom_casque AS libelle,
                         COUNT(commentaire.id_commantaire) AS nbr_commentaires_total,
                         AVG(note.note) AS moyenne_notes,
                         COUNT(note.note) AS nb_notes
-                 FROM type_casque
-                 left join casque ON type_casque.id_type_casque = casque.type_casque_id
+                 FROM casque
+                 left join type_casque ON casque.type_casque_id = type_casque.id_type_casque
                  LEFT JOIN commentaire ON casque.id_casque = commentaire.casque_id
                  LEFT JOIN note ON casque.id_casque = note.casque_id
-                 GROUP BY id_type_casque'''
-        mycursor.execute(sql)
+                 where type_casque.id_type_casque = %s
+                 GROUP BY casque.id_casque'''
+        mycursor.execute(sql, type_casque_id)
+        print("ici")
     else:
         sql = '''SELECT type_casque.libelle_type_casque AS libelle,
                         type_casque.id_type_casque,
@@ -52,7 +53,7 @@ def show_type_casque_stock():
     moyenne_notes = [row['moyenne_notes'] for row in datas_show ]
 
     nb_notes = [row['nb_notes'] for row in datas_show]
-    print(moyenne_notes)
+
 
     mycursor.execute('SELECT COUNT(*) AS total_commentaires FROM commentaire')
     total_commentaires = mycursor.fetchone()['total_commentaires']

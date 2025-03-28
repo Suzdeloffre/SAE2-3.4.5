@@ -21,7 +21,7 @@
     <form action="/admin/dataviz/etat1" method="get">
         <label for="type_casque">Type de casque</label>
         <select name="type_casque" id="type_casque">
-            <option>Tous les types de casques</option>
+            <option value="None">Tous les types de casques</option>
             {% for type_casque in type_casques %}
                 <option value="{{ type_casque.id_type_casque }}">{{ type_casque.libelle }}</option>
             {% endfor %}
